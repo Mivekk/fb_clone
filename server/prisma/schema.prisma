@@ -12,11 +12,12 @@ datasource db {
 
 generator typegraphql {
   provider = "typegraphql-prisma"
-  output = "../src/generated/type-graphql"
+  output   = "../src/generated/type-graphql"
 }
 
 model User {
   id    Int     @id @default(autoincrement())
+  username String @unique
   email String  @unique
-  name  String?
+  password String
 }
