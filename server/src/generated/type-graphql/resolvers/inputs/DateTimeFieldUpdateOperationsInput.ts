@@ -3,12 +3,10 @@ import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 
-@TypeGraphQL.ObjectType("UserAvgAggregate", {
-  simpleResolvers: true
-})
-export class UserAvgAggregate {
-  @TypeGraphQL.Field(_type => TypeGraphQL.Float, {
+@TypeGraphQL.InputType("DateTimeFieldUpdateOperationsInput", {})
+export class DateTimeFieldUpdateOperationsInput {
+  @TypeGraphQL.Field(_type => Date, {
     nullable: true
   })
-  id!: number | null;
+  set?: Date | undefined;
 }

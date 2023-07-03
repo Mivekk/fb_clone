@@ -13,10 +13,20 @@ export class UserCreateManyInput {
   @TypeGraphQL.Field(_type => String, {
     nullable: false
   })
+  firstName!: string;
+
+  @TypeGraphQL.Field(_type => String, {
+    nullable: false
+  })
+  lastName!: string;
+
+  @TypeGraphQL.Field(_type => String, {
+    nullable: false
+  })
   email!: string;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true
+    nullable: false
   })
-  name?: string | undefined;
+  password!: string;
 }

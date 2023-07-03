@@ -185,7 +185,7 @@ function applyTypeClassEnhanceConfig<
 }
 
 const modelsInfo = {
-  User: ["id", "email", "name"]
+  User: ["id", "firstName", "lastName", "email", "createdAt", "updatedAt"]
 };
 
 type ModelNames = keyof typeof models;
@@ -225,13 +225,13 @@ export function applyModelsEnhanceMap(modelsEnhanceMap: ModelsEnhanceMap) {
 
 const outputsInfo = {
   AggregateUser: ["_count", "_avg", "_sum", "_min", "_max"],
-  UserGroupBy: ["id", "email", "name", "_count", "_avg", "_sum", "_min", "_max"],
+  UserGroupBy: ["id", "firstName", "lastName", "email", "password", "createdAt", "updatedAt", "_count", "_avg", "_sum", "_min", "_max"],
   AffectedRowsOutput: ["count"],
-  UserCountAggregate: ["id", "email", "name", "_all"],
+  UserCountAggregate: ["id", "firstName", "lastName", "email", "password", "createdAt", "updatedAt", "_all"],
   UserAvgAggregate: ["id"],
   UserSumAggregate: ["id"],
-  UserMinAggregate: ["id", "email", "name"],
-  UserMaxAggregate: ["id", "email", "name"]
+  UserMinAggregate: ["id", "firstName", "lastName", "email", "password", "createdAt", "updatedAt"],
+  UserMaxAggregate: ["id", "firstName", "lastName", "email", "password", "createdAt", "updatedAt"]
 };
 
 type OutputTypesNames = keyof typeof outputTypes;
@@ -272,38 +272,36 @@ export function applyOutputTypesEnhanceMap(
 }
 
 const inputsInfo = {
-  UserWhereInput: ["AND", "OR", "NOT", "id", "email", "name"],
-  UserOrderByWithRelationInput: ["id", "email", "name"],
+  UserWhereInput: ["AND", "OR", "NOT", "id", "firstName", "lastName", "email", "password", "createdAt", "updatedAt"],
+  UserOrderByWithRelationInput: ["id", "firstName", "lastName", "email", "password", "createdAt", "updatedAt"],
   UserWhereUniqueInput: ["id", "email"],
-  UserOrderByWithAggregationInput: ["id", "email", "name", "_count", "_avg", "_max", "_min", "_sum"],
-  UserScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "email", "name"],
-  UserCreateInput: ["email", "name"],
-  UserUpdateInput: ["email", "name"],
-  UserCreateManyInput: ["id", "email", "name"],
-  UserUpdateManyMutationInput: ["email", "name"],
+  UserOrderByWithAggregationInput: ["id", "firstName", "lastName", "email", "password", "createdAt", "updatedAt", "_count", "_avg", "_max", "_min", "_sum"],
+  UserScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "firstName", "lastName", "email", "password", "createdAt", "updatedAt"],
+  UserCreateInput: ["firstName", "lastName", "email", "password", "createdAt", "updatedAt"],
+  UserUpdateInput: ["firstName", "lastName", "email", "password", "createdAt", "updatedAt"],
+  UserCreateManyInput: ["id", "firstName", "lastName", "email", "password", "createdAt", "updatedAt"],
+  UserUpdateManyMutationInput: ["firstName", "lastName", "email", "password", "createdAt", "updatedAt"],
   IntFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   StringFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "mode", "not"],
-  StringNullableFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "mode", "not"],
-  SortOrderInput: ["sort", "nulls"],
-  UserCountOrderByAggregateInput: ["id", "email", "name"],
+  DateTimeFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
+  UserCountOrderByAggregateInput: ["id", "firstName", "lastName", "email", "password", "createdAt", "updatedAt"],
   UserAvgOrderByAggregateInput: ["id"],
-  UserMaxOrderByAggregateInput: ["id", "email", "name"],
-  UserMinOrderByAggregateInput: ["id", "email", "name"],
+  UserMaxOrderByAggregateInput: ["id", "firstName", "lastName", "email", "password", "createdAt", "updatedAt"],
+  UserMinOrderByAggregateInput: ["id", "firstName", "lastName", "email", "password", "createdAt", "updatedAt"],
   UserSumOrderByAggregateInput: ["id"],
   IntWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not", "_count", "_avg", "_sum", "_min", "_max"],
   StringWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "mode", "not", "_count", "_min", "_max"],
-  StringNullableWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "mode", "not", "_count", "_min", "_max"],
+  DateTimeWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not", "_count", "_min", "_max"],
   StringFieldUpdateOperationsInput: ["set"],
-  NullableStringFieldUpdateOperationsInput: ["set"],
+  DateTimeFieldUpdateOperationsInput: ["set"],
   IntFieldUpdateOperationsInput: ["set", "increment", "decrement", "multiply", "divide"],
   NestedIntFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   NestedStringFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not"],
-  NestedStringNullableFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not"],
+  NestedDateTimeFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   NestedIntWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not", "_count", "_avg", "_sum", "_min", "_max"],
   NestedFloatFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   NestedStringWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not", "_count", "_min", "_max"],
-  NestedStringNullableWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not", "_count", "_min", "_max"],
-  NestedIntNullableFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"]
+  NestedDateTimeWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not", "_count", "_min", "_max"]
 };
 
 type InputTypesNames = keyof typeof inputTypes;

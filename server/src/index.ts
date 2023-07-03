@@ -8,13 +8,14 @@ import { json } from "body-parser";
 import { expressMiddleware } from "@apollo/server/express4";
 import { Context, context } from "./context";
 import { UserResolver } from "./resolvers/User";
+import { resolvers } from "./generated/type-graphql";
 
 const main = async () => {
   const app = express();
   const port = 4000;
 
   const schema = await buildSchema({
-    resolvers: [UserResolver],
+    resolvers: [...resolvers],
     validate: false,
   });
 
