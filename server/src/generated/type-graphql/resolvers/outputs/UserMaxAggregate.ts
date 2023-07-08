@@ -32,6 +32,11 @@ export class UserMaxAggregate {
   })
   password!: string | null;
 
+  @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
+    nullable: true
+  })
+  tokenVersion!: number | null;
+
   @TypeGraphQL.Field(_type => Date, {
     nullable: true
   })

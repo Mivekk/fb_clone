@@ -47,4 +47,9 @@ export class UserScalarWhereWithAggregatesInput {
     nullable: true
   })
   password?: StringWithAggregatesFilter | undefined;
+
+  @TypeGraphQL.Field(_type => IntWithAggregatesFilter, {
+    nullable: true
+  })
+  tokenVersion?: IntWithAggregatesFilter | undefined;
 }

@@ -47,4 +47,9 @@ export class UserWhereInput {
     nullable: true
   })
   password?: StringFilter | undefined;
+
+  @TypeGraphQL.Field(_type => IntFilter, {
+    nullable: true
+  })
+  tokenVersion?: IntFilter | undefined;
 }

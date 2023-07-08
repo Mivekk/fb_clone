@@ -36,6 +36,11 @@ export class UserOrderByWithAggregationInput {
   })
   password?: "asc" | "desc" | undefined;
 
+  @TypeGraphQL.Field(_type => SortOrder, {
+    nullable: true
+  })
+  tokenVersion?: "asc" | "desc" | undefined;
+
   @TypeGraphQL.Field(_type => UserCountOrderByAggregateInput, {
     nullable: true
   })

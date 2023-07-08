@@ -29,6 +29,11 @@ export class User {
 
   password?: string;
 
+  @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
+    nullable: false
+  })
+  tokenVersion!: number;
+
   @TypeGraphQL.Field(_type => Date, {
     nullable: false
   })

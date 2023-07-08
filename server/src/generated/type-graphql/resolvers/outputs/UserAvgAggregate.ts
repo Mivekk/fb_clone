@@ -11,4 +11,9 @@ export class UserAvgAggregate {
     nullable: true
   })
   id!: number | null;
+
+  @TypeGraphQL.Field(_type => TypeGraphQL.Float, {
+    nullable: true
+  })
+  tokenVersion!: number | null;
 }

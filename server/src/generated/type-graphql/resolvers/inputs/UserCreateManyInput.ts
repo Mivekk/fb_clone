@@ -29,4 +29,9 @@ export class UserCreateManyInput {
     nullable: false
   })
   password!: string;
+
+  @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
+    nullable: true
+  })
+  tokenVersion?: number | undefined;
 }

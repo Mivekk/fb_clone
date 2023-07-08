@@ -11,4 +11,9 @@ export class UserSumAggregate {
     nullable: true
   })
   id!: number | null;
+
+  @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
+    nullable: true
+  })
+  tokenVersion!: number | null;
 }

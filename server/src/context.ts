@@ -1,10 +1,15 @@
 import { PrismaClient } from "@prisma/client";
-import prisma from "./libs/prisma";
+import { Request, Response } from "express";
 
-export interface Context {
-  prisma: PrismaClient;
+export const prisma = new PrismaClient();
+
+interface Payload {
+  userId: number;
 }
 
-export const context: Context = {
-  prisma: prisma,
-};
+export interface ApolloContext {
+  prisma: PrismaClient;
+  payload?: Payload;
+  req: Request;
+  res: Response;
+}

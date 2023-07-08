@@ -185,7 +185,7 @@ function applyTypeClassEnhanceConfig<
 }
 
 const modelsInfo = {
-  User: ["id", "firstName", "lastName", "email", "createdAt", "updatedAt"]
+  User: ["id", "firstName", "lastName", "email", "tokenVersion", "createdAt", "updatedAt"]
 };
 
 type ModelNames = keyof typeof models;
@@ -225,13 +225,13 @@ export function applyModelsEnhanceMap(modelsEnhanceMap: ModelsEnhanceMap) {
 
 const outputsInfo = {
   AggregateUser: ["_count", "_avg", "_sum", "_min", "_max"],
-  UserGroupBy: ["id", "firstName", "lastName", "email", "password", "createdAt", "updatedAt", "_count", "_avg", "_sum", "_min", "_max"],
+  UserGroupBy: ["id", "firstName", "lastName", "email", "password", "tokenVersion", "createdAt", "updatedAt", "_count", "_avg", "_sum", "_min", "_max"],
   AffectedRowsOutput: ["count"],
-  UserCountAggregate: ["id", "firstName", "lastName", "email", "password", "createdAt", "updatedAt", "_all"],
-  UserAvgAggregate: ["id"],
-  UserSumAggregate: ["id"],
-  UserMinAggregate: ["id", "firstName", "lastName", "email", "password", "createdAt", "updatedAt"],
-  UserMaxAggregate: ["id", "firstName", "lastName", "email", "password", "createdAt", "updatedAt"]
+  UserCountAggregate: ["id", "firstName", "lastName", "email", "password", "tokenVersion", "createdAt", "updatedAt", "_all"],
+  UserAvgAggregate: ["id", "tokenVersion"],
+  UserSumAggregate: ["id", "tokenVersion"],
+  UserMinAggregate: ["id", "firstName", "lastName", "email", "password", "tokenVersion", "createdAt", "updatedAt"],
+  UserMaxAggregate: ["id", "firstName", "lastName", "email", "password", "tokenVersion", "createdAt", "updatedAt"]
 };
 
 type OutputTypesNames = keyof typeof outputTypes;
@@ -272,29 +272,29 @@ export function applyOutputTypesEnhanceMap(
 }
 
 const inputsInfo = {
-  UserWhereInput: ["AND", "OR", "NOT", "id", "firstName", "lastName", "email", "password", "createdAt", "updatedAt"],
-  UserOrderByWithRelationInput: ["id", "firstName", "lastName", "email", "password", "createdAt", "updatedAt"],
+  UserWhereInput: ["AND", "OR", "NOT", "id", "firstName", "lastName", "email", "password", "tokenVersion", "createdAt", "updatedAt"],
+  UserOrderByWithRelationInput: ["id", "firstName", "lastName", "email", "password", "tokenVersion", "createdAt", "updatedAt"],
   UserWhereUniqueInput: ["id", "email"],
-  UserOrderByWithAggregationInput: ["id", "firstName", "lastName", "email", "password", "createdAt", "updatedAt", "_count", "_avg", "_max", "_min", "_sum"],
-  UserScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "firstName", "lastName", "email", "password", "createdAt", "updatedAt"],
-  UserCreateInput: ["firstName", "lastName", "email", "password", "createdAt", "updatedAt"],
-  UserUpdateInput: ["firstName", "lastName", "email", "password", "createdAt", "updatedAt"],
-  UserCreateManyInput: ["id", "firstName", "lastName", "email", "password", "createdAt", "updatedAt"],
-  UserUpdateManyMutationInput: ["firstName", "lastName", "email", "password", "createdAt", "updatedAt"],
+  UserOrderByWithAggregationInput: ["id", "firstName", "lastName", "email", "password", "tokenVersion", "createdAt", "updatedAt", "_count", "_avg", "_max", "_min", "_sum"],
+  UserScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "firstName", "lastName", "email", "password", "tokenVersion", "createdAt", "updatedAt"],
+  UserCreateInput: ["firstName", "lastName", "email", "password", "tokenVersion", "createdAt", "updatedAt"],
+  UserUpdateInput: ["firstName", "lastName", "email", "password", "tokenVersion", "createdAt", "updatedAt"],
+  UserCreateManyInput: ["id", "firstName", "lastName", "email", "password", "tokenVersion", "createdAt", "updatedAt"],
+  UserUpdateManyMutationInput: ["firstName", "lastName", "email", "password", "tokenVersion", "createdAt", "updatedAt"],
   IntFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   StringFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "mode", "not"],
   DateTimeFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
-  UserCountOrderByAggregateInput: ["id", "firstName", "lastName", "email", "password", "createdAt", "updatedAt"],
-  UserAvgOrderByAggregateInput: ["id"],
-  UserMaxOrderByAggregateInput: ["id", "firstName", "lastName", "email", "password", "createdAt", "updatedAt"],
-  UserMinOrderByAggregateInput: ["id", "firstName", "lastName", "email", "password", "createdAt", "updatedAt"],
-  UserSumOrderByAggregateInput: ["id"],
+  UserCountOrderByAggregateInput: ["id", "firstName", "lastName", "email", "password", "tokenVersion", "createdAt", "updatedAt"],
+  UserAvgOrderByAggregateInput: ["id", "tokenVersion"],
+  UserMaxOrderByAggregateInput: ["id", "firstName", "lastName", "email", "password", "tokenVersion", "createdAt", "updatedAt"],
+  UserMinOrderByAggregateInput: ["id", "firstName", "lastName", "email", "password", "tokenVersion", "createdAt", "updatedAt"],
+  UserSumOrderByAggregateInput: ["id", "tokenVersion"],
   IntWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not", "_count", "_avg", "_sum", "_min", "_max"],
   StringWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "mode", "not", "_count", "_min", "_max"],
   DateTimeWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not", "_count", "_min", "_max"],
   StringFieldUpdateOperationsInput: ["set"],
-  DateTimeFieldUpdateOperationsInput: ["set"],
   IntFieldUpdateOperationsInput: ["set", "increment", "decrement", "multiply", "divide"],
+  DateTimeFieldUpdateOperationsInput: ["set"],
   NestedIntFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   NestedStringFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not"],
   NestedDateTimeFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
