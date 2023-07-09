@@ -6,13 +6,13 @@ import { buildSchema } from "type-graphql";
 import cors from "cors";
 import { json } from "body-parser";
 import { expressMiddleware } from "@apollo/server/express4";
-import { ApolloContext } from "./context";
+import { MyApolloContext } from "./context";
 import { UserResolver } from "./resolvers/User";
 import { resolvers } from "./generated/type-graphql";
-import { prisma } from "./context";
+import prisma from "./client";
 import cookieParser from "cookie-parser";
 import { verify } from "jsonwebtoken";
-import { createAccessToken, createRefreshToken } from "./auth/auth";
+import { createAccessToken } from "./auth/auth";
 import { sendRefreshToken } from "./auth/sendRefreshToken";
 
 const main = async () => {
@@ -56,7 +56,7 @@ const main = async () => {
     validate: false,
   });
 
-  const server = new ApolloServer<ApolloContext>({
+  const server = new ApolloServer<MyApolloContext>({
     schema,
   });
 

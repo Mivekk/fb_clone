@@ -1,15 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 import { Request, Response } from "express";
 
-export const prisma = new PrismaClient();
-
-interface Payload {
-  userId: number;
-}
-
-export interface ApolloContext {
+export interface MyApolloContext {
   prisma: PrismaClient;
-  payload?: Payload;
+  payload?: { userId: number };
   req: Request;
   res: Response;
 }

@@ -1,4 +1,4 @@
-import { ApolloContext } from "../context";
+import { MyApolloContext } from "../context";
 import { User } from "../generated/type-graphql";
 import {
   Arg,
@@ -19,18 +19,18 @@ import { sendRefreshToken } from "../auth/sendRefreshToken";
 export class UserResolver {
   @Query(() => String)
   @UseMiddleware(isAuth)
-  bye(@Ctx() { payload }: ApolloContext) {
+  bye(@Ctx() { payload }: MyApolloContext) {
     return `bye ${payload!.userId}`;
   }
 
   @Query(() => [User], { nullable: true })
-  async users(@Ctx() { prisma }: ApolloContext): Promise<User[] | null> {
+  async users(@Ctx() { prisma }: MyApolloContext): Promise<User[] | null> {
     return await prisma.user.findMany({});
   }
 
   @Mutation(() => ResponseObject)
   async register(
-    @Ctx() { prisma }: ApolloContext,
+    @Ctx() { prisma }: MyApolloContext,
     @Arg("data") data: RegisterInput
   ): Promise<ResponseObject> {
     const userExists = await prisma.user.findUnique({
@@ -60,7 +60,7 @@ export class UserResolver {
 
   @Mutation(() => ResponseObject)
   async login(
-    @Ctx() { prisma, res }: ApolloContext,
+    @Ctx() { prisma, res }: MyApolloContext,
     @Arg("data") data: LoginInput
   ): Promise<ResponseObject> {
     const user = await prisma.user.findUnique({ where: { email: data.email } });
@@ -84,7 +84,7 @@ export class UserResolver {
 
   @Mutation(() => Boolean)
   async revokeRefreshToken(
-    @Ctx() { prisma }: ApolloContext,
+    @Ctx() { prisma }: MyApolloContext,
     @Arg("userId") userId: number
   ): Promise<boolean> {
     const user = await prisma.user.update({
