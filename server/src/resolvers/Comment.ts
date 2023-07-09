@@ -37,4 +37,31 @@ export class CommentResolver {
 
     return { comment };
   }
+
+  @Mutation(() => Boolean)
+  @UseMiddleware(isAuth)
+  async removeComment(
+    @Ctx() { prisma, payload }: MyApolloContext,
+    @Arg("commentId") commentId: number
+  ): Promise<Boolean> {
+    const user = await prisma.user.findUnique({
+      where: { id: payload?.userId },
+    });
+
+    if (!user) {
+      throw new Error("could not find user");
+    }
+
+    const comment = await prisma.comment.findUnique({
+      where: { id: commentId },
+    });
+
+    if (!comment) {
+      throw new Error("could not find comment");
+    }
+
+    await prisma.comment.delete({ where: { id: comment.id } });
+
+    return true;
+  }
 }

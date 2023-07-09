@@ -1,14 +1,37 @@
 import argon2 from "argon2";
-import { Arg, Ctx, Mutation, Resolver } from "type-graphql";
+import {
+  Arg,
+  Ctx,
+  Mutation,
+  Query,
+  Resolver,
+  UseMiddleware,
+} from "type-graphql";
 
 import { createAccessToken, createRefreshToken } from "../auth/auth";
 import { sendRefreshToken } from "../auth/sendRefreshToken";
 import { MyApolloContext } from "../context";
 import { LoginInput, RegisterInput } from "./inputs/inputs";
 import { UserResponseObject } from "./outputs/outputs";
+import { User } from "../generated/type-graphql";
+import { isAuth } from "../middleware/isAuth";
 
 @Resolver()
 export class UserResolver {
+  @Query(() => User)
+  @UseMiddleware(isAuth)
+  async me(@Ctx() { prisma, payload }: MyApolloContext) {
+    const user = await prisma.user.findUnique({
+      where: { id: payload?.userId },
+    });
+
+    if (!user) {
+      throw new Error("could not find user");
+    }
+
+    return user;
+  }
+
   @Mutation(() => UserResponseObject)
   async register(
     @Ctx() { prisma }: MyApolloContext,

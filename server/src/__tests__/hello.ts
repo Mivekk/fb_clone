@@ -1,43 +1,66 @@
 import "reflect-metadata";
-
+import { buildSchema } from "type-graphql";
 import prisma from "../client";
-import { prismaMock } from "../singleton";
-import { UserCreateInput } from "../generated/type-graphql";
+import { resolvers } from "../generated/type-graphql";
+import { UserResolver } from "../resolvers/User";
+import { PostResolver } from "../resolvers/Post";
+import { CommentResolver } from "../resolvers/Comment";
+import { GraphQLSchema, graphql } from "graphql";
+
+const registerMutation = `
+mutation Register($data: RegisterInput!) {
+  register(data: $data) {
+    user {
+      id
+      firstName
+      lastName
+      email
+      createdAt
+      updatedAt
+    }
+    error
+  }
+}`;
+
+afterAll(async () => {
+  const deleteUser = prisma.user.deleteMany();
+  const deletePost = prisma.post.deleteMany();
+  const deleteComment = prisma.comment.deleteMany();
+
+  await prisma.$transaction([deleteUser, deletePost, deleteComment]);
+
+  await prisma.$disconnect();
+});
 
 describe("user", () => {
+  let schema: GraphQLSchema;
+
+  beforeAll(async () => {
+    schema = await buildSchema({
+      resolvers: [...resolvers, UserResolver, PostResolver, CommentResolver],
+      validate: false,
+    });
+  });
+
   test("should create a new user", async () => {
-    const user: UserCreateInput = {
-      firstName: "Rich",
-      lastName: "Drip",
-      email: "rich@drip.pl",
-      password: "drip",
-    };
-
-    const createdAt = new Date();
-    const updatedAt = new Date();
-
-    prismaMock.user.create.mockResolvedValue({
-      id: 1,
-      firstName: "Rich",
-      lastName: "Drip",
-      email: "rich@drip.pl",
-      createdAt,
-      updatedAt,
-      password: "drip",
-      tokenVersion: 0,
+    const result: any = await graphql({
+      schema,
+      source: registerMutation,
+      variableValues: {
+        data: {
+          firstName: "Rich",
+          lastName: "Drip",
+          email: "rich@drip.pl",
+          password: "richdrip",
+        },
+      },
+      contextValue: { prisma },
     });
 
-    const createdUser = prisma.user.create({ data: user });
-
-    await expect(createdUser).resolves.toEqual({
-      id: 1,
+    expect(result.data?.register.user).toMatchObject({
       firstName: "Rich",
       lastName: "Drip",
       email: "rich@drip.pl",
-      createdAt,
-      updatedAt,
-      password: "drip",
-      tokenVersion: 0,
     });
   });
 });
