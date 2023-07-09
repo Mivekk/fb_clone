@@ -1,19 +1,21 @@
 import "reflect-metadata";
 import "dotenv/config";
+
+import cookieParser from "cookie-parser";
+import cors from "cors";
 import express from "express";
 import { ApolloServer } from "@apollo/server";
-import { buildSchema } from "type-graphql";
-import cors from "cors";
-import { json } from "body-parser";
 import { expressMiddleware } from "@apollo/server/express4";
-import { MyApolloContext } from "./context";
-import { UserResolver } from "./resolvers/User";
-import { resolvers } from "./generated/type-graphql";
+import { json } from "body-parser";
+import { buildSchema } from "type-graphql";
+
 import prisma from "./client";
-import cookieParser from "cookie-parser";
-import { verify } from "jsonwebtoken";
-import { createAccessToken } from "./auth/auth";
-import { sendRefreshToken } from "./auth/sendRefreshToken";
+import { refreshToken } from "./routes/refreshToken";
+import { UserResolver } from "./resolvers/User";
+import { PostResolver } from "./resolvers/Post";
+import { CommentResolver } from "./resolvers/Comment";
+import { resolvers } from "./generated/type-graphql";
+import { MyApolloContext } from "./context";
 
 const main = async () => {
   const app = express();
@@ -21,38 +23,12 @@ const main = async () => {
 
   app.use(cookieParser());
 
-  app.post("/refresh_token", async (req, res) => {
-    const token = req.cookies.fbc;
-    if (!token) {
-      return res.send({ accessToken: "" });
-    }
-
-    let payload: any = null;
-    try {
-      payload = verify(token, process.env.REFRESH_TOKEN_SECRET!);
-    } catch (err) {
-      console.log(err);
-      return res.send({ accessToken: "" });
-    }
-
-    const user = await prisma.user.findUnique({
-      where: { id: payload.userId },
-    });
-    if (!user) {
-      return res.send({ accessToken: "" });
-    }
-
-    if (user.tokenVersion !== payload.tokenVersion) {
-      return res.send({ accessToken: "" });
-    }
-
-    sendRefreshToken(res, createAccessToken(user));
-
-    return res.send({ accessToken: createAccessToken(user) });
+  app.post("/refresh_token", (req, res) => {
+    refreshToken(req, res);
   });
 
   const schema = await buildSchema({
-    resolvers: [...resolvers, UserResolver],
+    resolvers: [...resolvers, UserResolver, PostResolver, CommentResolver],
     validate: false,
   });
 

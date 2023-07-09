@@ -1,6 +1,7 @@
-import { MyApolloContext } from "../context";
 import { MiddlewareFn } from "type-graphql";
 import { verify } from "jsonwebtoken";
+
+import { MyApolloContext } from "../context";
 
 export const isAuth: MiddlewareFn<MyApolloContext> = ({ context }, next) => {
   const authorization = context.req.headers.authorization;

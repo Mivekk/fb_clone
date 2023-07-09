@@ -2,6 +2,9 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../scalars";
+import { Comment } from "../models/Comment";
+import { Post } from "../models/Post";
+import { UserCount } from "../resolvers/outputs/UserCount";
 
 @TypeGraphQL.ObjectType("User", {
   simpleResolvers: true
@@ -34,6 +37,10 @@ export class User {
   })
   tokenVersion!: number;
 
+  posts?: Post[];
+
+  comments?: Comment[];
+
   @TypeGraphQL.Field(_type => Date, {
     nullable: false
   })
@@ -43,4 +50,9 @@ export class User {
     nullable: false
   })
   updatedAt!: Date;
+
+  @TypeGraphQL.Field(_type => UserCount, {
+    nullable: true
+  })
+  _count?: UserCount | null;
 }

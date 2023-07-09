@@ -1,7 +1,8 @@
 import "reflect-metadata";
+
+import prisma from "../client";
 import { prismaMock } from "../singleton";
 import { UserCreateInput } from "../generated/type-graphql";
-import prisma from "../client";
 
 describe("user", () => {
   test("should create a new user", async () => {

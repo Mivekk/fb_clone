@@ -1,38 +1,19 @@
-import { MyApolloContext } from "../context";
-import { User } from "../generated/type-graphql";
-import {
-  Arg,
-  Ctx,
-  Mutation,
-  Query,
-  Resolver,
-  UseMiddleware,
-} from "type-graphql";
-import { LoginInput, RegisterInput } from "./inputs";
-import { ResponseObject } from "./outputs";
 import argon2 from "argon2";
+import { Arg, Ctx, Mutation, Resolver } from "type-graphql";
+
 import { createAccessToken, createRefreshToken } from "../auth/auth";
-import { isAuth } from "../middleware/isAuth";
 import { sendRefreshToken } from "../auth/sendRefreshToken";
+import { MyApolloContext } from "../context";
+import { LoginInput, RegisterInput } from "./inputs/inputs";
+import { UserResponseObject } from "./outputs/outputs";
 
 @Resolver()
 export class UserResolver {
-  @Query(() => String)
-  @UseMiddleware(isAuth)
-  bye(@Ctx() { payload }: MyApolloContext) {
-    return `bye ${payload!.userId}`;
-  }
-
-  @Query(() => [User], { nullable: true })
-  async users(@Ctx() { prisma }: MyApolloContext): Promise<User[] | null> {
-    return await prisma.user.findMany({});
-  }
-
-  @Mutation(() => ResponseObject)
+  @Mutation(() => UserResponseObject)
   async register(
     @Ctx() { prisma }: MyApolloContext,
     @Arg("data") data: RegisterInput
-  ): Promise<ResponseObject> {
+  ): Promise<UserResponseObject> {
     const userExists = await prisma.user.findUnique({
       where: { email: data.email },
     });
@@ -58,11 +39,11 @@ export class UserResolver {
     return { user };
   }
 
-  @Mutation(() => ResponseObject)
+  @Mutation(() => UserResponseObject)
   async login(
     @Ctx() { prisma, res }: MyApolloContext,
     @Arg("data") data: LoginInput
-  ): Promise<ResponseObject> {
+  ): Promise<UserResponseObject> {
     const user = await prisma.user.findUnique({ where: { email: data.email } });
 
     if (!user) {
