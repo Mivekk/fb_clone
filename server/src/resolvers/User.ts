@@ -11,8 +11,8 @@ import {
 import { createAccessToken, createRefreshToken } from "../auth/auth";
 import { sendRefreshToken } from "../auth/sendRefreshToken";
 import { MyApolloContext } from "../context";
-import { LoginInput, RegisterInput } from "./inputs/inputs";
-import { LoginResponse, UserResponseObject } from "./outputs/outputs";
+import { LoginInput, RegisterInput } from "./utils/inputs";
+import { LoginResponse, UserResponseObject } from "./utils/outputs";
 import { User } from "../generated/type-graphql";
 import { isAuth } from "../middleware/isAuth";
 

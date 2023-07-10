@@ -2,8 +2,8 @@ import { Arg, Ctx, Mutation, Resolver, UseMiddleware } from "type-graphql";
 
 import { isAuth } from "../middleware/isAuth";
 import { MyApolloContext } from "../context";
-import { CommentInput } from "./inputs/inputs";
-import { CommentResponseObject } from "./outputs/outputs";
+import { CommentInput } from "./utils/inputs";
+import { CommentResponseObject } from "./utils/outputs";
 
 @Resolver()
 export class CommentResolver {

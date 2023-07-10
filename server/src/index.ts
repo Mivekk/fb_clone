@@ -7,15 +7,20 @@ import express from "express";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { json } from "body-parser";
+import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
+import { createServer } from "http";
+import { WebSocketServer } from "ws";
+import { useServer } from "graphql-ws/lib/use/ws";
+import { verify } from "jsonwebtoken";
 
 import prisma from "./client";
 import { refreshToken } from "./routes/refreshToken";
-import { MyApolloContext } from "./context";
-import { createSchema } from "./createSchema";
+import { MyApolloContext, MyApolloSubscriptionContext } from "./context";
+import { createSchema } from "./schema";
 
 const main = async () => {
   const app = express();
-  const port = 4000;
+  const httpServer = createServer(app);
 
   app.use(cookieParser());
 
@@ -23,8 +28,59 @@ const main = async () => {
     refreshToken(req, res);
   });
 
+  const wsServer = new WebSocketServer({
+    server: httpServer,
+    path: "/graphql",
+  });
+
+  const schema = await createSchema();
+
+  const serverCleanup = useServer(
+    {
+      schema,
+      context: async (): Promise<MyApolloSubscriptionContext> => ({
+        prisma,
+      }),
+      onConnect: async (ctx) => {
+        const authorization: any = ctx.connectionParams?.authorization;
+
+        if (!authorization) {
+          // it is a workaround, change while in prod
+          return true;
+          // return false;
+        }
+
+        try {
+          const token = authorization.split(" ")[1];
+          const payload = verify(token, process.env.ACCESS_TOKEN_SECRET!);
+
+          console.log(payload);
+        } catch (err) {
+          console.log(err);
+
+          return false;
+        }
+
+        return true;
+      },
+    },
+    wsServer
+  );
+
   const server = new ApolloServer<MyApolloContext>({
-    schema: await createSchema(),
+    schema,
+    plugins: [
+      ApolloServerPluginDrainHttpServer({ httpServer }),
+      {
+        async serverWillStart() {
+          return {
+            async drainServer() {
+              await serverCleanup.dispose();
+            },
+          };
+        },
+      },
+    ],
   });
 
   await server.start();
@@ -34,12 +90,17 @@ const main = async () => {
     cors(),
     json(),
     expressMiddleware(server, {
-      context: async ({ req, res }) => ({ prisma, req, res }),
+      context: async ({ req, res }): Promise<MyApolloContext> => ({
+        prisma,
+        req,
+        res,
+      }),
     })
   );
 
-  app.listen(port, () => {
-    console.log("Server started on port", port);
+  const PORT = 4000;
+  httpServer.listen(PORT, () => {
+    console.log("Server started on port", PORT);
   });
 };
 

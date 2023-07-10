@@ -1,9 +1,21 @@
-import { Arg, Ctx, Mutation, Resolver, UseMiddleware } from "type-graphql";
+import {
+  Arg,
+  Ctx,
+  Mutation,
+  PubSub,
+  PubSubEngine,
+  Resolver,
+  Root,
+  Subscription,
+  UseMiddleware,
+} from "type-graphql";
 
 import { isAuth } from "../middleware/isAuth";
-import { MyApolloContext } from "../context";
-import { PostResponseObject } from "./outputs/outputs";
-import { PostInput } from "./inputs/inputs";
+import { MyApolloContext, MyApolloSubscriptionContext } from "../context";
+import { PostResponseObject } from "./utils/outputs";
+import { PostInput } from "./utils/inputs";
+import { Topic } from "./utils/topics";
+import { Post } from "../generated/type-graphql";
 
 @Resolver()
 export class PostResolver {
@@ -11,7 +23,8 @@ export class PostResolver {
   @UseMiddleware(isAuth)
   async createPost(
     @Ctx() { prisma, payload }: MyApolloContext,
-    @Arg("data") data: PostInput
+    @Arg("data") data: PostInput,
+    @PubSub() pubSub: PubSubEngine
   ): Promise<PostResponseObject> {
     const user = await prisma.user.findUnique({
       where: { id: payload?.userId },
@@ -33,7 +46,18 @@ export class PostResolver {
       data: { ...data, authorId: user.id },
     });
 
+    await pubSub.publish(Topic.NewPost, post.id);
     return { post };
+  }
+
+  @Subscription(() => Post, { nullable: true, topics: Topic.NewPost })
+  async newPost(
+    @Ctx() { prisma }: MyApolloSubscriptionContext,
+    @Root() postId: number
+  ): Promise<Post | null> {
+    const post = await prisma.post.findUnique({ where: { id: postId } });
+
+    return post;
   }
 
   @Mutation(() => Boolean)

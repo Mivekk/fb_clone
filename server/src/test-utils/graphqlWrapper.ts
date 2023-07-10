@@ -1,6 +1,6 @@
 import { ExecutionResult, graphql } from "graphql";
 
-import { createSchema } from "../createSchema";
+import { createSchema } from "../schema";
 import prisma from "../client";
 
 interface Options {
