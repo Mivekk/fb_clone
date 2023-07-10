@@ -12,6 +12,12 @@ export class UserResponseObject {
 }
 
 @ObjectType()
+export class LoginResponse extends UserResponseObject {
+  @Field(() => String, { nullable: true })
+  accessToken?: string;
+}
+
+@ObjectType()
 export class PostResponseObject {
   @Field(() => Post, { nullable: true })
   post?: Post;

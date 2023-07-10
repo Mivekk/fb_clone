@@ -12,7 +12,7 @@ import { createAccessToken, createRefreshToken } from "../auth/auth";
 import { sendRefreshToken } from "../auth/sendRefreshToken";
 import { MyApolloContext } from "../context";
 import { LoginInput, RegisterInput } from "./inputs/inputs";
-import { UserResponseObject } from "./outputs/outputs";
+import { LoginResponse, UserResponseObject } from "./outputs/outputs";
 import { User } from "../generated/type-graphql";
 import { isAuth } from "../middleware/isAuth";
 
@@ -45,12 +45,16 @@ export class UserResolver {
       return { error: "user already exists" };
     }
 
+    if (data.firstName.length < 1 || data.lastName.length < 1) {
+      return { error: "invalid name" };
+    }
+
     if (!data.email.includes("@")) {
       return { error: "incorrect email" };
     }
 
     if (data.password.length <= 3) {
-      return { error: "password too short" };
+      return { error: "invalid password" };
     }
 
     const hashedPassword = await argon2.hash(data.password);
@@ -62,11 +66,11 @@ export class UserResolver {
     return { user };
   }
 
-  @Mutation(() => UserResponseObject)
+  @Mutation(() => LoginResponse)
   async login(
     @Ctx() { prisma, res }: MyApolloContext,
     @Arg("data") data: LoginInput
-  ): Promise<UserResponseObject> {
+  ): Promise<LoginResponse> {
     const user = await prisma.user.findUnique({ where: { email: data.email } });
 
     if (!user) {
@@ -76,14 +80,12 @@ export class UserResolver {
     const passwordsMatch = await argon2.verify(user.password, data.password);
 
     if (!passwordsMatch) {
-      return { error: "passwords do not match" };
+      return { error: "incorrect password" };
     }
 
     sendRefreshToken(res, createRefreshToken(user));
 
-    console.log("accessToken:", createAccessToken(user));
-
-    return { user };
+    return { user, accessToken: createAccessToken(user) };
   }
 
   @Mutation(() => Boolean)

@@ -7,15 +7,11 @@ import express from "express";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { json } from "body-parser";
-import { buildSchema } from "type-graphql";
 
 import prisma from "./client";
 import { refreshToken } from "./routes/refreshToken";
-import { UserResolver } from "./resolvers/User";
-import { PostResolver } from "./resolvers/Post";
-import { CommentResolver } from "./resolvers/Comment";
-import { resolvers } from "./generated/type-graphql";
 import { MyApolloContext } from "./context";
+import { createSchema } from "./createSchema";
 
 const main = async () => {
   const app = express();
@@ -27,13 +23,8 @@ const main = async () => {
     refreshToken(req, res);
   });
 
-  const schema = await buildSchema({
-    resolvers: [...resolvers, UserResolver, PostResolver, CommentResolver],
-    validate: false,
-  });
-
   const server = new ApolloServer<MyApolloContext>({
-    schema,
+    schema: await createSchema(),
   });
 
   await server.start();

@@ -15,7 +15,6 @@ export const isAuth: MiddlewareFn<MyApolloContext> = ({ context }, next) => {
     const payload = verify(token, process.env.ACCESS_TOKEN_SECRET!);
     context.payload = payload as any;
   } catch (err) {
-    console.log(err);
     throw new Error("not authenticated");
   }
 
