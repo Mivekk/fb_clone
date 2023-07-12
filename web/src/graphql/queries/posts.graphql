@@ -1,0 +1,27 @@
+query Posts {
+  posts {
+    id
+    title
+    body
+    createdAt
+    updatedAt
+    author {
+      id
+      firstName
+      lastName
+      email
+    }
+    comments {
+      id
+      authorId
+      postId
+      body
+      author {
+        id
+        firstName
+        lastName
+        email
+      }
+    }
+  }
+}
