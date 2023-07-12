@@ -11,7 +11,6 @@ import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHt
 import { createServer } from "http";
 import { WebSocketServer } from "ws";
 import { useServer } from "graphql-ws/lib/use/ws";
-import { verify } from "jsonwebtoken";
 
 import prisma from "./client";
 import { refreshToken } from "./routes/refreshToken";
@@ -41,28 +40,6 @@ const main = async () => {
       context: async (): Promise<MyApolloSubscriptionContext> => ({
         prisma,
       }),
-      onConnect: async (ctx) => {
-        const authorization: any = ctx.connectionParams?.authorization;
-
-        if (!authorization) {
-          // it is a workaround, change while in prod
-          return true;
-          // return false;
-        }
-
-        try {
-          const token = authorization.split(" ")[1];
-          const payload = verify(token, process.env.ACCESS_TOKEN_SECRET!);
-
-          console.log(payload);
-        } catch (err) {
-          console.log(err);
-
-          return false;
-        }
-
-        return true;
-      },
     },
     wsServer
   );

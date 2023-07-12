@@ -42,3 +42,45 @@ mutation Login($data: LoginInput!) {
   }
 }
 `;
+
+export const createPostMutation = `
+mutation CreatePost($data: PostInput!) {
+  createPost(data: $data) {
+    post {
+      id
+      authorId
+      title
+      body
+      createdAt
+      updatedAt
+      author {
+        id
+        firstName
+        lastName
+        email
+        createdAt
+        updatedAt
+      }
+      comments {
+        id
+        body
+        author {
+          id
+          firstName
+          lastName
+          email
+          createdAt
+          updatedAt
+        }
+      }
+    }
+    error
+  }
+}
+`;
+
+export const deletePostMutation = `
+mutation DeletePost($postId: Float!) {
+  deletePost(postId: $postId)
+}
+`;

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon dist/index.js",
     "watch": "tsc -w",
-    "test": "dotenv -e .env.test -- jest"
+    "test": "dotenv -e .env.test -- jest -i --forceExit --verbose"
   },
   "keywords": [],
   "author": "",

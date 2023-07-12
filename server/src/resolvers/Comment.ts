@@ -1,9 +1,18 @@
-import { Arg, Ctx, Mutation, Resolver, UseMiddleware } from "type-graphql";
+import {
+  Arg,
+  Ctx,
+  Mutation,
+  PubSub,
+  PubSubEngine,
+  Resolver,
+  UseMiddleware,
+} from "type-graphql";
 
 import { isAuth } from "../middleware/isAuth";
 import { MyApolloContext } from "../context";
 import { CommentInput } from "./utils/inputs";
 import { CommentResponseObject } from "./utils/outputs";
+import { Topic } from "./utils/topics";
 
 @Resolver()
 export class CommentResolver {
@@ -11,7 +20,8 @@ export class CommentResolver {
   @UseMiddleware(isAuth)
   async addComment(
     @Ctx() { prisma, payload }: MyApolloContext,
-    @Arg("data") data: CommentInput
+    @Arg("data") data: CommentInput,
+    @PubSub() pubSub: PubSubEngine
   ): Promise<CommentResponseObject> {
     const user = await prisma.user.findUnique({
       where: { id: payload?.userId },
@@ -35,6 +45,8 @@ export class CommentResolver {
       data: { ...data, authorId: user.id },
     });
 
+    pubSub.publish(Topic.UpdatePost, post.id);
+
     return { comment };
   }
 
@@ -42,7 +54,8 @@ export class CommentResolver {
   @UseMiddleware(isAuth)
   async removeComment(
     @Ctx() { prisma, payload }: MyApolloContext,
-    @Arg("commentId") commentId: number
+    @Arg("commentId") commentId: number,
+    @PubSub() pubSub: PubSubEngine
   ): Promise<Boolean> {
     const user = await prisma.user.findUnique({
       where: { id: payload?.userId },
@@ -60,7 +73,17 @@ export class CommentResolver {
       throw new Error("could not find comment");
     }
 
+    const post = await prisma.post.findUnique({
+      where: { id: comment.postId },
+    });
+
+    if (!post) {
+      throw new Error("could not find post");
+    }
+
     await prisma.comment.delete({ where: { id: comment.id } });
+
+    pubSub.publish(Topic.UpdatePost, post.id);
 
     return true;
   }

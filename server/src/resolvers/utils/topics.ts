@@ -1,3 +1,3 @@
 export enum Topic {
-  NewPost = "NEW_POST",
+  UpdatePost = "UPDATE_POST",
 }

@@ -34,24 +34,21 @@ export class PostResolver {
       throw new Error("could not find user");
     }
 
-    if (data.title.length < 1) {
-      return { error: "title can not be empty" };
-    }
-
-    if (data.body.length < 1) {
-      return { error: "body can not be empty" };
+    if (data.body.length < 1 || data.title.length < 1) {
+      return { error: "content can not be empty" };
     }
 
     const post = await prisma.post.create({
       data: { ...data, authorId: user.id },
     });
 
-    await pubSub.publish(Topic.NewPost, post.id);
+    await pubSub.publish(Topic.UpdatePost, post.id);
+
     return { post };
   }
 
-  @Subscription(() => Post, { nullable: true, topics: Topic.NewPost })
-  async newPost(
+  @Subscription(() => Post, { nullable: true, topics: Topic.UpdatePost })
+  async udpatePost(
     @Ctx() { prisma }: MyApolloSubscriptionContext,
     @Root() postId: number
   ): Promise<Post | null> {
@@ -64,7 +61,8 @@ export class PostResolver {
   @UseMiddleware(isAuth)
   async deletePost(
     @Ctx() { prisma, payload }: MyApolloContext,
-    @Arg("postId") postId: number
+    @Arg("postId") postId: number,
+    @PubSub() pubSub: PubSubEngine
   ): Promise<Boolean> {
     const post = await prisma.post.findUnique({ where: { id: postId } });
 
@@ -76,7 +74,14 @@ export class PostResolver {
       throw new Error("post has different author");
     }
 
+    await prisma.post.update({
+      where: { id: post.id },
+      data: { comments: { deleteMany: {} } },
+    });
+
     await prisma.post.delete({ where: { id: post.id } });
+
+    pubSub.publish(Topic.UpdatePost, post.id);
 
     return true;
   }

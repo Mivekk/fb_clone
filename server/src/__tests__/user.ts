@@ -1,7 +1,5 @@
 import "reflect-metadata";
 
-import argon2 from "argon2";
-
 import prisma from "../client";
 import {
   loginMutation,
@@ -9,25 +7,19 @@ import {
   registerMutation,
 } from "../test-utils/queries";
 import { graphqlWrapper } from "../test-utils/graphqlWrapper";
+import { graphqlLogin, graphqlRegister } from "../test-utils/graphqlFunctions";
 
 describe("user", () => {
-  afterEach(async () => {
-    await prisma.user.deleteMany();
+  beforeEach(async () => {
+    const users = prisma.user.deleteMany();
+    const posts = prisma.post.deleteMany();
+
+    await prisma.$transaction([posts, users]);
   });
 
   describe("register", () => {
-    test("create a new user", async () => {
-      const result: any = await graphqlWrapper({
-        source: registerMutation,
-        variableValues: {
-          data: {
-            firstName: "Rich",
-            lastName: "Drip",
-            email: "rich@drip.pl",
-            password: "richdrip",
-          },
-        },
-      });
+    test("new user", async () => {
+      const result: any = await graphqlRegister();
 
       expect(result.data?.register.user).toMatchObject({
         firstName: "Rich",
@@ -43,29 +35,13 @@ describe("user", () => {
     });
 
     test("user already exists", async () => {
-      await graphqlWrapper({
-        source: registerMutation,
-        variableValues: {
-          data: {
-            firstName: "Rich",
-            lastName: "Drip",
-            email: "rich@drip.pl",
-            password: "richdrip",
-          },
-        },
+      const register: any = await graphqlRegister();
+
+      expect(register.data?.register.user).toMatchObject({
+        email: "rich@drip.pl",
       });
 
-      const result: any = await graphqlWrapper({
-        source: registerMutation,
-        variableValues: {
-          data: {
-            firstName: "Rich",
-            lastName: "Drip",
-            email: "rich@drip.pl",
-            password: "richdrip",
-          },
-        },
-      });
+      const result: any = await graphqlRegister();
 
       const users = await prisma.user.count();
 
@@ -140,37 +116,20 @@ describe("user", () => {
   });
 
   describe("login", () => {
-    test("login into existing account", async () => {
-      const register: any = await graphqlWrapper({
-        source: registerMutation,
-        variableValues: {
-          data: {
-            firstName: "Rich",
-            lastName: "Drip",
-            email: "rich@drip.pl",
-            password: "richdrip",
-          },
-        },
-      });
+    test("existing account", async () => {
+      const register: any = await graphqlRegister();
 
       expect(register.data?.register.user).toMatchObject({
         email: "rich@drip.pl",
       });
 
-      const result: any = await graphqlWrapper({
-        source: loginMutation,
-        variableValues: {
-          data: {
-            email: "rich@drip.pl",
-            password: "richdrip",
-          },
-        },
-      });
+      const result: any = await graphqlLogin();
 
-      expect(result.data?.login.accessToken).not.toBeNull();
       expect(result.data?.login.user).toMatchObject({
         email: "rich@drip.pl",
       });
+
+      expect(result.data?.login.accessToken).not.toBeNull();
       expect(result.data?.login.error).toBeNull();
       expect(result.errors).toBeUndefined();
     });
@@ -193,17 +152,7 @@ describe("user", () => {
     });
 
     test("incorrect password", async () => {
-      const register: any = await graphqlWrapper({
-        source: registerMutation,
-        variableValues: {
-          data: {
-            firstName: "Rich",
-            lastName: "Drip",
-            email: "rich@drip.pl",
-            password: "richdrip",
-          },
-        },
-      });
+      const register: any = await graphqlRegister();
 
       expect(register.data?.register.user).toMatchObject({
         email: "rich@drip.pl",
@@ -228,37 +177,20 @@ describe("user", () => {
 
   describe("me", () => {
     test("login and execute me", async () => {
-      const register: any = await graphqlWrapper({
-        source: registerMutation,
-        variableValues: {
-          data: {
-            firstName: "Rich",
-            lastName: "Drip",
-            email: "rich@drip.pl",
-            password: "richdrip",
-          },
-        },
-      });
+      const register: any = await graphqlRegister();
 
       expect(register.data?.register.user).toMatchObject({
         email: "rich@drip.pl",
       });
 
-      const login: any = await graphqlWrapper({
-        source: loginMutation,
-        variableValues: {
-          data: {
-            email: "rich@drip.pl",
-            password: "richdrip",
-          },
-        },
-      });
+      const login: any = await graphqlLogin();
 
       expect(login.data?.login.user).toMatchObject({
         email: "rich@drip.pl",
       });
-      const accessToken = login.data?.login.accessToken;
+
       expect(login.data?.login.accessToken).not.toBeNull();
+      const accessToken = login.data?.login.accessToken;
 
       const result: any = await graphqlWrapper({
         source: meQuery,
@@ -275,38 +207,21 @@ describe("user", () => {
       expect(result.errors).toBeUndefined();
     });
 
-    test("invalid access token", async () => {
-      const register: any = await graphqlWrapper({
-        source: registerMutation,
-        variableValues: {
-          data: {
-            firstName: "Rich",
-            lastName: "Drip",
-            email: "rich@drip.pl",
-            password: "richdrip",
-          },
-        },
-      });
+    test("not authenticated", async () => {
+      const register: any = await graphqlRegister();
 
       expect(register.data?.register.user).toMatchObject({
         email: "rich@drip.pl",
       });
 
-      const login: any = await graphqlWrapper({
-        source: loginMutation,
-        variableValues: {
-          data: {
-            email: "rich@drip.pl",
-            password: "richdrip",
-          },
-        },
-      });
+      const login: any = await graphqlLogin();
 
       expect(login.data?.login.user).toMatchObject({
         email: "rich@drip.pl",
       });
-      const accessToken = login.data?.login.accessToken;
+
       expect(login.data?.login.accessToken).not.toBeNull();
+      const accessToken = login.data?.login.accessToken;
 
       const result: any = await graphqlWrapper({
         source: meQuery,
@@ -319,7 +234,7 @@ describe("user", () => {
         },
       });
 
-      expect(result.data?.me).toBeNull;
+      expect(result.data).toBeNull();
       expect(JSON.stringify(result.errors)).toMatch("not authenticated");
     });
   });
