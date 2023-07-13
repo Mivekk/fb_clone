@@ -1,21 +1,13 @@
-import { PostsDocument } from "@/generated/graphql";
-import { getClient } from "@/lib/client";
+import { Feed } from "./components/Feed";
+import NavBar from "./components/NavBar";
 
-const getPosts = async () => {
-  return getClient().query({ query: PostsDocument });
-};
-
-const Index: React.FC<{}> = async () => {
-  const posts = await getPosts();
-
-  const postsElements = posts.data.posts.map((post) => (
-    <div key={post.id}>
-      <h1>{post.title}</h1>
-      <p>{post.body}</p>
+const Home: React.FC<{}> = () => {
+  return (
+    <div>
+      <NavBar />
+      <Feed />
     </div>
-  ));
-
-  return <div>{postsElements}</div>;
+  );
 };
 
-export default Index;
+export default Home;

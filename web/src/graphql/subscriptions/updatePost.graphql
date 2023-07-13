@@ -1,0 +1,22 @@
+subscription UdpatePost {
+  udpatePost {
+    id
+    authorId
+    title
+    body
+    createdAt
+    updatedAt
+    comments {
+      id
+      authorId
+      postId
+      body
+      author {
+        id
+        firstName
+        lastName
+        email
+      }
+    }
+  }
+}

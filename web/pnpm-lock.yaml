@@ -7,7 +7,7 @@ settings:
 dependencies:
   '@apollo/client':
     specifier: 3.8.0-beta.7
-    version: 3.8.0-beta.7(graphql@16.7.1)(react-dom@18.2.0)(react@18.2.0)
+    version: 3.8.0-beta.7(graphql-ws@5.14.0)(graphql@16.7.1)(react-dom@18.2.0)(react@18.2.0)
   '@apollo/experimental-nextjs-app-support':
     specifier: ^0.3.2
     version: 0.3.2(@apollo/client@3.8.0-beta.7)(next@13.4.9)(react@18.2.0)
@@ -35,6 +35,9 @@ dependencies:
   graphql:
     specifier: ^16.7.1
     version: 16.7.1
+  graphql-ws:
+    specifier: ^5.14.0
+    version: 5.14.0(graphql@16.7.1)
   next:
     specifier: 13.4.9
     version: 13.4.9(@babel/core@7.22.8)(react-dom@18.2.0)(react@18.2.0)
@@ -81,7 +84,7 @@ packages:
       '@jridgewell/gen-mapping': 0.3.3
       '@jridgewell/trace-mapping': 0.3.18
 
-  /@apollo/client@3.8.0-beta.7(graphql@16.7.1)(react-dom@18.2.0)(react@18.2.0):
+  /@apollo/client@3.8.0-beta.7(graphql-ws@5.14.0)(graphql@16.7.1)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-LoIn1ocMF+YBzpUBn056b+ZdmF7trK35BJCTny+oZ9bm1xqv7f/SivyAr++qz4QSXNJqgnNdr0Zjh6LeIsTIcA==}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
@@ -105,6 +108,7 @@ packages:
       '@wry/trie': 0.4.3
       graphql: 16.7.1
       graphql-tag: 2.12.6(graphql@16.7.1)
+      graphql-ws: 5.14.0(graphql@16.7.1)
       hoist-non-react-statics: 3.3.2
       optimism: 0.17.5
       prop-types: 15.8.1
@@ -124,7 +128,7 @@ packages:
       next: ^13.4.1
       react: ^18
     dependencies:
-      '@apollo/client': 3.8.0-beta.7(graphql@16.7.1)(react-dom@18.2.0)(react@18.2.0)
+      '@apollo/client': 3.8.0-beta.7(graphql-ws@5.14.0)(graphql@16.7.1)(react-dom@18.2.0)(react@18.2.0)
       next: 13.4.9(@babel/core@7.22.8)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       superjson: 1.12.4
@@ -3338,7 +3342,6 @@ packages:
       graphql: '>=0.11 <=16'
     dependencies:
       graphql: 16.7.1
-    dev: true
 
   /graphql@16.7.1:
     resolution: {integrity: sha512-DRYR9tf+UGU0KOsMcKAlXeFfX89UiiIZ0dRU3mR0yJfu6OjZqUcp68NnFLnqQU5RexygFoDy1EW+ccOYcPfmHg==}

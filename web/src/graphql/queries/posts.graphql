@@ -1,5 +1,10 @@
-query Posts {
-  posts {
+query Posts(
+  $cursor: PostWhereUniqueInput
+  $take: Int
+  $skip: Int
+  $orderBy: [PostOrderByWithRelationInput!]
+) {
+  posts(cursor: $cursor, take: $take, skip: $skip, orderBy: $orderBy) {
     id
     title
     body

@@ -23,8 +23,7 @@ export class PostResolver {
   @UseMiddleware(isAuth)
   async createPost(
     @Ctx() { prisma, payload }: MyApolloContext,
-    @Arg("data") data: PostInput,
-    @PubSub() pubSub: PubSubEngine
+    @Arg("data") data: PostInput
   ): Promise<PostResponseObject> {
     const user = await prisma.user.findUnique({
       where: { id: payload?.userId },
@@ -41,8 +40,6 @@ export class PostResolver {
     const post = await prisma.post.create({
       data: { ...data, authorId: user.id },
     });
-
-    await pubSub.publish(Topic.UpdatePost, post.id);
 
     return { post };
   }
@@ -61,8 +58,7 @@ export class PostResolver {
   @UseMiddleware(isAuth)
   async deletePost(
     @Ctx() { prisma, payload }: MyApolloContext,
-    @Arg("postId") postId: number,
-    @PubSub() pubSub: PubSubEngine
+    @Arg("postId") postId: number
   ): Promise<Boolean> {
     const post = await prisma.post.findUnique({ where: { id: postId } });
 
@@ -80,8 +76,6 @@ export class PostResolver {
     });
 
     await prisma.post.delete({ where: { id: post.id } });
-
-    pubSub.publish(Topic.UpdatePost, post.id);
 
     return true;
   }
