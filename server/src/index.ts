@@ -23,6 +23,8 @@ const main = async () => {
 
   app.use(cookieParser());
 
+  app.use(cors({ credentials: true, origin: ["http://localhost:3000"] }));
+
   app.post("/refresh_token", (req, res) => {
     refreshToken(req, res);
   });
@@ -64,7 +66,6 @@ const main = async () => {
 
   app.use(
     "/graphql",
-    cors(),
     json(),
     expressMiddleware(server, {
       context: async ({ req, res }): Promise<MyApolloContext> => ({

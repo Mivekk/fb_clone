@@ -2,6 +2,7 @@ import "./globals.css";
 
 import { ApolloWrapper } from "@/lib/apollo-wrapper";
 import type { Metadata } from "next";
+import TokenWrapper from "./utils/TokenWrapper";
 
 export const metadata: Metadata = {
   title: "Facebook clone",
@@ -16,7 +17,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-[#f0f2f5]">
-        <ApolloWrapper>{children}</ApolloWrapper>
+        <ApolloWrapper>
+          <TokenWrapper>{children}</TokenWrapper>
+        </ApolloWrapper>
       </body>
     </html>
   );

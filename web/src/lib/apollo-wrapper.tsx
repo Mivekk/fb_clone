@@ -9,11 +9,23 @@ import {
   NextSSRInMemoryCache,
   SSRMultipartLink,
 } from "@apollo/experimental-nextjs-app-support/ssr";
+import { setContext } from "@apollo/client/link/context";
 import { createClient } from "graphql-ws";
+import { accessToken } from "@/token";
 
 function makeClient() {
   const httpLink = new HttpLink({
     uri: "http://localhost:4000/graphql",
+    credentials: "include",
+  });
+
+  const authLink = setContext((_, { headers }) => {
+    return {
+      headers: {
+        ...headers,
+        authorization: `Bearer ${accessToken}`,
+      },
+    };
   });
 
   const wsLink = new GraphQLWsLink(
@@ -31,7 +43,7 @@ function makeClient() {
       );
     },
     wsLink,
-    httpLink
+    authLink.concat(httpLink)
   );
 
   return new NextSSRApolloClient({

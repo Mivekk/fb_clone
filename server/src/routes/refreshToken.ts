@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { verify } from "jsonwebtoken";
 
 import prisma from "../client";
-import { createAccessToken } from "../auth/auth";
+import { createAccessToken, createRefreshToken } from "../auth/auth";
 import { sendRefreshToken } from "../auth/sendRefreshToken";
 
 export const refreshToken = async (req: Request, res: Response) => {
@@ -30,7 +30,7 @@ export const refreshToken = async (req: Request, res: Response) => {
     return res.send({ accessToken: "" });
   }
 
-  sendRefreshToken(res, createAccessToken(user));
+  sendRefreshToken(res, createRefreshToken(user));
 
   return res.send({ accessToken: createAccessToken(user) });
 };
