@@ -1042,7 +1042,7 @@ export type Query = {
   groupByComment: Array<CommentGroupBy>;
   groupByPost: Array<PostGroupBy>;
   groupByUser: Array<UserGroupBy>;
-  me: User;
+  me?: Maybe<User>;
   post?: Maybe<Post>;
   posts: Array<Post>;
   user?: Maybe<User>;
@@ -1647,7 +1647,7 @@ export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'Lo
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, createdAt: any, updatedAt: any } };
+export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, createdAt: any, updatedAt: any } | null };
 
 export type PostsQueryVariables = Exact<{
   cursor?: InputMaybe<PostWhereUniqueInput>;

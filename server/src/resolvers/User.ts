@@ -10,26 +10,45 @@ import {
 
 import { createAccessToken, createRefreshToken } from "../auth/auth";
 import { sendRefreshToken } from "../auth/sendRefreshToken";
-import { MyApolloContext } from "../context";
+import { MyApolloContext, Payload } from "../context";
 import { LoginInput, RegisterInput } from "./utils/inputs";
 import { LoginResponse, UserResponseObject } from "./utils/outputs";
 import { User } from "../generated/type-graphql";
-import { isAuth } from "../middleware/isAuth";
+import { verify } from "jsonwebtoken";
 
 @Resolver()
 export class UserResolver {
-  @Query(() => User)
-  @UseMiddleware(isAuth)
-  async me(@Ctx() { prisma, payload }: MyApolloContext) {
-    const user = await prisma.user.findUnique({
-      where: { id: payload?.userId },
-    });
+  @Query(() => User, { nullable: true })
+  async me(@Ctx() { prisma, req }: MyApolloContext): Promise<User | null> {
+    const authorization = req.headers.authorization;
 
-    if (!user) {
-      throw new Error("could not find user");
+    console.log("lol", authorization);
+
+    if (!authorization) {
+      return null;
     }
 
-    return user;
+    const token = authorization.split(" ")[1];
+
+    try {
+      const payload: Payload = verify(
+        token,
+        process.env.ACCESS_TOKEN_SECRET!
+      ) as any;
+
+      const user = await prisma.user.findUnique({
+        where: { id: payload.userId },
+      });
+
+      if (!user) {
+        return null;
+      }
+
+      return user;
+    } catch (err) {
+      console.log("lol", err);
+      return null;
+    }
   }
 
   @Mutation(() => UserResponseObject)

@@ -28,23 +28,29 @@ function makeClient() {
     };
   });
 
-  const wsLink = new GraphQLWsLink(
-    createClient({
-      url: "ws://localhost:4000/graphql",
-    })
-  );
+  const wsLink =
+    typeof window !== "undefined"
+      ? new GraphQLWsLink(
+          createClient({
+            url: "ws://localhost:4000/graphql",
+          })
+        )
+      : null;
 
-  const splitLink = split(
-    ({ query }) => {
-      const definition = getMainDefinition(query);
-      return (
-        definition.kind === "OperationDefinition" &&
-        definition.operation === "subscription"
-      );
-    },
-    wsLink,
-    authLink.concat(httpLink)
-  );
+  const splitLink =
+    wsLink !== null
+      ? split(
+          ({ query }) => {
+            const definition = getMainDefinition(query);
+            return (
+              definition.kind === "OperationDefinition" &&
+              definition.operation === "subscription"
+            );
+          },
+          wsLink,
+          authLink.concat(httpLink)
+        )
+      : authLink.concat(httpLink);
 
   return new NextSSRApolloClient({
     cache: new NextSSRInMemoryCache({

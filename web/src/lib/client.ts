@@ -17,7 +17,7 @@ export const { getClient } = registerApolloClient(() => {
     return {
       headers: {
         ...headers,
-        authorization: `Bearer ${(accessToken as any).accessToken}`,
+        authorization: `Bearer ${accessToken}`,
       },
     };
   });

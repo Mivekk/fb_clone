@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { Request, Response } from "express";
 
-interface Payload {
+export interface Payload {
   userId: number;
 }
 
