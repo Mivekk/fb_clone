@@ -2,6 +2,9 @@
 
 import React, { Suspense } from "react";
 import Comment, { CommentProps } from "./Comment";
+import { FaRegCommentAlt } from "react-icons/fa";
+import { useMutation } from "@apollo/client";
+import { AddCommentDocument } from "@/generated/graphql";
 
 interface Comment {}
 
@@ -22,11 +25,11 @@ interface Props {
   comments: CommentProps[];
 }
 
-const Post: React.FC<Props> = ({ author, title, body, comments }) => {
+const Post: React.FC<Props> = ({ id, author, title, body, comments }) => {
+  const [addComment] = useMutation(AddCommentDocument);
+
   const commentsElements = comments.map((comment) => (
-    <Suspense key={comment.id} fallback={<div>loading...</div>}>
-      <Comment {...comment} />
-    </Suspense>
+    <Comment key={comment.id} {...comment} />
   ));
 
   return (
@@ -37,6 +40,22 @@ const Post: React.FC<Props> = ({ author, title, body, comments }) => {
         </div>
         <div className="font-bold text-xl">{title}</div>
         <div className="text-lg">{body}</div>
+      </div>
+      <div className="w-full h-[1px] bg-[#e1e3e6]"></div>
+      <div className="flex pt-[6px] pb-[6px] justify-center">
+        <div
+          className="flex cursor-pointer w-[30%] h-8 justify-center items-center rounded-md hover:bg-[#F2F2F2]"
+          onClick={async () => {
+            const response = await addComment({
+              variables: { data: { body: "hahahahxddxxd", postId: id } },
+            });
+
+            console.log(response);
+          }}
+        >
+          <FaRegCommentAlt className=" mr-2" />
+          <div className="font-semibold">Comment</div>
+        </div>
       </div>
       {commentsElements.length > 0 ? (
         <>

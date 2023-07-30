@@ -11,7 +11,9 @@ import {
 } from "@apollo/experimental-nextjs-app-support/ssr";
 import { setContext } from "@apollo/client/link/context";
 import { createClient } from "graphql-ws";
-import { accessToken } from "@/token";
+import { accessToken, setAccessToken } from "@/token";
+import { TokenRefreshLink } from "apollo-link-token-refresh";
+import jwt_decode from "jwt-decode";
 
 function makeClient() {
   const httpLink = new HttpLink({
@@ -48,9 +50,47 @@ function makeClient() {
             );
           },
           wsLink,
-          authLink.concat(httpLink)
+          httpLink
         )
-      : authLink.concat(httpLink);
+      : httpLink;
+
+  const tokenLink = new TokenRefreshLink({
+    accessTokenField: "accessToken",
+    isTokenValidOrUndefined: async () => {
+      const token = accessToken;
+
+      if (!token) {
+        return true;
+      }
+
+      try {
+        const { exp } = jwt_decode(token) as any;
+
+        if (Date.now() >= exp * 1000) {
+          return false;
+        } else {
+          return true;
+        }
+      } catch (err) {
+        console.log(err);
+        return false;
+      }
+    },
+    fetchAccessToken: () => {
+      return fetch("http://localhost:4000/refresh_token", {
+        method: "POST",
+        credentials: "include",
+      });
+    },
+    handleFetch: (accessToken) => {
+      setAccessToken(accessToken);
+    },
+    handleError: (err) => {
+      // full control over handling token fetch Error
+      console.warn("Your refresh token is invalid. Try to relogin");
+      console.error(err);
+    },
+  });
 
   return new NextSSRApolloClient({
     cache: new NextSSRInMemoryCache({
@@ -75,9 +115,11 @@ function makeClient() {
             new SSRMultipartLink({
               stripDefer: true,
             }),
+            tokenLink,
+            authLink,
             splitLink,
           ])
-        : splitLink,
+        : ApolloLink.from([tokenLink, authLink, splitLink]),
   });
 }
 
@@ -85,7 +127,14 @@ function makeSuspenseCache() {
   return new SuspenseCache();
 }
 
-export function ApolloWrapper({ children }: React.PropsWithChildren) {
+interface Props {
+  children: React.ReactNode;
+  accessToken: string;
+}
+
+export function ApolloWrapper({ children, accessToken }: Props) {
+  setAccessToken(accessToken);
+
   return (
     <ApolloNextAppProvider
       makeClient={makeClient}

@@ -4,7 +4,7 @@ import { User } from "../generated/type-graphql";
 
 export const createAccessToken = (user: User) => {
   return sign({ userId: user.id }, process.env.ACCESS_TOKEN_SECRET!, {
-    expiresIn: "1m",
+    expiresIn: "15s",
   });
 };
 

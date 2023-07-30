@@ -13,8 +13,6 @@ export const metadata: Metadata = {
   description: "Facebook clone",
 };
 
-export const revalidate = 60;
-
 const getUser = async () => {
   return getClient().query({ query: MeDocument, fetchPolicy: "network-only" });
 };
@@ -28,16 +26,18 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
 
   const data = await refreshTokenData.json();
 
-  console.log(data.accessToken);
+  const accessToken = data.accessToken;
 
-  setAccessToken(data.accessToken);
+  setAccessToken(accessToken);
 
   const user = await getUser();
 
   return (
     <html lang="en">
       <body className="bg-[#f0f2f5]">
-        <ApolloWrapper>{user.data.me ? children : <Auth />}</ApolloWrapper>
+        <ApolloWrapper accessToken={accessToken}>
+          {user.data.me ? children : <Auth />}
+        </ApolloWrapper>
       </body>
     </html>
   );

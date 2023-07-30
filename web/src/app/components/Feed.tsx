@@ -9,7 +9,6 @@ import {
 import { useQuery, useSuspenseQuery } from "@apollo/client";
 import React, { Suspense, useEffect, useState } from "react";
 import Post from "./Post";
-import { accessToken, setAccessToken } from "@/token";
 
 export const Feed: React.FC<{}> = () => {
   const [hasMorePosts, setHasMorePosts] = useState(true);
@@ -17,7 +16,7 @@ export const Feed: React.FC<{}> = () => {
     variables: { take: TAKE_AMOUNT, orderBy: { id: "desc" } as any },
   });
 
-  const { data: meData, refetch } = useQuery(MeDocument, {
+  const { refetch } = useQuery(MeDocument, {
     fetchPolicy: "network-only",
   });
 
@@ -39,15 +38,9 @@ export const Feed: React.FC<{}> = () => {
     <>
       <button
         onClick={async () => {
-          setAccessToken(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyLCJpYXQiOjE2OTA0OTc5NjEsImV4cCI6MTY5MDQ5ODAyMX0.X0th1zhL1mU7XyCCW2gWXt7ufI5hIHa_Qgjb0M9__3E"
-          );
-
           const response = await refetch();
 
-          console.log(accessToken);
-
-          console.log(response);
+          console.log(response.data.me);
         }}
       >
         elo
