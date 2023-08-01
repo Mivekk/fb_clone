@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import InputField from "./InputField";
+import AuthInputField from "./AuthInputField";
 import Link from "next/link";
 import { useMutation } from "@apollo/client";
 import { LoginDocument } from "@/generated/graphql";
@@ -39,13 +39,13 @@ const LoginForm: React.FC<Props> = () => {
             }
           }}
         >
-          <InputField
+          <AuthInputField
             type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <InputField
+          <AuthInputField
             type="password"
             placeholder="Password"
             value={password}

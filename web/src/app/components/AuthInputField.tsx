@@ -7,7 +7,7 @@ type Props = React.DetailedHTMLProps<
   HTMLInputElement
 > & {};
 
-const InputField: React.FC<Props> = (props) => {
+const AuthInputField: React.FC<Props> = (props) => {
   return (
     <input
       {...props}
@@ -16,4 +16,4 @@ const InputField: React.FC<Props> = (props) => {
   );
 };
 
-export default InputField;
+export default AuthInputField;

@@ -1,10 +1,11 @@
 "use client";
 
-import React, { Suspense } from "react";
+import React, { Suspense, useRef } from "react";
 import Comment, { CommentProps } from "./Comment";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { useMutation } from "@apollo/client";
 import { AddCommentDocument } from "@/generated/graphql";
+import CommentInput from "./CommentInput";
 
 interface Comment {}
 
@@ -26,8 +27,6 @@ interface Props {
 }
 
 const Post: React.FC<Props> = ({ id, author, title, body, comments }) => {
-  const [addComment] = useMutation(AddCommentDocument);
-
   const commentsElements = comments.map((comment) => (
     <Comment key={comment.id} {...comment} />
   ));
@@ -45,24 +44,15 @@ const Post: React.FC<Props> = ({ id, author, title, body, comments }) => {
       <div className="flex pt-[6px] pb-[6px] justify-center">
         <div
           className="flex cursor-pointer w-[30%] h-8 justify-center items-center rounded-md hover:bg-[#F2F2F2]"
-          onClick={async () => {
-            const response = await addComment({
-              variables: { data: { body: "hahahahxddxxd", postId: id } },
-            });
-
-            console.log(response);
-          }}
+          onClick={async () => {}}
         >
-          <FaRegCommentAlt className=" mr-2" />
+          <FaRegCommentAlt className="mr-2" />
           <div className="font-semibold">Comment</div>
         </div>
       </div>
-      {commentsElements.length > 0 ? (
-        <>
-          <div className="w-full h-[1px] bg-[#e1e3e6]"></div>
-          <div>{commentsElements}</div>
-        </>
-      ) : null}
+      <div className="w-full h-[1px] bg-[#e1e3e6]"></div>
+      <CommentInput postId={id} />
+      {commentsElements.length > 0 ? <div>{commentsElements}</div> : null}
     </div>
   );
 };
