@@ -5,9 +5,9 @@ import React from "react";
 type Props = React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
-> & {};
+>;
 
-const AuthInputField: React.FC<Props> = (props) => {
+export const InputField: React.FC<Props> = (props) => {
   return (
     <input
       {...props}
@@ -15,5 +15,3 @@ const AuthInputField: React.FC<Props> = (props) => {
     />
   );
 };
-
-export default AuthInputField;

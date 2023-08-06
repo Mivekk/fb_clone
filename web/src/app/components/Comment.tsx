@@ -1,25 +1,11 @@
 "use client";
 
+import { Comment } from "@/types";
 import Image from "next/image";
 import React from "react";
 import stick from "../../../public/stick.png";
 
-export interface CommentProps {
-  __typename?: "Comment" | undefined;
-  id: number;
-  authorId: number;
-  postId: number;
-  body: string;
-  author: {
-    __typename?: "User" | undefined;
-    id: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-  };
-}
-
-const Comment: React.FC<CommentProps> = ({ author, body }) => {
+const Comment: React.FC<Comment> = ({ author, body }) => {
   return (
     <div className="flex">
       <Image

@@ -13,7 +13,8 @@ export type MethodDecoratorOverrideFn = (decorators: MethodDecorator[]) => Metho
 const crudResolversMap = {
   User: crudResolvers.UserCrudResolver,
   Post: crudResolvers.PostCrudResolver,
-  Comment: crudResolvers.CommentCrudResolver
+  Comment: crudResolvers.CommentCrudResolver,
+  Like: crudResolvers.LikeCrudResolver
 };
 const actionResolversMap = {
   User: {
@@ -63,12 +64,29 @@ const actionResolversMap = {
     updateManyComment: actionResolvers.UpdateManyCommentResolver,
     updateOneComment: actionResolvers.UpdateOneCommentResolver,
     upsertOneComment: actionResolvers.UpsertOneCommentResolver
+  },
+  Like: {
+    aggregateLike: actionResolvers.AggregateLikeResolver,
+    createManyLike: actionResolvers.CreateManyLikeResolver,
+    createOneLike: actionResolvers.CreateOneLikeResolver,
+    deleteManyLike: actionResolvers.DeleteManyLikeResolver,
+    deleteOneLike: actionResolvers.DeleteOneLikeResolver,
+    findFirstLike: actionResolvers.FindFirstLikeResolver,
+    findFirstLikeOrThrow: actionResolvers.FindFirstLikeOrThrowResolver,
+    likes: actionResolvers.FindManyLikeResolver,
+    like: actionResolvers.FindUniqueLikeResolver,
+    getLike: actionResolvers.FindUniqueLikeOrThrowResolver,
+    groupByLike: actionResolvers.GroupByLikeResolver,
+    updateManyLike: actionResolvers.UpdateManyLikeResolver,
+    updateOneLike: actionResolvers.UpdateOneLikeResolver,
+    upsertOneLike: actionResolvers.UpsertOneLikeResolver
   }
 };
 const crudResolversInfo = {
   User: ["aggregateUser", "createManyUser", "createOneUser", "deleteManyUser", "deleteOneUser", "findFirstUser", "findFirstUserOrThrow", "users", "user", "getUser", "groupByUser", "updateManyUser", "updateOneUser", "upsertOneUser"],
   Post: ["aggregatePost", "createManyPost", "createOnePost", "deleteManyPost", "deleteOnePost", "findFirstPost", "findFirstPostOrThrow", "posts", "post", "getPost", "groupByPost", "updateManyPost", "updateOnePost", "upsertOnePost"],
-  Comment: ["aggregateComment", "createManyComment", "createOneComment", "deleteManyComment", "deleteOneComment", "findFirstComment", "findFirstCommentOrThrow", "comments", "comment", "getComment", "groupByComment", "updateManyComment", "updateOneComment", "upsertOneComment"]
+  Comment: ["aggregateComment", "createManyComment", "createOneComment", "deleteManyComment", "deleteOneComment", "findFirstComment", "findFirstCommentOrThrow", "comments", "comment", "getComment", "groupByComment", "updateManyComment", "updateOneComment", "upsertOneComment"],
+  Like: ["aggregateLike", "createManyLike", "createOneLike", "deleteManyLike", "deleteOneLike", "findFirstLike", "findFirstLikeOrThrow", "likes", "like", "getLike", "groupByLike", "updateManyLike", "updateOneLike", "upsertOneLike"]
 };
 const argsInfo = {
   AggregateUserArgs: ["where", "orderBy", "cursor", "take", "skip"],
@@ -112,7 +130,21 @@ const argsInfo = {
   GroupByCommentArgs: ["where", "orderBy", "by", "having", "take", "skip"],
   UpdateManyCommentArgs: ["data", "where"],
   UpdateOneCommentArgs: ["data", "where"],
-  UpsertOneCommentArgs: ["where", "create", "update"]
+  UpsertOneCommentArgs: ["where", "create", "update"],
+  AggregateLikeArgs: ["where", "orderBy", "cursor", "take", "skip"],
+  CreateManyLikeArgs: ["data", "skipDuplicates"],
+  CreateOneLikeArgs: ["data"],
+  DeleteManyLikeArgs: ["where"],
+  DeleteOneLikeArgs: ["where"],
+  FindFirstLikeArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
+  FindFirstLikeOrThrowArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
+  FindManyLikeArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
+  FindUniqueLikeArgs: ["where"],
+  FindUniqueLikeOrThrowArgs: ["where"],
+  GroupByLikeArgs: ["where", "orderBy", "by", "having", "take", "skip"],
+  UpdateManyLikeArgs: ["data", "where"],
+  UpdateOneLikeArgs: ["data", "where"],
+  UpsertOneLikeArgs: ["where", "create", "update"]
 };
 
 type ResolverModelNames = keyof typeof crudResolversMap;
@@ -212,12 +244,14 @@ export function applyArgsTypesEnhanceMap(
 const relationResolversMap = {
   User: relationResolvers.UserRelationsResolver,
   Post: relationResolvers.PostRelationsResolver,
-  Comment: relationResolvers.CommentRelationsResolver
+  Comment: relationResolvers.CommentRelationsResolver,
+  Like: relationResolvers.LikeRelationsResolver
 };
 const relationResolversInfo = {
   User: ["posts", "comments"],
-  Post: ["author", "comments"],
-  Comment: ["author", "post"]
+  Post: ["author", "comments", "likes"],
+  Comment: ["author", "post"],
+  Like: ["post"]
 };
 
 type RelationResolverModelNames = keyof typeof relationResolversMap;
@@ -301,7 +335,8 @@ function applyTypeClassEnhanceConfig<
 const modelsInfo = {
   User: ["id", "firstName", "lastName", "email", "tokenVersion", "createdAt", "updatedAt"],
   Post: ["id", "authorId", "title", "body", "createdAt", "updatedAt"],
-  Comment: ["id", "authorId", "postId", "body"]
+  Comment: ["id", "authorId", "postId", "body"],
+  Like: ["id", "value", "postId"]
 };
 
 type ModelNames = keyof typeof models;
@@ -346,6 +381,8 @@ const outputsInfo = {
   PostGroupBy: ["id", "authorId", "title", "body", "createdAt", "updatedAt", "_count", "_avg", "_sum", "_min", "_max"],
   AggregateComment: ["_count", "_avg", "_sum", "_min", "_max"],
   CommentGroupBy: ["id", "authorId", "postId", "body", "_count", "_avg", "_sum", "_min", "_max"],
+  AggregateLike: ["_count", "_avg", "_sum", "_min", "_max"],
+  LikeGroupBy: ["id", "value", "postId", "_count", "_avg", "_sum", "_min", "_max"],
   AffectedRowsOutput: ["count"],
   UserCount: ["posts", "comments"],
   UserCountAggregate: ["id", "firstName", "lastName", "email", "password", "tokenVersion", "createdAt", "updatedAt", "_all"],
@@ -353,7 +390,7 @@ const outputsInfo = {
   UserSumAggregate: ["id", "tokenVersion"],
   UserMinAggregate: ["id", "firstName", "lastName", "email", "password", "tokenVersion", "createdAt", "updatedAt"],
   UserMaxAggregate: ["id", "firstName", "lastName", "email", "password", "tokenVersion", "createdAt", "updatedAt"],
-  PostCount: ["comments"],
+  PostCount: ["comments", "likes"],
   PostCountAggregate: ["id", "authorId", "title", "body", "createdAt", "updatedAt", "_all"],
   PostAvgAggregate: ["id", "authorId"],
   PostSumAggregate: ["id", "authorId"],
@@ -363,7 +400,12 @@ const outputsInfo = {
   CommentAvgAggregate: ["id", "authorId", "postId"],
   CommentSumAggregate: ["id", "authorId", "postId"],
   CommentMinAggregate: ["id", "authorId", "postId", "body"],
-  CommentMaxAggregate: ["id", "authorId", "postId", "body"]
+  CommentMaxAggregate: ["id", "authorId", "postId", "body"],
+  LikeCountAggregate: ["id", "value", "postId", "_all"],
+  LikeAvgAggregate: ["id", "value", "postId"],
+  LikeSumAggregate: ["id", "value", "postId"],
+  LikeMinAggregate: ["id", "value", "postId"],
+  LikeMaxAggregate: ["id", "value", "postId"]
 };
 
 type OutputTypesNames = keyof typeof outputTypes;
@@ -406,31 +448,40 @@ export function applyOutputTypesEnhanceMap(
 const inputsInfo = {
   UserWhereInput: ["AND", "OR", "NOT", "id", "firstName", "lastName", "email", "password", "tokenVersion", "createdAt", "updatedAt", "posts", "comments"],
   UserOrderByWithRelationInput: ["id", "firstName", "lastName", "email", "password", "tokenVersion", "createdAt", "updatedAt", "posts", "comments"],
-  UserWhereUniqueInput: ["id", "email"],
+  UserWhereUniqueInput: ["id", "email", "AND", "OR", "NOT", "firstName", "lastName", "password", "tokenVersion", "createdAt", "updatedAt", "posts", "comments"],
   UserOrderByWithAggregationInput: ["id", "firstName", "lastName", "email", "password", "tokenVersion", "createdAt", "updatedAt", "_count", "_avg", "_max", "_min", "_sum"],
   UserScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "firstName", "lastName", "email", "password", "tokenVersion", "createdAt", "updatedAt"],
-  PostWhereInput: ["AND", "OR", "NOT", "id", "authorId", "title", "body", "createdAt", "updatedAt", "author", "comments"],
-  PostOrderByWithRelationInput: ["id", "authorId", "title", "body", "createdAt", "updatedAt", "author", "comments"],
-  PostWhereUniqueInput: ["id"],
+  PostWhereInput: ["AND", "OR", "NOT", "id", "authorId", "title", "body", "createdAt", "updatedAt", "author", "comments", "likes"],
+  PostOrderByWithRelationInput: ["id", "authorId", "title", "body", "createdAt", "updatedAt", "author", "comments", "likes"],
+  PostWhereUniqueInput: ["id", "AND", "OR", "NOT", "authorId", "title", "body", "createdAt", "updatedAt", "author", "comments", "likes"],
   PostOrderByWithAggregationInput: ["id", "authorId", "title", "body", "createdAt", "updatedAt", "_count", "_avg", "_max", "_min", "_sum"],
   PostScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "authorId", "title", "body", "createdAt", "updatedAt"],
   CommentWhereInput: ["AND", "OR", "NOT", "id", "authorId", "postId", "body", "author", "post"],
   CommentOrderByWithRelationInput: ["id", "authorId", "postId", "body", "author", "post"],
-  CommentWhereUniqueInput: ["id"],
+  CommentWhereUniqueInput: ["id", "AND", "OR", "NOT", "authorId", "postId", "body", "author", "post"],
   CommentOrderByWithAggregationInput: ["id", "authorId", "postId", "body", "_count", "_avg", "_max", "_min", "_sum"],
   CommentScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "authorId", "postId", "body"],
+  LikeWhereInput: ["AND", "OR", "NOT", "id", "value", "postId", "post"],
+  LikeOrderByWithRelationInput: ["id", "value", "postId", "post"],
+  LikeWhereUniqueInput: ["id", "AND", "OR", "NOT", "value", "postId", "post"],
+  LikeOrderByWithAggregationInput: ["id", "value", "postId", "_count", "_avg", "_max", "_min", "_sum"],
+  LikeScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "value", "postId"],
   UserCreateInput: ["firstName", "lastName", "email", "password", "tokenVersion", "createdAt", "updatedAt", "posts", "comments"],
   UserUpdateInput: ["firstName", "lastName", "email", "password", "tokenVersion", "createdAt", "updatedAt", "posts", "comments"],
   UserCreateManyInput: ["id", "firstName", "lastName", "email", "password", "tokenVersion", "createdAt", "updatedAt"],
   UserUpdateManyMutationInput: ["firstName", "lastName", "email", "password", "tokenVersion", "createdAt", "updatedAt"],
-  PostCreateInput: ["title", "body", "createdAt", "updatedAt", "author", "comments"],
-  PostUpdateInput: ["title", "body", "createdAt", "updatedAt", "author", "comments"],
+  PostCreateInput: ["title", "body", "createdAt", "updatedAt", "author", "comments", "likes"],
+  PostUpdateInput: ["title", "body", "createdAt", "updatedAt", "author", "comments", "likes"],
   PostCreateManyInput: ["id", "authorId", "title", "body", "createdAt", "updatedAt"],
   PostUpdateManyMutationInput: ["title", "body", "createdAt", "updatedAt"],
   CommentCreateInput: ["body", "author", "post"],
   CommentUpdateInput: ["body", "author", "post"],
   CommentCreateManyInput: ["id", "authorId", "postId", "body"],
   CommentUpdateManyMutationInput: ["body"],
+  LikeCreateInput: ["value", "post"],
+  LikeUpdateInput: ["value", "post"],
+  LikeCreateManyInput: ["id", "value", "postId"],
+  LikeUpdateManyMutationInput: ["value"],
   IntFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   StringFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "mode", "not"],
   DateTimeFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
@@ -447,6 +498,8 @@ const inputsInfo = {
   StringWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "mode", "not", "_count", "_min", "_max"],
   DateTimeWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not", "_count", "_min", "_max"],
   UserRelationFilter: ["is", "isNot"],
+  LikeListRelationFilter: ["every", "some", "none"],
+  LikeOrderByRelationAggregateInput: ["_count"],
   PostCountOrderByAggregateInput: ["id", "authorId", "title", "body", "createdAt", "updatedAt"],
   PostAvgOrderByAggregateInput: ["id", "authorId"],
   PostMaxOrderByAggregateInput: ["id", "authorId", "title", "body", "createdAt", "updatedAt"],
@@ -458,6 +511,11 @@ const inputsInfo = {
   CommentMaxOrderByAggregateInput: ["id", "authorId", "postId", "body"],
   CommentMinOrderByAggregateInput: ["id", "authorId", "postId", "body"],
   CommentSumOrderByAggregateInput: ["id", "authorId", "postId"],
+  LikeCountOrderByAggregateInput: ["id", "value", "postId"],
+  LikeAvgOrderByAggregateInput: ["id", "value", "postId"],
+  LikeMaxOrderByAggregateInput: ["id", "value", "postId"],
+  LikeMinOrderByAggregateInput: ["id", "value", "postId"],
+  LikeSumOrderByAggregateInput: ["id", "value", "postId"],
   PostCreateNestedManyWithoutAuthorInput: ["create", "connectOrCreate", "createMany", "connect"],
   CommentCreateNestedManyWithoutAuthorInput: ["create", "connectOrCreate", "createMany", "connect"],
   StringFieldUpdateOperationsInput: ["set"],
@@ -467,12 +525,16 @@ const inputsInfo = {
   CommentUpdateManyWithoutAuthorNestedInput: ["create", "connectOrCreate", "upsert", "createMany", "set", "disconnect", "delete", "connect", "update", "updateMany", "deleteMany"],
   UserCreateNestedOneWithoutPostsInput: ["create", "connectOrCreate", "connect"],
   CommentCreateNestedManyWithoutPostInput: ["create", "connectOrCreate", "createMany", "connect"],
+  LikeCreateNestedManyWithoutPostInput: ["create", "connectOrCreate", "createMany", "connect"],
   UserUpdateOneRequiredWithoutPostsNestedInput: ["create", "connectOrCreate", "upsert", "connect", "update"],
   CommentUpdateManyWithoutPostNestedInput: ["create", "connectOrCreate", "upsert", "createMany", "set", "disconnect", "delete", "connect", "update", "updateMany", "deleteMany"],
+  LikeUpdateManyWithoutPostNestedInput: ["create", "connectOrCreate", "upsert", "createMany", "set", "disconnect", "delete", "connect", "update", "updateMany", "deleteMany"],
   UserCreateNestedOneWithoutCommentsInput: ["create", "connectOrCreate", "connect"],
   PostCreateNestedOneWithoutCommentsInput: ["create", "connectOrCreate", "connect"],
   UserUpdateOneRequiredWithoutCommentsNestedInput: ["create", "connectOrCreate", "upsert", "connect", "update"],
   PostUpdateOneRequiredWithoutCommentsNestedInput: ["create", "connectOrCreate", "upsert", "connect", "update"],
+  PostCreateNestedOneWithoutLikesInput: ["create", "connectOrCreate", "connect"],
+  PostUpdateOneRequiredWithoutLikesNestedInput: ["create", "connectOrCreate", "upsert", "connect", "update"],
   NestedIntFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   NestedStringFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not"],
   NestedDateTimeFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
@@ -480,7 +542,7 @@ const inputsInfo = {
   NestedFloatFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   NestedStringWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not", "_count", "_min", "_max"],
   NestedDateTimeWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not", "_count", "_min", "_max"],
-  PostCreateWithoutAuthorInput: ["title", "body", "createdAt", "updatedAt", "comments"],
+  PostCreateWithoutAuthorInput: ["title", "body", "createdAt", "updatedAt", "comments", "likes"],
   PostCreateOrConnectWithoutAuthorInput: ["where", "create"],
   PostCreateManyAuthorInputEnvelope: ["data", "skipDuplicates"],
   CommentCreateWithoutAuthorInput: ["body", "post"],
@@ -499,25 +561,42 @@ const inputsInfo = {
   CommentCreateWithoutPostInput: ["body", "author"],
   CommentCreateOrConnectWithoutPostInput: ["where", "create"],
   CommentCreateManyPostInputEnvelope: ["data", "skipDuplicates"],
-  UserUpsertWithoutPostsInput: ["update", "create"],
+  LikeCreateWithoutPostInput: ["value"],
+  LikeCreateOrConnectWithoutPostInput: ["where", "create"],
+  LikeCreateManyPostInputEnvelope: ["data", "skipDuplicates"],
+  UserUpsertWithoutPostsInput: ["update", "create", "where"],
+  UserUpdateToOneWithWhereWithoutPostsInput: ["where", "data"],
   UserUpdateWithoutPostsInput: ["firstName", "lastName", "email", "password", "tokenVersion", "createdAt", "updatedAt", "comments"],
   CommentUpsertWithWhereUniqueWithoutPostInput: ["where", "update", "create"],
   CommentUpdateWithWhereUniqueWithoutPostInput: ["where", "data"],
   CommentUpdateManyWithWhereWithoutPostInput: ["where", "data"],
+  LikeUpsertWithWhereUniqueWithoutPostInput: ["where", "update", "create"],
+  LikeUpdateWithWhereUniqueWithoutPostInput: ["where", "data"],
+  LikeUpdateManyWithWhereWithoutPostInput: ["where", "data"],
+  LikeScalarWhereInput: ["AND", "OR", "NOT", "id", "value", "postId"],
   UserCreateWithoutCommentsInput: ["firstName", "lastName", "email", "password", "tokenVersion", "createdAt", "updatedAt", "posts"],
   UserCreateOrConnectWithoutCommentsInput: ["where", "create"],
-  PostCreateWithoutCommentsInput: ["title", "body", "createdAt", "updatedAt", "author"],
+  PostCreateWithoutCommentsInput: ["title", "body", "createdAt", "updatedAt", "author", "likes"],
   PostCreateOrConnectWithoutCommentsInput: ["where", "create"],
-  UserUpsertWithoutCommentsInput: ["update", "create"],
+  UserUpsertWithoutCommentsInput: ["update", "create", "where"],
+  UserUpdateToOneWithWhereWithoutCommentsInput: ["where", "data"],
   UserUpdateWithoutCommentsInput: ["firstName", "lastName", "email", "password", "tokenVersion", "createdAt", "updatedAt", "posts"],
-  PostUpsertWithoutCommentsInput: ["update", "create"],
-  PostUpdateWithoutCommentsInput: ["title", "body", "createdAt", "updatedAt", "author"],
+  PostUpsertWithoutCommentsInput: ["update", "create", "where"],
+  PostUpdateToOneWithWhereWithoutCommentsInput: ["where", "data"],
+  PostUpdateWithoutCommentsInput: ["title", "body", "createdAt", "updatedAt", "author", "likes"],
+  PostCreateWithoutLikesInput: ["title", "body", "createdAt", "updatedAt", "author", "comments"],
+  PostCreateOrConnectWithoutLikesInput: ["where", "create"],
+  PostUpsertWithoutLikesInput: ["update", "create", "where"],
+  PostUpdateToOneWithWhereWithoutLikesInput: ["where", "data"],
+  PostUpdateWithoutLikesInput: ["title", "body", "createdAt", "updatedAt", "author", "comments"],
   PostCreateManyAuthorInput: ["id", "title", "body", "createdAt", "updatedAt"],
   CommentCreateManyAuthorInput: ["id", "postId", "body"],
-  PostUpdateWithoutAuthorInput: ["title", "body", "createdAt", "updatedAt", "comments"],
+  PostUpdateWithoutAuthorInput: ["title", "body", "createdAt", "updatedAt", "comments", "likes"],
   CommentUpdateWithoutAuthorInput: ["body", "post"],
   CommentCreateManyPostInput: ["id", "authorId", "body"],
-  CommentUpdateWithoutPostInput: ["body", "author"]
+  LikeCreateManyPostInput: ["id", "value"],
+  CommentUpdateWithoutPostInput: ["body", "author"],
+  LikeUpdateWithoutPostInput: ["value"]
 };
 
 type InputTypesNames = keyof typeof inputTypes;

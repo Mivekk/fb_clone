@@ -3,6 +3,7 @@ import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../scalars";
 import { Comment } from "../models/Comment";
+import { Like } from "../models/Like";
 import { User } from "../models/User";
 import { PostCount } from "../resolvers/outputs/PostCount";
 
@@ -33,6 +34,8 @@ export class Post {
   body!: string;
 
   comments?: Comment[];
+
+  likes?: Like[];
 
   @TypeGraphQL.Field(_type => Date, {
     nullable: false

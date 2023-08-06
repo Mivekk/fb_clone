@@ -22,8 +22,6 @@ export class UserResolver {
   async me(@Ctx() { prisma, req }: MyApolloContext): Promise<User | null> {
     const authorization = req.headers.authorization;
 
-    console.log("lol", authorization);
-
     if (!authorization) {
       return null;
     }
@@ -46,7 +44,6 @@ export class UserResolver {
 
       return user;
     } catch (err) {
-      console.log("lol", err);
       return null;
     }
   }

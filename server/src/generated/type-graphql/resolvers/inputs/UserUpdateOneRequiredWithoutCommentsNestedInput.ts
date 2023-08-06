@@ -4,7 +4,7 @@ import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { UserCreateOrConnectWithoutCommentsInput } from "../inputs/UserCreateOrConnectWithoutCommentsInput";
 import { UserCreateWithoutCommentsInput } from "../inputs/UserCreateWithoutCommentsInput";
-import { UserUpdateWithoutCommentsInput } from "../inputs/UserUpdateWithoutCommentsInput";
+import { UserUpdateToOneWithWhereWithoutCommentsInput } from "../inputs/UserUpdateToOneWithWhereWithoutCommentsInput";
 import { UserUpsertWithoutCommentsInput } from "../inputs/UserUpsertWithoutCommentsInput";
 import { UserWhereUniqueInput } from "../inputs/UserWhereUniqueInput";
 
@@ -30,8 +30,8 @@ export class UserUpdateOneRequiredWithoutCommentsNestedInput {
   })
   connect?: UserWhereUniqueInput | undefined;
 
-  @TypeGraphQL.Field(_type => UserUpdateWithoutCommentsInput, {
+  @TypeGraphQL.Field(_type => UserUpdateToOneWithWhereWithoutCommentsInput, {
     nullable: true
   })
-  update?: UserUpdateWithoutCommentsInput | undefined;
+  update?: UserUpdateToOneWithWhereWithoutCommentsInput | undefined;
 }

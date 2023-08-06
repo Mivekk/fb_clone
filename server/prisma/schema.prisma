@@ -13,8 +13,8 @@ datasource db {
 generator typegraphql {
   provider                  = "typegraphql-prisma"
   output                    = "../src/generated/type-graphql"
-  omitInputFieldsByDefault  = "createdAt,updatedAt"
-  omitOutputFieldsByDefault = "password"
+  omitInputFieldsByDefault  = ["createdAt", "updatedAt"]
+  omitOutputFieldsByDefault = ["password"]
   simpleResolvers           = true
 }
 
@@ -38,6 +38,7 @@ model Post {
   title     String
   body      String
   comments  Comment[]
+  likes     Like[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
@@ -49,4 +50,11 @@ model Comment {
   post     Post   @relation(fields: [postId], references: [id])
   postId   Int
   body     String
+}
+
+model Like {
+  id     Int  @id @default(autoincrement())
+  value  Int
+  post   Post @relation(fields: [postId], references: [id])
+  postId Int
 }

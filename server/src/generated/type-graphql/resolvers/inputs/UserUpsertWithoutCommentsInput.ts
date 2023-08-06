@@ -4,6 +4,7 @@ import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { UserCreateWithoutCommentsInput } from "../inputs/UserCreateWithoutCommentsInput";
 import { UserUpdateWithoutCommentsInput } from "../inputs/UserUpdateWithoutCommentsInput";
+import { UserWhereInput } from "../inputs/UserWhereInput";
 
 @TypeGraphQL.InputType("UserUpsertWithoutCommentsInput", {})
 export class UserUpsertWithoutCommentsInput {
@@ -16,4 +17,9 @@ export class UserUpsertWithoutCommentsInput {
     nullable: false
   })
   create!: UserCreateWithoutCommentsInput;
+
+  @TypeGraphQL.Field(_type => UserWhereInput, {
+    nullable: true
+  })
+  where?: UserWhereInput | undefined;
 }

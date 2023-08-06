@@ -1,22 +1,30 @@
 "use client";
 
-import Image from "next/image";
-import React, { useRef, useState } from "react";
-import { IoMdSend } from "react-icons/io";
-import stick from "../../../public/stick.png";
-import { useMutation } from "@apollo/client";
 import { AddCommentDocument } from "@/generated/graphql";
+import { useMutation } from "@apollo/client";
+import Image from "next/image";
+import React, { useEffect, useRef, useState } from "react";
+import { IoMdSend } from "react-icons/io";
+import stick from "../../../../public/stick.png";
 
 interface Props {
   postId: number;
+  focus: boolean;
+  setFocus: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const CommentInput: React.FC<Props> = ({ postId }) => {
+export const CommentInput: React.FC<Props> = ({ postId, focus, setFocus }) => {
   const [text, setText] = useState("");
 
-  const ref = useRef(null);
+  const ref = useRef<HTMLInputElement>(null);
 
   const [addComment] = useMutation(AddCommentDocument);
+
+  useEffect(() => {
+    if (focus && ref.current) {
+      ref.current.focus();
+    }
+  }, [focus]);
 
   return (
     <div className="flex w-full">
@@ -32,20 +40,29 @@ const CommentInput: React.FC<Props> = ({ postId }) => {
           const response = await addComment({
             variables: { data: { body: text, postId } },
           });
-
           console.log(response);
 
           setText("");
         }}
-        className="bg-[#f0f2f5] ml-4 mr-4 rounded-lg mt-2 mb-2 flex flex-col pt-1 pb-2 w-full"
+        className={`bg-[#f0f2f5] ml-4 mr-4 rounded-lg mt-2 mb-2 flex ${
+          focus ? "flex-col" : null
+        } pt-1 pb-2 w-full`}
       >
         <input
           placeholder="Write comment..."
           value={text}
           onChange={(e) => setText(e.target.value)}
-          className="bg-[#f0f2f5] rounded-lg focus:outline-none ml-2 text-[#6d6f73]"
+          className={`bg-[#f0f2f5] rounded-lg focus:outline-none ml-2 text-[#6d6f73] ${
+            focus ? null : "w-full"
+          }`}
+          onFocus={() => setFocus(true)}
+          ref={ref}
         />
-        <button type="submit" className="w-fit ml-auto mr-2">
+        <button
+          type="submit"
+          className="w-fit ml-auto mr-2"
+          disabled={text ? false : true}
+        >
           <IoMdSend
             className={`${
               text
@@ -58,5 +75,3 @@ const CommentInput: React.FC<Props> = ({ postId }) => {
     </div>
   );
 };
-
-export default CommentInput;

@@ -1,16 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
-import AuthInputField from "./AuthInputField";
-import Link from "next/link";
-import { useMutation } from "@apollo/client";
 import { LoginDocument } from "@/generated/graphql";
 import { setAccessToken } from "@/token";
+import { useMutation } from "@apollo/client";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import { InputField } from "./InputField";
 
-interface Props {}
-
-const LoginForm: React.FC<Props> = () => {
+const LoginForm: React.FC<{}> = () => {
   const router = useRouter();
 
   const [email, setEmail] = useState("");
@@ -39,13 +37,13 @@ const LoginForm: React.FC<Props> = () => {
             }
           }}
         >
-          <AuthInputField
+          <InputField
             type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <AuthInputField
+          <InputField
             type="password"
             placeholder="Password"
             value={password}

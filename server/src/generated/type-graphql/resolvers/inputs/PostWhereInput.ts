@@ -5,6 +5,7 @@ import { DecimalJSScalar } from "../../scalars";
 import { CommentListRelationFilter } from "../inputs/CommentListRelationFilter";
 import { DateTimeFilter } from "../inputs/DateTimeFilter";
 import { IntFilter } from "../inputs/IntFilter";
+import { LikeListRelationFilter } from "../inputs/LikeListRelationFilter";
 import { StringFilter } from "../inputs/StringFilter";
 import { UserRelationFilter } from "../inputs/UserRelationFilter";
 
@@ -54,4 +55,9 @@ export class PostWhereInput {
     nullable: true
   })
   comments?: CommentListRelationFilter | undefined;
+
+  @TypeGraphQL.Field(_type => LikeListRelationFilter, {
+    nullable: true
+  })
+  likes?: LikeListRelationFilter | undefined;
 }
