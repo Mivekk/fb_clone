@@ -58,13 +58,21 @@ export class PostResolver {
     @Ctx() { prisma, payload }: MyApolloContext,
     @Arg("postId") postId: number
   ): Promise<Boolean> {
+    const user = await prisma.user.findUnique({
+      where: { id: payload?.userId },
+    });
+
+    if (!user) {
+      throw new Error("could not find user");
+    }
+
     const post = await prisma.post.findUnique({ where: { id: postId } });
 
     if (!post) {
       throw new Error("post does not exist");
     }
 
-    if (post.authorId !== payload?.userId) {
+    if (post.authorId !== user.id) {
       throw new Error("post has different author");
     }
 
@@ -73,7 +81,7 @@ export class PostResolver {
       data: { comments: { deleteMany: {} } },
     });
 
-    await prisma.post.delete({ where: { id: post.id } });
+    await prisma.post.delete({ where: post });
 
     return true;
   }

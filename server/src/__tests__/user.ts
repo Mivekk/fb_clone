@@ -13,14 +13,15 @@ describe("user", () => {
   beforeEach(async () => {
     const users = prisma.user.deleteMany();
     const posts = prisma.post.deleteMany();
+    const comments = prisma.comment.deleteMany();
+    const reactions = prisma.reaction.deleteMany();
 
-    await prisma.$transaction([posts, users]);
+    await prisma.$transaction([reactions, comments, posts, users]);
   });
 
   describe("register", () => {
     test("new user", async () => {
       const result: any = await graphqlRegister();
-
       expect(result.data?.register.user).toMatchObject({
         firstName: "Rich",
         lastName: "Drip",
@@ -36,7 +37,6 @@ describe("user", () => {
 
     test("user already exists", async () => {
       const register: any = await graphqlRegister();
-
       expect(register.data?.register.user).toMatchObject({
         email: "rich@drip.pl",
       });
@@ -118,13 +118,11 @@ describe("user", () => {
   describe("login", () => {
     test("existing account", async () => {
       const register: any = await graphqlRegister();
-
       expect(register.data?.register.user).toMatchObject({
         email: "rich@drip.pl",
       });
 
       const result: any = await graphqlLogin();
-
       expect(result.data?.login.user).toMatchObject({
         email: "rich@drip.pl",
       });
@@ -153,7 +151,6 @@ describe("user", () => {
 
     test("incorrect password", async () => {
       const register: any = await graphqlRegister();
-
       expect(register.data?.register.user).toMatchObject({
         email: "rich@drip.pl",
       });
@@ -178,13 +175,11 @@ describe("user", () => {
   describe("me", () => {
     test("login and execute me", async () => {
       const register: any = await graphqlRegister();
-
       expect(register.data?.register.user).toMatchObject({
         email: "rich@drip.pl",
       });
 
       const login: any = await graphqlLogin();
-
       expect(login.data?.login.user).toMatchObject({
         email: "rich@drip.pl",
       });
@@ -209,13 +204,11 @@ describe("user", () => {
 
     test("not authenticated", async () => {
       const register: any = await graphqlRegister();
-
       expect(register.data?.register.user).toMatchObject({
         email: "rich@drip.pl",
       });
 
       const login: any = await graphqlLogin();
-
       expect(login.data?.login.user).toMatchObject({
         email: "rich@drip.pl",
       });

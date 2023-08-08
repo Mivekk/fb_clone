@@ -3,15 +3,15 @@ import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { DateTimeFieldUpdateOperationsInput } from "../inputs/DateTimeFieldUpdateOperationsInput";
-import { IntFieldUpdateOperationsInput } from "../inputs/IntFieldUpdateOperationsInput";
+import { EnumReactionTypeFieldUpdateOperationsInput } from "../inputs/EnumReactionTypeFieldUpdateOperationsInput";
 import { UserUpdateOneRequiredWithoutReactionsNestedInput } from "../inputs/UserUpdateOneRequiredWithoutReactionsNestedInput";
 
 @TypeGraphQL.InputType("ReactionUpdateWithoutPostInput", {})
 export class ReactionUpdateWithoutPostInput {
-  @TypeGraphQL.Field(_type => IntFieldUpdateOperationsInput, {
+  @TypeGraphQL.Field(_type => EnumReactionTypeFieldUpdateOperationsInput, {
     nullable: true
   })
-  value?: IntFieldUpdateOperationsInput | undefined;
+  type?: EnumReactionTypeFieldUpdateOperationsInput | undefined;
 
   @TypeGraphQL.Field(_type => UserUpdateOneRequiredWithoutReactionsNestedInput, {
     nullable: true

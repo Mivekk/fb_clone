@@ -7,6 +7,7 @@ import { ReactionCountAggregate } from "../outputs/ReactionCountAggregate";
 import { ReactionMaxAggregate } from "../outputs/ReactionMaxAggregate";
 import { ReactionMinAggregate } from "../outputs/ReactionMinAggregate";
 import { ReactionSumAggregate } from "../outputs/ReactionSumAggregate";
+import { ReactionType } from "../../enums/ReactionType";
 
 @TypeGraphQL.ObjectType("ReactionGroupBy", {
   simpleResolvers: true
@@ -22,10 +23,10 @@ export class ReactionGroupBy {
   })
   authorId!: number;
 
-  @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
+  @TypeGraphQL.Field(_type => ReactionType, {
     nullable: false
   })
-  value!: number;
+  type!: "LIKE" | "DISLIKE";
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
     nullable: false

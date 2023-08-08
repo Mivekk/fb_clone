@@ -1,5 +1,4 @@
 import { buildSchema } from "type-graphql";
-import { RedisPubSub } from "graphql-redis-subscriptions";
 
 import pubSub from "./pubsub";
 import { resolvers } from "./generated/type-graphql";

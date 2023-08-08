@@ -3,13 +3,14 @@ import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { UserCreateNestedOneWithoutReactionsInput } from "../inputs/UserCreateNestedOneWithoutReactionsInput";
+import { ReactionType } from "../../enums/ReactionType";
 
 @TypeGraphQL.InputType("ReactionCreateWithoutPostInput", {})
 export class ReactionCreateWithoutPostInput {
-  @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
+  @TypeGraphQL.Field(_type => ReactionType, {
     nullable: false
   })
-  value!: number;
+  type!: "LIKE" | "DISLIKE";
 
   @TypeGraphQL.Field(_type => UserCreateNestedOneWithoutReactionsInput, {
     nullable: false

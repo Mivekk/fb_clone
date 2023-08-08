@@ -5,6 +5,7 @@ import { createPostMutation, deletePostMutation } from "../test-utils/queries";
 import { graphqlWrapper } from "../test-utils/graphqlWrapper";
 import {
   graphqlCreatePost,
+  graphqlDeletePost,
   graphqlLogin,
   graphqlRegister,
 } from "../test-utils/graphqlFunctions";
@@ -14,8 +15,10 @@ describe("post", () => {
   beforeEach(async () => {
     const users = prisma.user.deleteMany();
     const posts = prisma.post.deleteMany();
+    const comments = prisma.comment.deleteMany();
+    const reactions = prisma.reaction.deleteMany();
 
-    await prisma.$transaction([posts, users]);
+    await prisma.$transaction([reactions, comments, posts, users]);
 
     const register: any = await graphqlRegister();
 
@@ -80,44 +83,22 @@ describe("post", () => {
   describe("delete post", () => {
     test("existing post", async () => {
       const createPost: any = await graphqlCreatePost(accessToken);
-
       expect(createPost.data?.createPost.post).toMatchObject({
         title: "test title",
         body: "test body",
       });
 
-      const result: any = await graphqlWrapper({
-        source: deletePostMutation,
-        variableValues: {
-          postId: createPost.data?.createPost.post.id,
-        },
-        contextValue: {
-          req: {
-            headers: {
-              authorization: `Bearer ${accessToken}`,
-            },
-          },
-        },
-      });
+      const result = await graphqlDeletePost(
+        accessToken,
+        createPost.data?.createPost.post.id
+      );
 
       expect(result.data?.deletePost).toBe(true);
       expect(result.errors).toBeUndefined();
     });
 
     test("non existing post", async () => {
-      const result: any = await graphqlWrapper({
-        source: deletePostMutation,
-        variableValues: {
-          postId: -1,
-        },
-        contextValue: {
-          req: {
-            headers: {
-              authorization: `Bearer ${accessToken}`,
-            },
-          },
-        },
-      });
+      const result = await graphqlDeletePost(accessToken, -1);
 
       expect(result.data).toBeNull();
       expect(JSON.stringify(result.errors)).toMatch("post does not exist");
@@ -125,34 +106,27 @@ describe("post", () => {
 
     test("different author", async () => {
       const createPost: any = await graphqlCreatePost(accessToken);
+      expect(createPost.data?.createPost.post).toMatchObject({
+        title: "test title",
+        body: "test body",
+      });
 
       const register: any = await graphqlRegister("bob@drip.pl");
-
       expect(register.data?.register.user).toMatchObject({
         email: "bob@drip.pl",
       });
 
       const login: any = await graphqlLogin("bob@drip.pl");
-
       expect(login.data?.login.user).toMatchObject({
         email: "bob@drip.pl",
       });
 
       const newAccessToken = login.data?.login.accessToken;
 
-      const result: any = await graphqlWrapper({
-        source: deletePostMutation,
-        variableValues: {
-          postId: createPost.data?.createPost.post.id,
-        },
-        contextValue: {
-          req: {
-            headers: {
-              authorization: `Bearer ${newAccessToken}`,
-            },
-          },
-        },
-      });
+      const result: any = await graphqlDeletePost(
+        newAccessToken,
+        createPost.data?.createPost.post.id
+      );
 
       expect(result.data).toBeNull();
       expect(JSON.stringify(result.errors)).toMatch(
@@ -162,20 +136,15 @@ describe("post", () => {
 
     test("not authenticated", async () => {
       const createPost: any = await graphqlCreatePost(accessToken);
-
-      const result: any = await graphqlWrapper({
-        source: deletePostMutation,
-        variableValues: {
-          postId: createPost.data?.createPost.post.id,
-        },
-        contextValue: {
-          req: {
-            headers: {
-              authorization: `Bearer ${accessToken}x`,
-            },
-          },
-        },
+      expect(createPost.data?.createPost.post).toMatchObject({
+        title: "test title",
+        body: "test body",
       });
+
+      const result = await graphqlDeletePost(
+        accessToken + "x",
+        createPost.data?.createPost.post.id
+      );
 
       expect(result.data).toBeNull();
       expect(JSON.stringify(result.errors)).toMatch("not authenticated");

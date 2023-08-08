@@ -3,12 +3,12 @@ import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { DateTimeFieldUpdateOperationsInput } from "../inputs/DateTimeFieldUpdateOperationsInput";
-import { IntFieldUpdateOperationsInput } from "../inputs/IntFieldUpdateOperationsInput";
+import { EnumReactionTypeFieldUpdateOperationsInput } from "../inputs/EnumReactionTypeFieldUpdateOperationsInput";
 
 @TypeGraphQL.InputType("ReactionUpdateManyMutationInput", {})
 export class ReactionUpdateManyMutationInput {
-  @TypeGraphQL.Field(_type => IntFieldUpdateOperationsInput, {
+  @TypeGraphQL.Field(_type => EnumReactionTypeFieldUpdateOperationsInput, {
     nullable: true
   })
-  value?: IntFieldUpdateOperationsInput | undefined;
+  type?: EnumReactionTypeFieldUpdateOperationsInput | undefined;
 }

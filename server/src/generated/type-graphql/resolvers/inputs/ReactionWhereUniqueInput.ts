@@ -3,6 +3,7 @@ import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { DateTimeFilter } from "../inputs/DateTimeFilter";
+import { EnumReactionTypeFilter } from "../inputs/EnumReactionTypeFilter";
 import { IntFilter } from "../inputs/IntFilter";
 import { PostRelationFilter } from "../inputs/PostRelationFilter";
 import { ReactionWhereInput } from "../inputs/ReactionWhereInput";
@@ -35,10 +36,10 @@ export class ReactionWhereUniqueInput {
   })
   authorId?: IntFilter | undefined;
 
-  @TypeGraphQL.Field(_type => IntFilter, {
+  @TypeGraphQL.Field(_type => EnumReactionTypeFilter, {
     nullable: true
   })
-  value?: IntFilter | undefined;
+  type?: EnumReactionTypeFilter | undefined;
 
   @TypeGraphQL.Field(_type => IntFilter, {
     nullable: true

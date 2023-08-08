@@ -35,5 +35,5 @@ export class PostReactionsArgs {
   @TypeGraphQL.Field(_type => [ReactionScalarFieldEnum], {
     nullable: true
   })
-  distinct?: Array<"id" | "authorId" | "value" | "postId" | "createdAt" | "updatedAt"> | undefined;
+  distinct?: Array<"id" | "authorId" | "type" | "postId" | "createdAt" | "updatedAt"> | undefined;
 }

@@ -4,6 +4,7 @@ import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../scalars";
 import { Post } from "../models/Post";
 import { User } from "../models/User";
+import { ReactionType } from "../enums/ReactionType";
 
 @TypeGraphQL.ObjectType("Reaction", {
   simpleResolvers: true
@@ -21,10 +22,10 @@ export class Reaction {
   })
   authorId!: number;
 
-  @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
+  @TypeGraphQL.Field(_type => ReactionType, {
     nullable: false
   })
-  value!: number;
+  type!: "LIKE" | "DISLIKE";
 
   post?: Post;
 

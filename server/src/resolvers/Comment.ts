@@ -45,14 +45,14 @@ export class CommentResolver {
       data: { ...data, authorId: user.id },
     });
 
-    pubSub.publish(Topic.UpdatePost, post.id);
+    await pubSub.publish(Topic.UpdatePost, post.id);
 
     return { comment };
   }
 
   @Mutation(() => Boolean)
   @UseMiddleware(isAuth)
-  async removeComment(
+  async deleteComment(
     @Ctx() { prisma, payload }: MyApolloContext,
     @Arg("commentId") commentId: number,
     @PubSub() pubSub: PubSubEngine
@@ -81,9 +81,13 @@ export class CommentResolver {
       throw new Error("could not find post");
     }
 
-    await prisma.comment.delete({ where: { id: comment.id } });
+    if (comment.authorId !== user.id) {
+      throw new Error("comment has different author");
+    }
 
-    pubSub.publish(Topic.UpdatePost, post.id);
+    await prisma.comment.delete({ where: comment });
+
+    await pubSub.publish(Topic.UpdatePost, post.id);
 
     return true;
   }

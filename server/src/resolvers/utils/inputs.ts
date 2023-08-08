@@ -1,3 +1,4 @@
+import { ReactionType } from "../../generated/type-graphql";
 import { InputType, Field } from "type-graphql";
 
 @InputType()
@@ -43,10 +44,10 @@ export class AddCommentInput {
 }
 
 @InputType()
-export class AddLikeInput {
+export class AddReactionInput {
   @Field(() => Number)
   postId: number;
 
-  @Field(() => Number)
-  value: number;
+  @Field(() => ReactionType)
+  type: ReactionType;
 }
