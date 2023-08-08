@@ -1,4 +1,4 @@
 export { Comment } from "./Comment";
-export { Like } from "./Like";
 export { Post } from "./Post";
+export { Reaction } from "./Reaction";
 export { User } from "./User";

@@ -1,4 +1,4 @@
 export { CommentRelationsResolver } from "./Comment/CommentRelationsResolver";
-export { LikeRelationsResolver } from "./Like/LikeRelationsResolver";
 export { PostRelationsResolver } from "./Post/PostRelationsResolver";
+export { ReactionRelationsResolver } from "./Reaction/ReactionRelationsResolver";
 export { UserRelationsResolver } from "./User/UserRelationsResolver";

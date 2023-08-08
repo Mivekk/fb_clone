@@ -27,6 +27,7 @@ model User {
   tokenVersion Int       @default(0)
   posts        Post[]
   comments     Comment[]
+  reactions    Reaction[]
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 }
@@ -38,7 +39,7 @@ model Post {
   title     String
   body      String
   comments  Comment[]
-  likes     Like[]
+  reactions Reaction[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
@@ -50,11 +51,17 @@ model Comment {
   post     Post   @relation(fields: [postId], references: [id])
   postId   Int
   body     String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
-model Like {
+model Reaction {
   id     Int  @id @default(autoincrement())
+  author   User @relation(fields: [authorId], references: [id])
+  authorId Int
   value  Int
   post   Post @relation(fields: [postId], references: [id])
   postId Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }

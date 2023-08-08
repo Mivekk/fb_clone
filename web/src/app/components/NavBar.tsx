@@ -1,7 +1,7 @@
 import Image from "next/image";
 import stick from "../../../public/stick.png";
 
-const NavBar: React.FC<{}> = async () => {
+export const NavBar: React.FC<{}> = async () => {
   return (
     <div className="flex items-center justify-end w-full h-14 bg-white border-b-[#dbdde0] shadow-sm">
       <Image
@@ -12,5 +12,3 @@ const NavBar: React.FC<{}> = async () => {
     </div>
   );
 };
-
-export default NavBar;

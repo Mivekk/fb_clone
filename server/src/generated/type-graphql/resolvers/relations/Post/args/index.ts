@@ -1,2 +1,2 @@
 export { PostCommentsArgs } from "./PostCommentsArgs";
-export { PostLikesArgs } from "./PostLikesArgs";
+export { PostReactionsArgs } from "./PostReactionsArgs";

@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { InputField } from "./InputField";
 
-const LoginForm: React.FC<{}> = () => {
+export const LoginForm: React.FC<{}> = () => {
   const router = useRouter();
 
   const [email, setEmail] = useState("");
@@ -67,5 +67,3 @@ const LoginForm: React.FC<{}> = () => {
     </div>
   );
 };
-
-export default LoginForm;

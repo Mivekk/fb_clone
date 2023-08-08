@@ -5,7 +5,7 @@ import { useMutation } from "@apollo/client";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import { IoMdSend } from "react-icons/io";
-import stick from "../../../../public/stick.png";
+import stick from "../../../public/stick.png";
 
 interface Props {
   postId: number;

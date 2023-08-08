@@ -6,6 +6,7 @@ import { CommentListRelationFilter } from "../inputs/CommentListRelationFilter";
 import { DateTimeFilter } from "../inputs/DateTimeFilter";
 import { IntFilter } from "../inputs/IntFilter";
 import { PostListRelationFilter } from "../inputs/PostListRelationFilter";
+import { ReactionListRelationFilter } from "../inputs/ReactionListRelationFilter";
 import { StringFilter } from "../inputs/StringFilter";
 
 @TypeGraphQL.InputType("UserWhereInput", {})
@@ -64,4 +65,9 @@ export class UserWhereInput {
     nullable: true
   })
   comments?: CommentListRelationFilter | undefined;
+
+  @TypeGraphQL.Field(_type => ReactionListRelationFilter, {
+    nullable: true
+  })
+  reactions?: ReactionListRelationFilter | undefined;
 }

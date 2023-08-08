@@ -3,7 +3,7 @@ import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { DateTimeFieldUpdateOperationsInput } from "../inputs/DateTimeFieldUpdateOperationsInput";
-import { LikeUpdateManyWithoutPostNestedInput } from "../inputs/LikeUpdateManyWithoutPostNestedInput";
+import { ReactionUpdateManyWithoutPostNestedInput } from "../inputs/ReactionUpdateManyWithoutPostNestedInput";
 import { StringFieldUpdateOperationsInput } from "../inputs/StringFieldUpdateOperationsInput";
 import { UserUpdateOneRequiredWithoutPostsNestedInput } from "../inputs/UserUpdateOneRequiredWithoutPostsNestedInput";
 
@@ -24,8 +24,8 @@ export class PostUpdateWithoutCommentsInput {
   })
   author?: UserUpdateOneRequiredWithoutPostsNestedInput | undefined;
 
-  @TypeGraphQL.Field(_type => LikeUpdateManyWithoutPostNestedInput, {
+  @TypeGraphQL.Field(_type => ReactionUpdateManyWithoutPostNestedInput, {
     nullable: true
   })
-  likes?: LikeUpdateManyWithoutPostNestedInput | undefined;
+  reactions?: ReactionUpdateManyWithoutPostNestedInput | undefined;
 }

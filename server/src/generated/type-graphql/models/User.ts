@@ -4,6 +4,7 @@ import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../scalars";
 import { Comment } from "../models/Comment";
 import { Post } from "../models/Post";
+import { Reaction } from "../models/Reaction";
 import { UserCount } from "../resolvers/outputs/UserCount";
 
 @TypeGraphQL.ObjectType("User", {
@@ -40,6 +41,8 @@ export class User {
   posts?: Post[];
 
   comments?: Comment[];
+
+  reactions?: Reaction[];
 
   @TypeGraphQL.Field(_type => Date, {
     nullable: false

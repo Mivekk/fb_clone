@@ -10,19 +10,19 @@ import {
 
 import { isAuth } from "../middleware/isAuth";
 import { MyApolloContext } from "../context";
-import { CommentInput } from "./utils/inputs";
-import { CommentResponseObject } from "./utils/outputs";
+import { AddCommentInput } from "./utils/inputs";
+import { AddCommentResponseObject } from "./utils/outputs";
 import { Topic } from "./utils/topics";
 
 @Resolver()
 export class CommentResolver {
-  @Mutation(() => CommentResponseObject)
+  @Mutation(() => AddCommentResponseObject)
   @UseMiddleware(isAuth)
   async addComment(
     @Ctx() { prisma, payload }: MyApolloContext,
-    @Arg("data") data: CommentInput,
+    @Arg("data") data: AddCommentInput,
     @PubSub() pubSub: PubSubEngine
-  ): Promise<CommentResponseObject> {
+  ): Promise<AddCommentResponseObject> {
     const user = await prisma.user.findUnique({
       where: { id: payload?.userId },
     });

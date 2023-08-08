@@ -4,6 +4,7 @@ import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { CommentOrderByRelationAggregateInput } from "../inputs/CommentOrderByRelationAggregateInput";
 import { PostOrderByRelationAggregateInput } from "../inputs/PostOrderByRelationAggregateInput";
+import { ReactionOrderByRelationAggregateInput } from "../inputs/ReactionOrderByRelationAggregateInput";
 import { SortOrder } from "../../enums/SortOrder";
 
 @TypeGraphQL.InputType("UserOrderByWithRelationInput", {})
@@ -47,4 +48,9 @@ export class UserOrderByWithRelationInput {
     nullable: true
   })
   comments?: CommentOrderByRelationAggregateInput | undefined;
+
+  @TypeGraphQL.Field(_type => ReactionOrderByRelationAggregateInput, {
+    nullable: true
+  })
+  reactions?: ReactionOrderByRelationAggregateInput | undefined;
 }

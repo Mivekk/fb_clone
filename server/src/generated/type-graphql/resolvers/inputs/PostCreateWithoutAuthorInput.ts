@@ -3,7 +3,7 @@ import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { CommentCreateNestedManyWithoutPostInput } from "../inputs/CommentCreateNestedManyWithoutPostInput";
-import { LikeCreateNestedManyWithoutPostInput } from "../inputs/LikeCreateNestedManyWithoutPostInput";
+import { ReactionCreateNestedManyWithoutPostInput } from "../inputs/ReactionCreateNestedManyWithoutPostInput";
 
 @TypeGraphQL.InputType("PostCreateWithoutAuthorInput", {})
 export class PostCreateWithoutAuthorInput {
@@ -22,8 +22,8 @@ export class PostCreateWithoutAuthorInput {
   })
   comments?: CommentCreateNestedManyWithoutPostInput | undefined;
 
-  @TypeGraphQL.Field(_type => LikeCreateNestedManyWithoutPostInput, {
+  @TypeGraphQL.Field(_type => ReactionCreateNestedManyWithoutPostInput, {
     nullable: true
   })
-  likes?: LikeCreateNestedManyWithoutPostInput | undefined;
+  reactions?: ReactionCreateNestedManyWithoutPostInput | undefined;
 }

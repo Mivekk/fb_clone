@@ -6,7 +6,7 @@ import { getClient } from "@/lib/client";
 import { MeDocument } from "@/generated/graphql";
 import { setAccessToken } from "@/token";
 import { cookies } from "next/dist/client/components/headers";
-import Auth from "./components/auth/Auth";
+import { Auth } from "./components/auth/Auth";
 
 export const metadata: Metadata = {
   title: "Facebook clone",

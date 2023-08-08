@@ -12,7 +12,7 @@ import { createAccessToken, createRefreshToken } from "../auth/auth";
 import { sendRefreshToken } from "../auth/sendRefreshToken";
 import { MyApolloContext, Payload } from "../context";
 import { LoginInput, RegisterInput } from "./utils/inputs";
-import { LoginResponse, UserResponseObject } from "./utils/outputs";
+import { LoginResponseObject, RegisterResponseObject } from "./utils/outputs";
 import { User } from "../generated/type-graphql";
 import { verify } from "jsonwebtoken";
 
@@ -48,11 +48,11 @@ export class UserResolver {
     }
   }
 
-  @Mutation(() => UserResponseObject)
+  @Mutation(() => RegisterResponseObject)
   async register(
     @Ctx() { prisma }: MyApolloContext,
     @Arg("data") data: RegisterInput
-  ): Promise<UserResponseObject> {
+  ): Promise<RegisterResponseObject> {
     const userExists = await prisma.user.findUnique({
       where: { email: data.email },
     });
@@ -82,11 +82,11 @@ export class UserResolver {
     return { user };
   }
 
-  @Mutation(() => LoginResponse)
+  @Mutation(() => LoginResponseObject)
   async login(
     @Ctx() { prisma, res }: MyApolloContext,
     @Arg("data") data: LoginInput
-  ): Promise<LoginResponse> {
+  ): Promise<LoginResponseObject> {
     const user = await prisma.user.findUnique({ where: { email: data.email } });
 
     if (!user) {

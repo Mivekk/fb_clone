@@ -2,9 +2,11 @@ import * as TypeGraphQL from "type-graphql";
 import type { GraphQLResolveInfo } from "graphql";
 import { Comment } from "../../../models/Comment";
 import { Post } from "../../../models/Post";
+import { Reaction } from "../../../models/Reaction";
 import { User } from "../../../models/User";
 import { UserCommentsArgs } from "./args/UserCommentsArgs";
 import { UserPostsArgs } from "./args/UserPostsArgs";
+import { UserReactionsArgs } from "./args/UserReactionsArgs";
 import { transformInfoIntoPrismaArgs, getPrismaFromContext, transformCountFieldIntoSelectRelationsCount } from "../../../helpers";
 
 @TypeGraphQL.Resolver(_of => User)
@@ -34,6 +36,21 @@ export class UserRelationsResolver {
         id: user.id,
       },
     }).comments({
+      ...args,
+      ...(_count && transformCountFieldIntoSelectRelationsCount(_count)),
+    });
+  }
+
+  @TypeGraphQL.FieldResolver(_type => [Reaction], {
+    nullable: false
+  })
+  async reactions(@TypeGraphQL.Root() user: User, @TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: UserReactionsArgs): Promise<Reaction[]> {
+    const { _count } = transformInfoIntoPrismaArgs(info);
+    return getPrismaFromContext(ctx).user.findUniqueOrThrow({
+      where: {
+        id: user.id,
+      },
+    }).reactions({
       ...args,
       ...(_count && transformCountFieldIntoSelectRelationsCount(_count)),
     });

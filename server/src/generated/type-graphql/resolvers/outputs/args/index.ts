@@ -1,4 +1,5 @@
 export { PostCountCommentsArgs } from "./PostCountCommentsArgs";
-export { PostCountLikesArgs } from "./PostCountLikesArgs";
+export { PostCountReactionsArgs } from "./PostCountReactionsArgs";
 export { UserCountCommentsArgs } from "./UserCountCommentsArgs";
 export { UserCountPostsArgs } from "./UserCountPostsArgs";
+export { UserCountReactionsArgs } from "./UserCountReactionsArgs";

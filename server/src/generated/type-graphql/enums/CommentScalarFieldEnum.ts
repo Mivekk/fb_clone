@@ -4,7 +4,9 @@ export enum CommentScalarFieldEnum {
   id = "id",
   authorId = "authorId",
   postId = "postId",
-  body = "body"
+  body = "body",
+  createdAt = "createdAt",
+  updatedAt = "updatedAt"
 }
 TypeGraphQL.registerEnumType(CommentScalarFieldEnum, {
   name: "CommentScalarFieldEnum",

@@ -3,7 +3,7 @@ import { ObjectType, Field } from "type-graphql";
 import { User, Post, Comment } from "../../generated/type-graphql";
 
 @ObjectType()
-export class UserResponseObject {
+export class RegisterResponseObject {
   @Field(() => User, { nullable: true })
   user?: User;
 
@@ -12,13 +12,13 @@ export class UserResponseObject {
 }
 
 @ObjectType()
-export class LoginResponse extends UserResponseObject {
+export class LoginResponseObject extends RegisterResponseObject {
   @Field(() => String, { nullable: true })
   accessToken?: string;
 }
 
 @ObjectType()
-export class PostResponseObject {
+export class CreatePostResponseObject {
   @Field(() => Post, { nullable: true })
   post?: Post;
 
@@ -27,7 +27,7 @@ export class PostResponseObject {
 }
 
 @ObjectType()
-export class CommentResponseObject {
+export class AddCommentResponseObject {
   @Field(() => Comment, { nullable: true })
   comment?: Comment;
 

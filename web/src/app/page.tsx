@@ -1,5 +1,5 @@
 import { Feed } from "./components/Feed";
-import NavBar from "./components/NavBar";
+import { NavBar } from "./components/NavBar";
 
 const Home: React.FC<{}> = () => {
   return (

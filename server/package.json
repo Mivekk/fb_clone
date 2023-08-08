@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon dist/index.js",
+    "dev": "nodemon dist/index.js", 
     "watch": "tsc -w",
+    "test:setup": "docker compose up -d && dotenv -e .env.test -- prisma migrate deploy",
     "test": "dotenv -e .env.test -- jest -i --forceExit --verbose"
   },
   "keywords": [],

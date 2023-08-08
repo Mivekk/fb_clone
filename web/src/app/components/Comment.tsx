@@ -1,11 +1,11 @@
 "use client";
 
-import { Comment } from "@/types";
+import { CommentType } from "@/types";
 import Image from "next/image";
 import React from "react";
 import stick from "../../../public/stick.png";
 
-const Comment: React.FC<Comment> = ({ author, body }) => {
+export const Comment: React.FC<CommentType> = ({ author, body }) => {
   return (
     <div className="flex">
       <Image
@@ -22,5 +22,3 @@ const Comment: React.FC<Comment> = ({ author, body }) => {
     </div>
   );
 };
-
-export default Comment;

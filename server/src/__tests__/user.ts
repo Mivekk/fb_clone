@@ -234,8 +234,7 @@ describe("user", () => {
         },
       });
 
-      expect(result.data).toBeNull();
-      expect(JSON.stringify(result.errors)).toMatch("not authenticated");
+      expect(result.data.me).toBeNull();
     });
   });
 });

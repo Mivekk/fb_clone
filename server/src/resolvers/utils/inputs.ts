@@ -25,7 +25,7 @@ export class LoginInput {
 }
 
 @InputType()
-export class PostInput {
+export class CreatePostInput {
   @Field(() => String)
   title: string;
 
@@ -34,10 +34,19 @@ export class PostInput {
 }
 
 @InputType()
-export class CommentInput {
+export class AddCommentInput {
   @Field(() => Number)
   postId: number;
 
   @Field(() => String)
   body: string;
+}
+
+@InputType()
+export class AddLikeInput {
+  @Field(() => Number)
+  postId: number;
+
+  @Field(() => Number)
+  value: number;
 }

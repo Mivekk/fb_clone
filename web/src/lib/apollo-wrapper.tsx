@@ -1,6 +1,6 @@
 "use client";
 
-import { ApolloLink, HttpLink, SuspenseCache, split } from "@apollo/client";
+import { ApolloLink, HttpLink, split } from "@apollo/client";
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { getMainDefinition } from "@apollo/client/utilities";
 import {
@@ -123,10 +123,6 @@ function makeClient() {
   });
 }
 
-function makeSuspenseCache() {
-  return new SuspenseCache();
-}
-
 interface Props {
   children: React.ReactNode;
   accessToken: string;
@@ -136,10 +132,7 @@ export function ApolloWrapper({ children, accessToken }: Props) {
   setAccessToken(accessToken);
 
   return (
-    <ApolloNextAppProvider
-      makeClient={makeClient}
-      makeSuspenseCache={makeSuspenseCache}
-    >
+    <ApolloNextAppProvider makeClient={makeClient}>
       {children}
     </ApolloNextAppProvider>
   );

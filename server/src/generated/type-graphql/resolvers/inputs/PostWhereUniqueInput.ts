@@ -5,8 +5,8 @@ import { DecimalJSScalar } from "../../scalars";
 import { CommentListRelationFilter } from "../inputs/CommentListRelationFilter";
 import { DateTimeFilter } from "../inputs/DateTimeFilter";
 import { IntFilter } from "../inputs/IntFilter";
-import { LikeListRelationFilter } from "../inputs/LikeListRelationFilter";
 import { PostWhereInput } from "../inputs/PostWhereInput";
+import { ReactionListRelationFilter } from "../inputs/ReactionListRelationFilter";
 import { StringFilter } from "../inputs/StringFilter";
 import { UserRelationFilter } from "../inputs/UserRelationFilter";
 
@@ -57,8 +57,8 @@ export class PostWhereUniqueInput {
   })
   comments?: CommentListRelationFilter | undefined;
 
-  @TypeGraphQL.Field(_type => LikeListRelationFilter, {
+  @TypeGraphQL.Field(_type => ReactionListRelationFilter, {
     nullable: true
   })
-  likes?: LikeListRelationFilter | undefined;
+  reactions?: ReactionListRelationFilter | undefined;
 }

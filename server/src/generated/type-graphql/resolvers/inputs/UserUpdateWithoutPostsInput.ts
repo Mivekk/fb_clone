@@ -5,6 +5,7 @@ import { DecimalJSScalar } from "../../scalars";
 import { CommentUpdateManyWithoutAuthorNestedInput } from "../inputs/CommentUpdateManyWithoutAuthorNestedInput";
 import { DateTimeFieldUpdateOperationsInput } from "../inputs/DateTimeFieldUpdateOperationsInput";
 import { IntFieldUpdateOperationsInput } from "../inputs/IntFieldUpdateOperationsInput";
+import { ReactionUpdateManyWithoutAuthorNestedInput } from "../inputs/ReactionUpdateManyWithoutAuthorNestedInput";
 import { StringFieldUpdateOperationsInput } from "../inputs/StringFieldUpdateOperationsInput";
 
 @TypeGraphQL.InputType("UserUpdateWithoutPostsInput", {})
@@ -38,4 +39,9 @@ export class UserUpdateWithoutPostsInput {
     nullable: true
   })
   comments?: CommentUpdateManyWithoutAuthorNestedInput | undefined;
+
+  @TypeGraphQL.Field(_type => ReactionUpdateManyWithoutAuthorNestedInput, {
+    nullable: true
+  })
+  reactions?: ReactionUpdateManyWithoutAuthorNestedInput | undefined;
 }

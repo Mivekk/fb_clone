@@ -1,12 +1,18 @@
 "use client";
 
-import { Post } from "@/types";
+import { PostType } from "@/types";
 import React, { useState } from "react";
 import { FaRegCommentAlt } from "react-icons/fa";
-import Comment from "./Comment";
+import { Comment } from "./Comment";
 import { CommentInput } from "./CommentInput";
 
-const Post: React.FC<Post> = ({ id, author, title, body, comments }) => {
+export const Post: React.FC<PostType> = ({
+  id,
+  author,
+  title,
+  body,
+  comments,
+}) => {
   const [focus, setFocus] = useState(false);
 
   const commentsElements = comments
@@ -38,5 +44,3 @@ const Post: React.FC<Post> = ({ id, author, title, body, comments }) => {
     </div>
   );
 };
-
-export default Post;

@@ -4,7 +4,7 @@ import { TAKE_AMOUNT } from "@/constants";
 import { PostsDocument, UdpatePostDocument } from "@/generated/graphql";
 import { useSuspenseQuery } from "@apollo/client";
 import React, { Suspense, useEffect, useState } from "react";
-import Post from "./Post";
+import { Post } from "./Post";
 
 export const Feed: React.FC<{}> = () => {
   const [hasMorePosts, setHasMorePosts] = useState(true);

@@ -44,7 +44,7 @@ mutation Login($data: LoginInput!) {
 `;
 
 export const createPostMutation = `
-mutation CreatePost($data: PostInput!) {
+mutation CreatePost($data: CreatePostInput!) {
   createPost(data: $data) {
     post {
       id

@@ -1,7 +1,7 @@
 import React from "react";
-import LoginForm from "./LoginForm";
+import { LoginForm } from "./LoginForm";
 
-const Auth: React.FC<{}> = () => {
+export const Auth: React.FC<{}> = () => {
   return (
     <div className="flex flex-col w-full h-screen bg-white">
       <div className="flex w-full h-[640px] bg-[#f0f2f5] justify-center items-center">
@@ -15,5 +15,3 @@ const Auth: React.FC<{}> = () => {
     </div>
   );
 };
-
-export default Auth;

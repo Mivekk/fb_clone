@@ -6,6 +6,7 @@ import { CommentUpdateManyWithoutAuthorNestedInput } from "../inputs/CommentUpda
 import { DateTimeFieldUpdateOperationsInput } from "../inputs/DateTimeFieldUpdateOperationsInput";
 import { IntFieldUpdateOperationsInput } from "../inputs/IntFieldUpdateOperationsInput";
 import { PostUpdateManyWithoutAuthorNestedInput } from "../inputs/PostUpdateManyWithoutAuthorNestedInput";
+import { ReactionUpdateManyWithoutAuthorNestedInput } from "../inputs/ReactionUpdateManyWithoutAuthorNestedInput";
 import { StringFieldUpdateOperationsInput } from "../inputs/StringFieldUpdateOperationsInput";
 
 @TypeGraphQL.InputType("UserUpdateInput", {})
@@ -44,4 +45,9 @@ export class UserUpdateInput {
     nullable: true
   })
   comments?: CommentUpdateManyWithoutAuthorNestedInput | undefined;
+
+  @TypeGraphQL.Field(_type => ReactionUpdateManyWithoutAuthorNestedInput, {
+    nullable: true
+  })
+  reactions?: ReactionUpdateManyWithoutAuthorNestedInput | undefined;
 }

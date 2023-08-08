@@ -3,14 +3,14 @@ import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { PostCountCommentsArgs } from "./args/PostCountCommentsArgs";
-import { PostCountLikesArgs } from "./args/PostCountLikesArgs";
+import { PostCountReactionsArgs } from "./args/PostCountReactionsArgs";
 
 @TypeGraphQL.ObjectType("PostCount", {
   simpleResolvers: true
 })
 export class PostCount {
   comments!: number;
-  likes!: number;
+  reactions!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
     name: "comments",
@@ -21,10 +21,10 @@ export class PostCount {
   }
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    name: "likes",
+    name: "reactions",
     nullable: false
   })
-  getLikes(@TypeGraphQL.Root() root: PostCount, @TypeGraphQL.Args() args: PostCountLikesArgs): number {
-    return root.likes;
+  getReactions(@TypeGraphQL.Root() root: PostCount, @TypeGraphQL.Args() args: PostCountReactionsArgs): number {
+    return root.reactions;
   }
 }

@@ -1,4 +1,4 @@
 export { CommentCrudResolver } from "./Comment/CommentCrudResolver";
-export { LikeCrudResolver } from "./Like/LikeCrudResolver";
 export { PostCrudResolver } from "./Post/PostCrudResolver";
+export { ReactionCrudResolver } from "./Reaction/ReactionCrudResolver";
 export { UserCrudResolver } from "./User/UserCrudResolver";
