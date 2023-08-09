@@ -1,0 +1,9 @@
+- finish tests for reaction
+- add tests for replies and reactions for comments (try TDD)
+- add replies (optional replyId field in comment's model)
+- add reactions for comments (optional commentId field in reaction's model)
+- google jwt auth
+- facebook jwt auth
+
+when bored:
+    - add tests for when post no longer exists

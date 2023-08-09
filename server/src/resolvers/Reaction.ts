@@ -10,6 +10,7 @@ import { MyApolloContext } from "../context";
 import { isAuth } from "../middleware/isAuth";
 import { AddReactionInput } from "./utils/inputs";
 import { Reaction } from "../generated/type-graphql";
+import { Topic } from "./utils/topics";
 
 export class ReactionResolver {
   @Mutation(() => Reaction)
@@ -33,17 +34,22 @@ export class ReactionResolver {
       throw new Error("could not find post");
     }
 
-    // remove previous reaction
-    const previousReaction = await prisma.reaction.findFirst({
+    let reaction = await prisma.reaction.findFirst({
       where: { authorId: user.id, postId: post.id },
     });
-    if (previousReaction) {
-      await prisma.reaction.delete({ where: previousReaction });
+
+    if (reaction) {
+      await prisma.reaction.update({
+        where: reaction,
+        data: { type: data.type },
+      });
+    } else {
+      reaction = await prisma.reaction.create({
+        data: { ...data, authorId: user.id },
+      });
     }
 
-    const reaction = await prisma.reaction.create({
-      data: { ...data, authorId: user.id },
-    });
+    await pubSub.publish(Topic.UpdatePost, post.id);
 
     return reaction;
   }
@@ -71,7 +77,17 @@ export class ReactionResolver {
       throw new Error("could not find reaction");
     }
 
+    const post = await prisma.post.findUnique({
+      where: { id: reaction.postId },
+    });
+
+    if (!post) {
+      throw new Error("could not find post");
+    }
+
     await prisma.reaction.delete({ where: reaction });
+
+    await pubSub.publish(Topic.UpdatePost, post.id);
 
     return true;
   }
