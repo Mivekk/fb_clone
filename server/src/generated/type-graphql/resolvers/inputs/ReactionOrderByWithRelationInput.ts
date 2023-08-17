@@ -2,7 +2,9 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
+import { CommentOrderByWithRelationInput } from "../inputs/CommentOrderByWithRelationInput";
 import { PostOrderByWithRelationInput } from "../inputs/PostOrderByWithRelationInput";
+import { SortOrderInput } from "../inputs/SortOrderInput";
 import { UserOrderByWithRelationInput } from "../inputs/UserOrderByWithRelationInput";
 import { SortOrder } from "../../enums/SortOrder";
 
@@ -28,6 +30,11 @@ export class ReactionOrderByWithRelationInput {
   })
   postId?: "asc" | "desc" | undefined;
 
+  @TypeGraphQL.Field(_type => SortOrderInput, {
+    nullable: true
+  })
+  commentId?: SortOrderInput | undefined;
+
   @TypeGraphQL.Field(_type => UserOrderByWithRelationInput, {
     nullable: true
   })
@@ -37,4 +44,9 @@ export class ReactionOrderByWithRelationInput {
     nullable: true
   })
   post?: PostOrderByWithRelationInput | undefined;
+
+  @TypeGraphQL.Field(_type => CommentOrderByWithRelationInput, {
+    nullable: true
+  })
+  comment?: CommentOrderByWithRelationInput | undefined;
 }

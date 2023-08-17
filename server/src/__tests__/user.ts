@@ -7,21 +7,22 @@ import {
   registerMutation,
 } from "../test-utils/queries";
 import { graphqlWrapper } from "../test-utils/graphqlWrapper";
-import { graphqlLogin, graphqlRegister } from "../test-utils/graphqlFunctions";
+import {
+  clearDatabase,
+  graphqlLogin,
+  graphqlRegister,
+} from "../test-utils/functions";
 
 describe("user", () => {
   beforeEach(async () => {
-    const users = prisma.user.deleteMany();
-    const posts = prisma.post.deleteMany();
-    const comments = prisma.comment.deleteMany();
-    const reactions = prisma.reaction.deleteMany();
-
-    await prisma.$transaction([reactions, comments, posts, users]);
+    await clearDatabase();
   });
 
   describe("register", () => {
     test("new user", async () => {
-      const result: any = await graphqlRegister();
+      const userCount = await prisma.user.count();
+
+      const result = await graphqlRegister();
       expect(result.data?.register.user).toMatchObject({
         firstName: "Rich",
         lastName: "Drip",
@@ -30,18 +31,18 @@ describe("user", () => {
 
       const users = await prisma.user.count();
 
-      expect(users).toBe(1);
+      expect(users).toBe(userCount + 1);
       expect(result.errors).toBeUndefined();
       expect(result.data?.register.error).toBeNull();
     });
 
     test("user already exists", async () => {
-      const register: any = await graphqlRegister();
+      const register = await graphqlRegister();
       expect(register.data?.register.user).toMatchObject({
         email: "rich@drip.pl",
       });
 
-      const result: any = await graphqlRegister();
+      const result = await graphqlRegister();
 
       const users = await prisma.user.count();
 
@@ -174,12 +175,12 @@ describe("user", () => {
 
   describe("me", () => {
     test("login and execute me", async () => {
-      const register: any = await graphqlRegister();
+      const register = await graphqlRegister();
       expect(register.data?.register.user).toMatchObject({
         email: "rich@drip.pl",
       });
 
-      const login: any = await graphqlLogin();
+      const login = await graphqlLogin();
       expect(login.data?.login.user).toMatchObject({
         email: "rich@drip.pl",
       });
@@ -203,17 +204,17 @@ describe("user", () => {
     });
 
     test("not authenticated", async () => {
-      const register: any = await graphqlRegister();
+      const register = await graphqlRegister();
       expect(register.data?.register.user).toMatchObject({
         email: "rich@drip.pl",
       });
 
-      const login: any = await graphqlLogin();
+      const login = await graphqlLogin();
       expect(login.data?.login.user).toMatchObject({
         email: "rich@drip.pl",
       });
 
-      expect(login.data?.login.accessToken).not.toBeNull();
+      expect(login.data?.login.accessToken).toBeDefined();
       const accessToken = login.data?.login.accessToken;
 
       const result: any = await graphqlWrapper({

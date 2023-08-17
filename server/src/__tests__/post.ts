@@ -1,44 +1,29 @@
 import "reflect-metadata";
 
-import prisma from "../client";
-import { createPostMutation, deletePostMutation } from "../test-utils/queries";
-import { graphqlWrapper } from "../test-utils/graphqlWrapper";
 import {
+  clearDatabase,
   graphqlCreatePost,
   graphqlDeletePost,
   graphqlLogin,
   graphqlRegister,
-} from "../test-utils/graphqlFunctions";
+} from "../test-utils/functions";
+import { graphqlWrapper } from "../test-utils/graphqlWrapper";
+import { createPostMutation } from "../test-utils/queries";
 
 describe("post", () => {
   let accessToken = "";
   beforeEach(async () => {
-    const users = prisma.user.deleteMany();
-    const posts = prisma.post.deleteMany();
-    const comments = prisma.comment.deleteMany();
-    const reactions = prisma.reaction.deleteMany();
+    await clearDatabase();
 
-    await prisma.$transaction([reactions, comments, posts, users]);
+    await graphqlRegister();
 
-    const register: any = await graphqlRegister();
-
-    expect(register.data?.register.user).toMatchObject({
-      email: "rich@drip.pl",
-    });
-
-    const login: any = await graphqlLogin();
-
-    expect(login.data?.login.user).toMatchObject({
-      email: "rich@drip.pl",
-    });
-
-    expect(login.data?.login.accessToken).not.toBeNull();
+    const login = await graphqlLogin();
     accessToken = login.data?.login.accessToken;
   });
 
   describe("create post", () => {
     test("new post", async () => {
-      const result: any = await graphqlCreatePost(accessToken);
+      const result = await graphqlCreatePost(accessToken);
 
       expect(result.data?.createPost.post).toMatchObject({
         title: "test title",
@@ -73,7 +58,7 @@ describe("post", () => {
     });
 
     test("not authenticated", async () => {
-      const result: any = await graphqlCreatePost(accessToken + "x");
+      const result = await graphqlCreatePost(accessToken + "x");
 
       expect(result.data).toBeNull();
       expect(JSON.stringify(result.errors)).toMatch("not authenticated");
@@ -82,7 +67,8 @@ describe("post", () => {
 
   describe("delete post", () => {
     test("existing post", async () => {
-      const createPost: any = await graphqlCreatePost(accessToken);
+      const createPost = await graphqlCreatePost(accessToken);
+
       expect(createPost.data?.createPost.post).toMatchObject({
         title: "test title",
         body: "test body",
@@ -105,25 +91,25 @@ describe("post", () => {
     });
 
     test("different author", async () => {
-      const createPost: any = await graphqlCreatePost(accessToken);
+      const createPost = await graphqlCreatePost(accessToken);
       expect(createPost.data?.createPost.post).toMatchObject({
         title: "test title",
         body: "test body",
       });
 
-      const register: any = await graphqlRegister("bob@drip.pl");
+      const register = await graphqlRegister("bob@drip.pl");
       expect(register.data?.register.user).toMatchObject({
         email: "bob@drip.pl",
       });
 
-      const login: any = await graphqlLogin("bob@drip.pl");
+      const login = await graphqlLogin("bob@drip.pl");
       expect(login.data?.login.user).toMatchObject({
         email: "bob@drip.pl",
       });
 
       const newAccessToken = login.data?.login.accessToken;
 
-      const result: any = await graphqlDeletePost(
+      const result = await graphqlDeletePost(
         newAccessToken,
         createPost.data?.createPost.post.id
       );
@@ -135,7 +121,7 @@ describe("post", () => {
     });
 
     test("not authenticated", async () => {
-      const createPost: any = await graphqlCreatePost(accessToken);
+      const createPost = await graphqlCreatePost(accessToken);
       expect(createPost.data?.createPost.post).toMatchObject({
         title: "test title",
         body: "test body",

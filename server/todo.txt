@@ -4,6 +4,3 @@
 - add reactions for comments (optional commentId field in reaction's model)
 - google jwt auth
 - facebook jwt auth
-
-when bored:
-    - add tests for when post no longer exists

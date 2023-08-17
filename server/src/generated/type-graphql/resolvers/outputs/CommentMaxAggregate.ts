@@ -22,6 +22,11 @@ export class CommentMaxAggregate {
   })
   postId!: number | null;
 
+  @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
+    nullable: true
+  })
+  replyId!: number | null;
+
   @TypeGraphQL.Field(_type => String, {
     nullable: true
   })

@@ -25,4 +25,9 @@ export class ReactionMaxOrderByAggregateInput {
     nullable: true
   })
   postId?: "asc" | "desc" | undefined;
+
+  @TypeGraphQL.Field(_type => SortOrder, {
+    nullable: true
+  })
+  commentId?: "asc" | "desc" | undefined;
 }

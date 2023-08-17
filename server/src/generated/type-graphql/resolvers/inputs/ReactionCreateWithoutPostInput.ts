@@ -2,6 +2,7 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
+import { CommentCreateNestedOneWithoutReactionsInput } from "../inputs/CommentCreateNestedOneWithoutReactionsInput";
 import { UserCreateNestedOneWithoutReactionsInput } from "../inputs/UserCreateNestedOneWithoutReactionsInput";
 import { ReactionType } from "../../enums/ReactionType";
 
@@ -16,4 +17,9 @@ export class ReactionCreateWithoutPostInput {
     nullable: false
   })
   author!: UserCreateNestedOneWithoutReactionsInput;
+
+  @TypeGraphQL.Field(_type => CommentCreateNestedOneWithoutReactionsInput, {
+    nullable: true
+  })
+  comment?: CommentCreateNestedOneWithoutReactionsInput | undefined;
 }

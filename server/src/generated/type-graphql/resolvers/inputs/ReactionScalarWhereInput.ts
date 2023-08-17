@@ -5,6 +5,7 @@ import { DecimalJSScalar } from "../../scalars";
 import { DateTimeFilter } from "../inputs/DateTimeFilter";
 import { EnumReactionTypeFilter } from "../inputs/EnumReactionTypeFilter";
 import { IntFilter } from "../inputs/IntFilter";
+import { IntNullableFilter } from "../inputs/IntNullableFilter";
 
 @TypeGraphQL.InputType("ReactionScalarWhereInput", {})
 export class ReactionScalarWhereInput {
@@ -42,4 +43,9 @@ export class ReactionScalarWhereInput {
     nullable: true
   })
   postId?: IntFilter | undefined;
+
+  @TypeGraphQL.Field(_type => IntNullableFilter, {
+    nullable: true
+  })
+  commentId?: IntNullableFilter | undefined;
 }

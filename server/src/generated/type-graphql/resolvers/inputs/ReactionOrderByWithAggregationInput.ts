@@ -7,6 +7,7 @@ import { ReactionCountOrderByAggregateInput } from "../inputs/ReactionCountOrder
 import { ReactionMaxOrderByAggregateInput } from "../inputs/ReactionMaxOrderByAggregateInput";
 import { ReactionMinOrderByAggregateInput } from "../inputs/ReactionMinOrderByAggregateInput";
 import { ReactionSumOrderByAggregateInput } from "../inputs/ReactionSumOrderByAggregateInput";
+import { SortOrderInput } from "../inputs/SortOrderInput";
 import { SortOrder } from "../../enums/SortOrder";
 
 @TypeGraphQL.InputType("ReactionOrderByWithAggregationInput", {})
@@ -30,6 +31,11 @@ export class ReactionOrderByWithAggregationInput {
     nullable: true
   })
   postId?: "asc" | "desc" | undefined;
+
+  @TypeGraphQL.Field(_type => SortOrderInput, {
+    nullable: true
+  })
+  commentId?: SortOrderInput | undefined;
 
   @TypeGraphQL.Field(_type => ReactionCountOrderByAggregateInput, {
     nullable: true

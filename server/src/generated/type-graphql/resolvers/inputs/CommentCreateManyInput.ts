@@ -20,6 +20,11 @@ export class CommentCreateManyInput {
   })
   postId!: number;
 
+  @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
+    nullable: true
+  })
+  replyId?: number | undefined;
+
   @TypeGraphQL.Field(_type => String, {
     nullable: false
   })

@@ -27,6 +27,11 @@ export class CommentGroupBy {
   })
   postId!: number;
 
+  @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
+    nullable: true
+  })
+  replyId!: number | null;
+
   @TypeGraphQL.Field(_type => String, {
     nullable: false
   })

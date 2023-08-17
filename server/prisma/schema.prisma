@@ -45,14 +45,18 @@ model Post {
 }
 
 model Comment {
-  id        Int      @id @default(autoincrement())
-  author    User     @relation(fields: [authorId], references: [id])
+  id        Int        @id @default(autoincrement())
+  author    User       @relation(fields: [authorId], references: [id])
   authorId  Int
-  post      Post     @relation(fields: [postId], references: [id])
+  post      Post       @relation(fields: [postId], references: [id])
   postId    Int
+  reactions Reaction[]
+  replies   Comment[]  @relation("Replying")
+  reply     Comment?   @relation("Replying", fields: [replyId], references: [id])
+  replyId   Int?
   body      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 }
 
 enum ReactionType {
@@ -67,6 +71,8 @@ model Reaction {
   type      ReactionType
   post      Post         @relation(fields: [postId], references: [id])
   postId    Int
+  comment   Comment?     @relation(fields: [commentId], references: [id])
+  commentId Int?
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
 }

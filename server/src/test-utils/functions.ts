@@ -1,3 +1,5 @@
+import prisma from "../client";
+import { ReactionType } from "../generated/type-graphql";
 import { graphqlWrapper } from "./graphqlWrapper";
 import {
   addCommentMutation,
@@ -5,8 +7,18 @@ import {
   deleteCommentMutation,
   deletePostMutation,
   loginMutation,
+  reactMutation,
   registerMutation,
 } from "./queries";
+
+export const clearDatabase = async () => {
+  const users = prisma.user.deleteMany();
+  const posts = prisma.post.deleteMany();
+  const comments = prisma.comment.deleteMany();
+  const reactions = prisma.reaction.deleteMany();
+
+  await prisma.$transaction([reactions, comments, posts, users]);
+};
 
 export const graphqlLogin = async (
   email: string = "rich@drip.pl"
@@ -106,6 +118,29 @@ export const graphqlDeleteComment = async (
     source: deleteCommentMutation,
     variableValues: {
       commentId,
+    },
+    contextValue: {
+      req: {
+        headers: {
+          authorization: `Bearer ${accessToken}`,
+        },
+      },
+    },
+  });
+};
+
+export const graphqlReact = async (
+  accessToken: string,
+  postId: number,
+  type: ReactionType
+): Promise<any> => {
+  return await graphqlWrapper({
+    source: reactMutation,
+    variableValues: {
+      data: {
+        type,
+        postId,
+      },
     },
     contextValue: {
       req: {

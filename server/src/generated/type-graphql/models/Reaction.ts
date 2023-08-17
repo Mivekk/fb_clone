@@ -2,6 +2,7 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../scalars";
+import { Comment } from "../models/Comment";
 import { Post } from "../models/Post";
 import { User } from "../models/User";
 import { ReactionType } from "../enums/ReactionType";
@@ -33,6 +34,13 @@ export class Reaction {
     nullable: false
   })
   postId!: number;
+
+  comment?: Comment | null;
+
+  @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
+    nullable: true
+  })
+  commentId?: number | null;
 
   @TypeGraphQL.Field(_type => Date, {
     nullable: false

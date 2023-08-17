@@ -28,6 +28,11 @@ export class ReactionMaxAggregate {
   })
   postId!: number | null;
 
+  @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
+    nullable: true
+  })
+  commentId!: number | null;
+
   @TypeGraphQL.Field(_type => Date, {
     nullable: true
   })

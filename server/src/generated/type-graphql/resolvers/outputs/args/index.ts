@@ -1,3 +1,5 @@
+export { CommentCountReactionsArgs } from "./CommentCountReactionsArgs";
+export { CommentCountRepliesArgs } from "./CommentCountRepliesArgs";
 export { PostCountCommentsArgs } from "./PostCountCommentsArgs";
 export { PostCountReactionsArgs } from "./PostCountReactionsArgs";
 export { UserCountCommentsArgs } from "./UserCountCommentsArgs";

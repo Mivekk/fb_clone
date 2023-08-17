@@ -16,6 +16,8 @@ import { LoginResponseObject, RegisterResponseObject } from "./utils/outputs";
 import { User } from "../generated/type-graphql";
 import { verify } from "jsonwebtoken";
 
+const MAX_INPUT_LENGTH = 32;
+
 @Resolver()
 export class UserResolver {
   @Query(() => User, { nullable: true })
@@ -61,7 +63,12 @@ export class UserResolver {
       return { error: "user already exists" };
     }
 
-    if (data.firstName.length < 1 || data.lastName.length < 1) {
+    if (
+      data.firstName.length < 1 ||
+      data.lastName.length < 1 ||
+      data.firstName.length > MAX_INPUT_LENGTH ||
+      data.lastName.length > MAX_INPUT_LENGTH
+    ) {
       return { error: "invalid name" };
     }
 
@@ -69,7 +76,7 @@ export class UserResolver {
       return { error: "incorrect email" };
     }
 
-    if (data.password.length <= 3) {
+    if (data.password.length <= 3 || data.password.length > MAX_INPUT_LENGTH) {
       return { error: "invalid password" };
     }
 

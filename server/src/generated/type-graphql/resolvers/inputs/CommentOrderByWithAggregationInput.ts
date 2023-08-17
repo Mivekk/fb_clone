@@ -7,6 +7,7 @@ import { CommentCountOrderByAggregateInput } from "../inputs/CommentCountOrderBy
 import { CommentMaxOrderByAggregateInput } from "../inputs/CommentMaxOrderByAggregateInput";
 import { CommentMinOrderByAggregateInput } from "../inputs/CommentMinOrderByAggregateInput";
 import { CommentSumOrderByAggregateInput } from "../inputs/CommentSumOrderByAggregateInput";
+import { SortOrderInput } from "../inputs/SortOrderInput";
 import { SortOrder } from "../../enums/SortOrder";
 
 @TypeGraphQL.InputType("CommentOrderByWithAggregationInput", {})
@@ -25,6 +26,11 @@ export class CommentOrderByWithAggregationInput {
     nullable: true
   })
   postId?: "asc" | "desc" | undefined;
+
+  @TypeGraphQL.Field(_type => SortOrderInput, {
+    nullable: true
+  })
+  replyId?: SortOrderInput | undefined;
 
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true

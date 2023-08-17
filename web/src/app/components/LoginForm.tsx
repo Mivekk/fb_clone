@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { InputField } from "./InputField";
+import { revalidatePath } from "next/cache";
 
 export const LoginForm: React.FC<{}> = () => {
   const router = useRouter();

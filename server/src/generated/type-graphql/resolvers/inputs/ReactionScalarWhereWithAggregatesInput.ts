@@ -4,6 +4,7 @@ import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { DateTimeWithAggregatesFilter } from "../inputs/DateTimeWithAggregatesFilter";
 import { EnumReactionTypeWithAggregatesFilter } from "../inputs/EnumReactionTypeWithAggregatesFilter";
+import { IntNullableWithAggregatesFilter } from "../inputs/IntNullableWithAggregatesFilter";
 import { IntWithAggregatesFilter } from "../inputs/IntWithAggregatesFilter";
 
 @TypeGraphQL.InputType("ReactionScalarWhereWithAggregatesInput", {})
@@ -42,4 +43,9 @@ export class ReactionScalarWhereWithAggregatesInput {
     nullable: true
   })
   postId?: IntWithAggregatesFilter | undefined;
+
+  @TypeGraphQL.Field(_type => IntNullableWithAggregatesFilter, {
+    nullable: true
+  })
+  commentId?: IntNullableWithAggregatesFilter | undefined;
 }

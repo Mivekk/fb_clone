@@ -104,3 +104,14 @@ mutation DeleteComment($commentId: Float!) {
   deleteComment(commentId: $commentId)
 }
 `;
+
+export const reactMutation = `
+mutation React($data: AddReactionInput!) {
+  react(data: $data) {
+    id
+    authorId
+    postId
+    type
+  }
+}
+`;

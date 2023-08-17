@@ -20,7 +20,7 @@ export class GroupByReactionArgs {
   @TypeGraphQL.Field(_type => [ReactionScalarFieldEnum], {
     nullable: false
   })
-  by!: Array<"id" | "authorId" | "type" | "postId" | "createdAt" | "updatedAt">;
+  by!: Array<"id" | "authorId" | "type" | "postId" | "commentId" | "createdAt" | "updatedAt">;
 
   @TypeGraphQL.Field(_type => ReactionScalarWhereWithAggregatesInput, {
     nullable: true

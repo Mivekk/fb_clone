@@ -1,49 +1,30 @@
 import "reflect-metadata";
 
 import {
+  clearDatabase,
   graphqlAddComment,
   graphqlCreatePost,
   graphqlDeleteComment,
   graphqlDeletePost,
   graphqlLogin,
   graphqlRegister,
-} from "../test-utils/graphqlFunctions";
-import prisma from "../client";
+} from "../test-utils/functions";
 import { graphqlWrapper } from "../test-utils/graphqlWrapper";
 import { addCommentMutation } from "../test-utils/queries";
+import prisma from "../client";
 
 describe("comment", () => {
+  let postId = 0;
   let accessToken = "";
-  let postId = 1;
   beforeEach(async () => {
-    const users = prisma.user.deleteMany();
-    const posts = prisma.post.deleteMany();
-    const comments = prisma.comment.deleteMany();
-    const reactions = prisma.reaction.deleteMany();
+    await clearDatabase();
 
-    await prisma.$transaction([reactions, comments, posts, users]);
-
-    const register = await graphqlRegister();
-
-    expect(register.data?.register.user).toMatchObject({
-      email: "rich@drip.pl",
-    });
+    await graphqlRegister();
 
     const login = await graphqlLogin();
-
-    expect(login.data?.login.user).toMatchObject({
-      email: "rich@drip.pl",
-    });
-
-    expect(login.data?.login.accessToken).not.toBeNull();
     accessToken = login.data?.login.accessToken;
 
     const post = await graphqlCreatePost(accessToken);
-
-    expect(post.data?.createPost.post).toMatchObject({
-      title: "test title",
-      body: "test body",
-    });
     postId = post.data?.createPost.post.id;
   });
 
@@ -56,6 +37,13 @@ describe("comment", () => {
       expect(result.data?.addComment.comment).toMatchObject({
         body: "test body",
       });
+    });
+
+    test("post doesn't exist", async () => {
+      const result = await graphqlAddComment(accessToken, -1);
+
+      expect(result.data).toBeNull();
+      expect(JSON.stringify(result.errors)).toMatch("could not find post");
     });
 
     test("empty body", async () => {
@@ -111,10 +99,17 @@ describe("comment", () => {
         body: "test body",
       });
 
+      const addCommentId = addComment.data?.addComment.comment.id;
+
       const result = await graphqlDeletePost(accessToken, postId);
 
       expect(result.errors).toBeUndefined();
       expect(result.data?.deletePost).toBe(true);
+
+      const deletedComment = await prisma.comment.findUnique({
+        where: { id: addCommentId },
+      });
+      expect(deletedComment).toBeNull();
     });
 
     test("non existing comment", async () => {
@@ -130,12 +125,12 @@ describe("comment", () => {
         body: "test body",
       });
 
-      const register: any = await graphqlRegister("bob@drip.pl");
+      const register = await graphqlRegister("bob@drip.pl");
       expect(register.data?.register.user).toMatchObject({
         email: "bob@drip.pl",
       });
 
-      const login: any = await graphqlLogin("bob@drip.pl");
+      const login = await graphqlLogin("bob@drip.pl");
       expect(login.data?.login.user).toMatchObject({
         email: "bob@drip.pl",
       });

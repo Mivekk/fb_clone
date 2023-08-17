@@ -4,6 +4,7 @@ export { AggregatePost } from "./AggregatePost";
 export { AggregateReaction } from "./AggregateReaction";
 export { AggregateUser } from "./AggregateUser";
 export { CommentAvgAggregate } from "./CommentAvgAggregate";
+export { CommentCount } from "./CommentCount";
 export { CommentCountAggregate } from "./CommentCountAggregate";
 export { CommentGroupBy } from "./CommentGroupBy";
 export { CommentMaxAggregate } from "./CommentMaxAggregate";

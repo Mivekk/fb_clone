@@ -1,7 +1,9 @@
 import React from "react";
 import { LoginForm } from "./LoginForm";
 
-export const Auth: React.FC<{}> = () => {
+interface Props {}
+
+const Auth: React.FC<Props> = () => {
   return (
     <div className="flex flex-col w-full h-screen bg-white">
       <div className="flex w-full h-[640px] bg-[#f0f2f5] justify-center items-center">
@@ -15,3 +17,5 @@ export const Auth: React.FC<{}> = () => {
     </div>
   );
 };
+
+export default Auth;

@@ -20,4 +20,9 @@ export class ReactionCreateManyPostInput {
     nullable: false
   })
   type!: "LIKE" | "DISLIKE";
+
+  @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
+    nullable: true
+  })
+  commentId?: number | undefined;
 }

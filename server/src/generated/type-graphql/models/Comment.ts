@@ -3,7 +3,9 @@ import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../scalars";
 import { Post } from "../models/Post";
+import { Reaction } from "../models/Reaction";
 import { User } from "../models/User";
+import { CommentCount } from "../resolvers/outputs/CommentCount";
 
 @TypeGraphQL.ObjectType("Comment", {
   simpleResolvers: true
@@ -28,6 +30,17 @@ export class Comment {
   })
   postId!: number;
 
+  reactions?: Reaction[];
+
+  replies?: Comment[];
+
+  reply?: Comment | null;
+
+  @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
+    nullable: true
+  })
+  replyId?: number | null;
+
   @TypeGraphQL.Field(_type => String, {
     nullable: false
   })
@@ -42,4 +55,9 @@ export class Comment {
     nullable: false
   })
   updatedAt!: Date;
+
+  @TypeGraphQL.Field(_type => CommentCount, {
+    nullable: true
+  })
+  _count?: CommentCount | null;
 }

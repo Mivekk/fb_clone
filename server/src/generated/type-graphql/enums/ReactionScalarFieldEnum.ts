@@ -5,6 +5,7 @@ export enum ReactionScalarFieldEnum {
   authorId = "authorId",
   type = "type",
   postId = "postId",
+  commentId = "commentId",
   createdAt = "createdAt",
   updatedAt = "updatedAt"
 }

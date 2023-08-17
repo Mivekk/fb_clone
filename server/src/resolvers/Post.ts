@@ -15,6 +15,9 @@ import { CreatePostInput } from "./utils/inputs";
 import { CreatePostResponseObject } from "./utils/outputs";
 import { Topic } from "./utils/topics";
 
+const MAX_TITLE_LENGTH = 128;
+const MAX_BODY_LENGTH = 4096;
+
 @Resolver()
 export class PostResolver {
   @Mutation(() => CreatePostResponseObject)
@@ -33,6 +36,14 @@ export class PostResolver {
 
     if (data.body.length < 1 || data.title.length < 1) {
       return { error: "content can not be empty" };
+    }
+
+    if (data.title.length > MAX_TITLE_LENGTH) {
+      return { error: "title must have less than 128 characters" };
+    }
+
+    if (data.body.length > MAX_BODY_LENGTH) {
+      return { error: "body must have less than 4096 characters" };
     }
 
     const post = await prisma.post.create({
@@ -77,8 +88,8 @@ export class PostResolver {
     }
 
     await prisma.post.update({
-      where: { id: post.id },
-      data: { comments: { deleteMany: {} } },
+      where: post,
+      data: { comments: { deleteMany: {} }, reactions: { deleteMany: {} } },
     });
 
     await prisma.post.delete({ where: post });

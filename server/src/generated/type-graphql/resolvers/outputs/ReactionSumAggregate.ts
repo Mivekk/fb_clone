@@ -21,4 +21,9 @@ export class ReactionSumAggregate {
     nullable: true
   })
   postId!: number | null;
+
+  @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
+    nullable: true
+  })
+  commentId!: number | null;
 }

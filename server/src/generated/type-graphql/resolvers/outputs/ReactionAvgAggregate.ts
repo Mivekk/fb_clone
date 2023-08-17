@@ -21,4 +21,9 @@ export class ReactionAvgAggregate {
     nullable: true
   })
   postId!: number | null;
+
+  @TypeGraphQL.Field(_type => TypeGraphQL.Float, {
+    nullable: true
+  })
+  commentId!: number | null;
 }

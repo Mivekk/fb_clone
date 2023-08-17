@@ -20,4 +20,9 @@ export class CommentSumOrderByAggregateInput {
     nullable: true
   })
   postId?: "asc" | "desc" | undefined;
+
+  @TypeGraphQL.Field(_type => SortOrder, {
+    nullable: true
+  })
+  replyId?: "asc" | "desc" | undefined;
 }

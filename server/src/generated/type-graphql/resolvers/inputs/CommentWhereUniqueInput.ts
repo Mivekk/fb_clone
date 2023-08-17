@@ -2,10 +2,14 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
+import { CommentListRelationFilter } from "../inputs/CommentListRelationFilter";
+import { CommentNullableRelationFilter } from "../inputs/CommentNullableRelationFilter";
 import { CommentWhereInput } from "../inputs/CommentWhereInput";
 import { DateTimeFilter } from "../inputs/DateTimeFilter";
 import { IntFilter } from "../inputs/IntFilter";
+import { IntNullableFilter } from "../inputs/IntNullableFilter";
 import { PostRelationFilter } from "../inputs/PostRelationFilter";
+import { ReactionListRelationFilter } from "../inputs/ReactionListRelationFilter";
 import { StringFilter } from "../inputs/StringFilter";
 import { UserRelationFilter } from "../inputs/UserRelationFilter";
 
@@ -41,6 +45,11 @@ export class CommentWhereUniqueInput {
   })
   postId?: IntFilter | undefined;
 
+  @TypeGraphQL.Field(_type => IntNullableFilter, {
+    nullable: true
+  })
+  replyId?: IntNullableFilter | undefined;
+
   @TypeGraphQL.Field(_type => StringFilter, {
     nullable: true
   })
@@ -55,4 +64,19 @@ export class CommentWhereUniqueInput {
     nullable: true
   })
   post?: PostRelationFilter | undefined;
+
+  @TypeGraphQL.Field(_type => ReactionListRelationFilter, {
+    nullable: true
+  })
+  reactions?: ReactionListRelationFilter | undefined;
+
+  @TypeGraphQL.Field(_type => CommentListRelationFilter, {
+    nullable: true
+  })
+  replies?: CommentListRelationFilter | undefined;
+
+  @TypeGraphQL.Field(_type => CommentNullableRelationFilter, {
+    nullable: true
+  })
+  reply?: CommentNullableRelationFilter | undefined;
 }

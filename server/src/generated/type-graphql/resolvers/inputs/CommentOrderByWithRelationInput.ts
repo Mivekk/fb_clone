@@ -2,7 +2,10 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
+import { CommentOrderByRelationAggregateInput } from "../inputs/CommentOrderByRelationAggregateInput";
 import { PostOrderByWithRelationInput } from "../inputs/PostOrderByWithRelationInput";
+import { ReactionOrderByRelationAggregateInput } from "../inputs/ReactionOrderByRelationAggregateInput";
+import { SortOrderInput } from "../inputs/SortOrderInput";
 import { UserOrderByWithRelationInput } from "../inputs/UserOrderByWithRelationInput";
 import { SortOrder } from "../../enums/SortOrder";
 
@@ -23,6 +26,11 @@ export class CommentOrderByWithRelationInput {
   })
   postId?: "asc" | "desc" | undefined;
 
+  @TypeGraphQL.Field(_type => SortOrderInput, {
+    nullable: true
+  })
+  replyId?: SortOrderInput | undefined;
+
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
   })
@@ -37,4 +45,19 @@ export class CommentOrderByWithRelationInput {
     nullable: true
   })
   post?: PostOrderByWithRelationInput | undefined;
+
+  @TypeGraphQL.Field(_type => ReactionOrderByRelationAggregateInput, {
+    nullable: true
+  })
+  reactions?: ReactionOrderByRelationAggregateInput | undefined;
+
+  @TypeGraphQL.Field(_type => CommentOrderByRelationAggregateInput, {
+    nullable: true
+  })
+  replies?: CommentOrderByRelationAggregateInput | undefined;
+
+  @TypeGraphQL.Field(_type => CommentOrderByWithRelationInput, {
+    nullable: true
+  })
+  reply?: CommentOrderByWithRelationInput | undefined;
 }

@@ -14,6 +14,8 @@ import { AddCommentInput } from "./utils/inputs";
 import { AddCommentResponseObject } from "./utils/outputs";
 import { Topic } from "./utils/topics";
 
+const MAX_COMMENT_LENGTH = 2048;
+
 @Resolver()
 export class CommentResolver {
   @Mutation(() => AddCommentResponseObject)
@@ -33,6 +35,10 @@ export class CommentResolver {
 
     if (data.body.length < 1) {
       return { error: "body can not be empty" };
+    }
+
+    if (data.body.length > MAX_COMMENT_LENGTH) {
+      return { error: "body must have less than 2048 characters" };
     }
 
     const post = await prisma.post.findUnique({ where: { id: data.postId } });
@@ -84,6 +90,11 @@ export class CommentResolver {
     if (comment.authorId !== user.id) {
       throw new Error("comment has different author");
     }
+
+    await prisma.comment.update({
+      where: comment,
+      data: { reactions: { deleteMany: {} } },
+    });
 
     await prisma.comment.delete({ where: comment });
 

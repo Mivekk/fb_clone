@@ -9,13 +9,13 @@ import {
 import { MyApolloContext } from "../context";
 import { isAuth } from "../middleware/isAuth";
 import { AddReactionInput } from "./utils/inputs";
-import { Reaction } from "../generated/type-graphql";
+import { Reaction, ReactionType } from "../generated/type-graphql";
 import { Topic } from "./utils/topics";
 
 export class ReactionResolver {
   @Mutation(() => Reaction)
   @UseMiddleware(isAuth)
-  async addReaction(
+  async react(
     @Arg("data") data: AddReactionInput,
     @Ctx() { prisma, payload }: MyApolloContext,
     @PubSub() pubSub: PubSubEngine
@@ -34,12 +34,18 @@ export class ReactionResolver {
       throw new Error("could not find post");
     }
 
+    if (!Object.values(ReactionType).includes(data.type)) {
+      throw new Error("invalid reaction type");
+    }
+
     let reaction = await prisma.reaction.findFirst({
       where: { authorId: user.id, postId: post.id },
     });
 
-    if (reaction) {
-      await prisma.reaction.update({
+    if (reaction && reaction.type === data.type) {
+      reaction = await prisma.reaction.delete({ where: reaction });
+    } else if (reaction) {
+      reaction = await prisma.reaction.update({
         where: reaction,
         data: { type: data.type },
       });
@@ -52,43 +58,5 @@ export class ReactionResolver {
     await pubSub.publish(Topic.UpdatePost, post.id);
 
     return reaction;
-  }
-
-  @Mutation(() => Boolean)
-  @UseMiddleware(isAuth)
-  async removeReaction(
-    @Arg("reactionId") reactionId: number,
-    @Ctx() { prisma, payload }: MyApolloContext,
-    @PubSub() pubSub: PubSubEngine
-  ): Promise<boolean> {
-    const user = await prisma.user.findUnique({
-      where: { id: payload?.userId },
-    });
-
-    if (!user) {
-      throw new Error("could not find user");
-    }
-
-    const reaction = await prisma.reaction.findUnique({
-      where: { id: reactionId },
-    });
-
-    if (!reaction) {
-      throw new Error("could not find reaction");
-    }
-
-    const post = await prisma.post.findUnique({
-      where: { id: reaction.postId },
-    });
-
-    if (!post) {
-      throw new Error("could not find post");
-    }
-
-    await prisma.reaction.delete({ where: reaction });
-
-    await pubSub.publish(Topic.UpdatePost, post.id);
-
-    return true;
   }
 }

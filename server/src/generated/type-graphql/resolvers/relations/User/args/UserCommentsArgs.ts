@@ -35,5 +35,5 @@ export class UserCommentsArgs {
   @TypeGraphQL.Field(_type => [CommentScalarFieldEnum], {
     nullable: true
   })
-  distinct?: Array<"id" | "authorId" | "postId" | "body" | "createdAt" | "updatedAt"> | undefined;
+  distinct?: Array<"id" | "authorId" | "postId" | "replyId" | "body" | "createdAt" | "updatedAt"> | undefined;
 }

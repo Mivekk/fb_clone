@@ -20,4 +20,9 @@ export class ReactionCreateManyAuthorInput {
     nullable: false
   })
   postId!: number;
+
+  @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
+    nullable: true
+  })
+  commentId?: number | undefined;
 }
