@@ -11,7 +11,7 @@ import {
 } from "@apollo/experimental-nextjs-app-support/ssr";
 import { setContext } from "@apollo/client/link/context";
 import { createClient } from "graphql-ws";
-import { accessToken, setAccessToken } from "@/token";
+import { getAccessToken, setAccessToken } from "@/token";
 import { TokenRefreshLink } from "apollo-link-token-refresh";
 import jwt_decode from "jwt-decode";
 
@@ -25,7 +25,7 @@ function makeClient() {
     return {
       headers: {
         ...headers,
-        authorization: `Bearer ${accessToken}`,
+        authorization: `Bearer ${getAccessToken()}`,
       },
     };
   });
@@ -57,7 +57,7 @@ function makeClient() {
   const tokenLink = new TokenRefreshLink({
     accessTokenField: "accessToken",
     isTokenValidOrUndefined: async () => {
-      const token = accessToken;
+      const token = getAccessToken();
 
       if (!token) {
         return true;
@@ -99,7 +99,6 @@ function makeClient() {
           fields: {
             posts: {
               keyArgs: false,
-
               merge(existing = [], incoming) {
                 return [...existing, ...incoming];
               },

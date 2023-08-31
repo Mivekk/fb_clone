@@ -13,11 +13,9 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "mutation AddComment($data: CommentInput!) {\n  addComment(data: $data) {\n    comment {\n      id\n      authorId\n      postId\n      body\n    }\n  }\n}": types.AddCommentDocument,
     "mutation Login($data: LoginInput!) {\n  login(data: $data) {\n    user {\n      id\n      firstName\n      lastName\n      email\n      createdAt\n      updatedAt\n    }\n    accessToken\n    error\n  }\n}": types.LoginDocument,
+    "mutation Register($data: RegisterInput!) {\n  register(data: $data) {\n    error\n    user {\n      id\n      firstName\n      lastName\n      email\n    }\n  }\n}": types.RegisterDocument,
     "query Me {\n  me {\n    id\n    firstName\n    lastName\n    email\n    createdAt\n    updatedAt\n  }\n}": types.MeDocument,
-    "query Posts($cursor: PostWhereUniqueInput, $take: Int, $skip: Int, $orderBy: [PostOrderByWithRelationInput!]) {\n  posts(cursor: $cursor, take: $take, skip: $skip, orderBy: $orderBy) {\n    id\n    title\n    body\n    createdAt\n    updatedAt\n    author {\n      id\n      firstName\n      lastName\n      email\n    }\n    comments {\n      id\n      authorId\n      postId\n      body\n      author {\n        id\n        firstName\n        lastName\n        email\n      }\n    }\n  }\n}": types.PostsDocument,
-    "subscription UdpatePost {\n  udpatePost {\n    id\n    authorId\n    title\n    body\n    createdAt\n    updatedAt\n    comments {\n      id\n      authorId\n      postId\n      body\n      author {\n        id\n        firstName\n        lastName\n        email\n      }\n    }\n  }\n}": types.UdpatePostDocument,
 };
 
 /**
@@ -37,23 +35,15 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "mutation AddComment($data: CommentInput!) {\n  addComment(data: $data) {\n    comment {\n      id\n      authorId\n      postId\n      body\n    }\n  }\n}"): (typeof documents)["mutation AddComment($data: CommentInput!) {\n  addComment(data: $data) {\n    comment {\n      id\n      authorId\n      postId\n      body\n    }\n  }\n}"];
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
 export function graphql(source: "mutation Login($data: LoginInput!) {\n  login(data: $data) {\n    user {\n      id\n      firstName\n      lastName\n      email\n      createdAt\n      updatedAt\n    }\n    accessToken\n    error\n  }\n}"): (typeof documents)["mutation Login($data: LoginInput!) {\n  login(data: $data) {\n    user {\n      id\n      firstName\n      lastName\n      email\n      createdAt\n      updatedAt\n    }\n    accessToken\n    error\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function graphql(source: "mutation Register($data: RegisterInput!) {\n  register(data: $data) {\n    error\n    user {\n      id\n      firstName\n      lastName\n      email\n    }\n  }\n}"): (typeof documents)["mutation Register($data: RegisterInput!) {\n  register(data: $data) {\n    error\n    user {\n      id\n      firstName\n      lastName\n      email\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function graphql(source: "query Me {\n  me {\n    id\n    firstName\n    lastName\n    email\n    createdAt\n    updatedAt\n  }\n}"): (typeof documents)["query Me {\n  me {\n    id\n    firstName\n    lastName\n    email\n    createdAt\n    updatedAt\n  }\n}"];
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(source: "query Posts($cursor: PostWhereUniqueInput, $take: Int, $skip: Int, $orderBy: [PostOrderByWithRelationInput!]) {\n  posts(cursor: $cursor, take: $take, skip: $skip, orderBy: $orderBy) {\n    id\n    title\n    body\n    createdAt\n    updatedAt\n    author {\n      id\n      firstName\n      lastName\n      email\n    }\n    comments {\n      id\n      authorId\n      postId\n      body\n      author {\n        id\n        firstName\n        lastName\n        email\n      }\n    }\n  }\n}"): (typeof documents)["query Posts($cursor: PostWhereUniqueInput, $take: Int, $skip: Int, $orderBy: [PostOrderByWithRelationInput!]) {\n  posts(cursor: $cursor, take: $take, skip: $skip, orderBy: $orderBy) {\n    id\n    title\n    body\n    createdAt\n    updatedAt\n    author {\n      id\n      firstName\n      lastName\n      email\n    }\n    comments {\n      id\n      authorId\n      postId\n      body\n      author {\n        id\n        firstName\n        lastName\n        email\n      }\n    }\n  }\n}"];
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(source: "subscription UdpatePost {\n  udpatePost {\n    id\n    authorId\n    title\n    body\n    createdAt\n    updatedAt\n    comments {\n      id\n      authorId\n      postId\n      body\n      author {\n        id\n        firstName\n        lastName\n        email\n      }\n    }\n  }\n}"): (typeof documents)["subscription UdpatePost {\n  udpatePost {\n    id\n    authorId\n    title\n    body\n    createdAt\n    updatedAt\n    comments {\n      id\n      authorId\n      postId\n      body\n      author {\n        id\n        firstName\n        lastName\n        email\n      }\n    }\n  }\n}"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

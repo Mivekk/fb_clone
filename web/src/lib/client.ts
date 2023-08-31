@@ -1,4 +1,4 @@
-import { accessToken } from "@/token";
+import { getAccessToken } from "@/token";
 import { HttpLink } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { registerApolloClient } from "@apollo/experimental-nextjs-app-support/rsc";
@@ -17,7 +17,7 @@ export const { getClient } = registerApolloClient(() => {
     return {
       headers: {
         ...headers,
-        authorization: `Bearer ${accessToken}`,
+        authorization: `Bearer ${getAccessToken()}`,
       },
     };
   });

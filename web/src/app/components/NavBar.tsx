@@ -1,14 +1,14 @@
-import Image from "next/image";
-import stick from "../../../public/stick.png";
+import { getUser } from "@/functions";
+import React from "react";
 
-export const NavBar: React.FC<{}> = async () => {
+const NavBar: React.FC<{}> = async ({}) => {
+  const user = await getUser();
+
   return (
-    <div className="flex items-center justify-end w-full h-14 bg-white border-b-[#dbdde0] shadow-sm">
-      <Image
-        src={stick}
-        alt="profile picture"
-        className="w-12 h-12 ml-2 mr-2 max-h-full rounded-full"
-      />
+    <div className="w-full h-12 bg-gray-400">
+      Hello {user.data.me?.firstName}
     </div>
   );
 };
+
+export default NavBar;
