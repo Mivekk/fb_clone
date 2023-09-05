@@ -5,7 +5,7 @@ import prisma from "../client";
 import { createAccessToken, createRefreshToken } from "../auth/auth";
 import { sendRefreshToken } from "../auth/sendRefreshToken";
 
-export const refreshToken = async (req: Request, res: Response) => {
+export const refreshTokenRoute = async (req: Request, res: Response) => {
   const token = req.cookies.fbc;
   if (!token) {
     return res.send({ accessToken: "" });

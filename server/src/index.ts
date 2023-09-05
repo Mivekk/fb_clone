@@ -14,7 +14,8 @@ import { useServer } from "graphql-ws/lib/use/ws";
 import { OAuth2Client } from "google-auth-library";
 
 import prisma from "./client";
-import { refreshToken } from "./routes/refreshToken";
+import { refreshTokenRoute } from "./routes/refreshToken";
+import { googleAuthRoute } from "./routes/googleAuth";
 import { MyApolloContext, MyApolloSubscriptionContext } from "./context";
 import { createSchema } from "./schema";
 
@@ -22,32 +23,19 @@ const main = async () => {
   const app = express();
   const httpServer = createServer(app);
 
-  app.use(cookieParser());
-
-  app.use(cors({ credentials: true, origin: ["http://localhost:3000"] }));
-
-  app.use(json());
-
-  app.post("/auth/refresh-token", (req, res) => {
-    refreshToken(req, res);
-  });
-
-  const oAuth2Client = new OAuth2Client(
-    process.env.GOOGLE_CLIENT_ID,
-    process.env.GOOGLE_CLIENT_SECRET,
-    "http://localhost:3000"
+  app.use(
+    cookieParser(),
+    cors({ credentials: true, origin: ["http://localhost:3000"] }),
+    json()
   );
 
-  app.post("/auth/google", async (req, res) => {
-    const { tokens } = await oAuth2Client.getToken(req.headers.authorization!); // exchange code for tokens
-
-    console.log(tokens);
-
-    const tokenInfo = await oAuth2Client.getTokenInfo(tokens.access_token!);
-    console.log(tokenInfo);
+  app.post("/auth/refresh-token", (req, res) => {
+    return refreshTokenRoute(req, res);
   });
 
-  app.post("/auth/google/refresh-token", (req, res) => {});
+  app.post("/auth/google", (req, res) => {
+    return googleAuthRoute(req, res);
+  });
 
   const wsServer = new WebSocketServer({
     server: httpServer,
