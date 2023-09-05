@@ -13,9 +13,10 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "mutation Login($data: LoginInput!) {\n  login(data: $data) {\n    user {\n      id\n      firstName\n      lastName\n      email\n      createdAt\n      updatedAt\n    }\n    accessToken\n    error\n  }\n}": types.LoginDocument,
-    "mutation Register($data: RegisterInput!) {\n  register(data: $data) {\n    error\n    user {\n      id\n      firstName\n      lastName\n      email\n    }\n  }\n}": types.RegisterDocument,
-    "query Me {\n  me {\n    id\n    firstName\n    lastName\n    email\n    createdAt\n    updatedAt\n  }\n}": types.MeDocument,
+    "fragment UserFields on User {\n  id\n  firstName\n  lastName\n  email\n  createdAt\n  updatedAt\n}": types.UserFieldsFragmentDoc,
+    "mutation Login($data: LoginInput!) {\n  login(data: $data) {\n    user {\n      ...UserFields\n    }\n    accessToken\n    error\n  }\n}": types.LoginDocument,
+    "mutation Register($data: RegisterInput!) {\n  register(data: $data) {\n    user {\n      ...UserFields\n    }\n    error\n  }\n}": types.RegisterDocument,
+    "query Me {\n  me {\n    ...UserFields\n  }\n}": types.MeDocument,
 };
 
 /**
@@ -35,15 +36,19 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "mutation Login($data: LoginInput!) {\n  login(data: $data) {\n    user {\n      id\n      firstName\n      lastName\n      email\n      createdAt\n      updatedAt\n    }\n    accessToken\n    error\n  }\n}"): (typeof documents)["mutation Login($data: LoginInput!) {\n  login(data: $data) {\n    user {\n      id\n      firstName\n      lastName\n      email\n      createdAt\n      updatedAt\n    }\n    accessToken\n    error\n  }\n}"];
+export function graphql(source: "fragment UserFields on User {\n  id\n  firstName\n  lastName\n  email\n  createdAt\n  updatedAt\n}"): (typeof documents)["fragment UserFields on User {\n  id\n  firstName\n  lastName\n  email\n  createdAt\n  updatedAt\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "mutation Register($data: RegisterInput!) {\n  register(data: $data) {\n    error\n    user {\n      id\n      firstName\n      lastName\n      email\n    }\n  }\n}"): (typeof documents)["mutation Register($data: RegisterInput!) {\n  register(data: $data) {\n    error\n    user {\n      id\n      firstName\n      lastName\n      email\n    }\n  }\n}"];
+export function graphql(source: "mutation Login($data: LoginInput!) {\n  login(data: $data) {\n    user {\n      ...UserFields\n    }\n    accessToken\n    error\n  }\n}"): (typeof documents)["mutation Login($data: LoginInput!) {\n  login(data: $data) {\n    user {\n      ...UserFields\n    }\n    accessToken\n    error\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query Me {\n  me {\n    id\n    firstName\n    lastName\n    email\n    createdAt\n    updatedAt\n  }\n}"): (typeof documents)["query Me {\n  me {\n    id\n    firstName\n    lastName\n    email\n    createdAt\n    updatedAt\n  }\n}"];
+export function graphql(source: "mutation Register($data: RegisterInput!) {\n  register(data: $data) {\n    user {\n      ...UserFields\n    }\n    error\n  }\n}"): (typeof documents)["mutation Register($data: RegisterInput!) {\n  register(data: $data) {\n    user {\n      ...UserFields\n    }\n    error\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query Me {\n  me {\n    ...UserFields\n  }\n}"): (typeof documents)["query Me {\n  me {\n    ...UserFields\n  }\n}"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

@@ -1,4 +1,5 @@
 import { getUser } from "@/functions";
+import { getAccessToken } from "@/token";
 import React from "react";
 
 const NavBar: React.FC<{}> = async ({}) => {

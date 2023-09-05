@@ -1,5 +1,6 @@
 import { getUser } from "@/functions";
 import { redirect } from "next/navigation";
+import Feed from "./components/Feed";
 
 const Home: React.FC<{}> = async ({}) => {
   const user = await getUser();
@@ -8,7 +9,12 @@ const Home: React.FC<{}> = async ({}) => {
     redirect("/authenticate");
   }
 
-  return <div>Home {user.data.me.firstName}</div>;
+  return (
+    <div>
+      Hello {user.data.me.firstName}
+      <Feed />
+    </div>
+  );
 };
 
 export default Home;

@@ -11,6 +11,7 @@ import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHt
 import { createServer } from "http";
 import { WebSocketServer } from "ws";
 import { useServer } from "graphql-ws/lib/use/ws";
+import { OAuth2Client } from "google-auth-library";
 
 import prisma from "./client";
 import { refreshToken } from "./routes/refreshToken";
@@ -25,9 +26,28 @@ const main = async () => {
 
   app.use(cors({ credentials: true, origin: ["http://localhost:3000"] }));
 
-  app.post("/refresh_token", (req, res) => {
+  app.use(json());
+
+  app.post("/auth/refresh-token", (req, res) => {
     refreshToken(req, res);
   });
+
+  const oAuth2Client = new OAuth2Client(
+    process.env.GOOGLE_CLIENT_ID,
+    process.env.GOOGLE_CLIENT_SECRET,
+    "http://localhost:3000"
+  );
+
+  app.post("/auth/google", async (req, res) => {
+    const { tokens } = await oAuth2Client.getToken(req.headers.authorization!); // exchange code for tokens
+
+    console.log(tokens);
+
+    const tokenInfo = await oAuth2Client.getTokenInfo(tokens.access_token!);
+    console.log(tokenInfo);
+  });
+
+  app.post("/auth/google/refresh-token", (req, res) => {});
 
   const wsServer = new WebSocketServer({
     server: httpServer,
@@ -66,7 +86,6 @@ const main = async () => {
 
   app.use(
     "/graphql",
-    json(),
     expressMiddleware(server, {
       context: async ({ req, res }): Promise<MyApolloContext> => ({
         prisma,

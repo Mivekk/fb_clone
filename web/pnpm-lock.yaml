@@ -11,6 +11,9 @@ dependencies:
   '@apollo/experimental-nextjs-app-support':
     specifier: ^0.4.1
     version: 0.4.1(@apollo/client@3.8.1)(next@13.4.19)(react@18.2.0)
+  '@react-oauth/google':
+    specifier: ^0.11.1
+    version: 0.11.1(react-dom@18.2.0)(react@18.2.0)
   '@types/node':
     specifier: 20.5.7
     version: 20.5.7
@@ -1521,6 +1524,16 @@ packages:
       tslib: 2.6.2
       webcrypto-core: 1.7.7
     dev: true
+
+  /@react-oauth/google@0.11.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-tywZisXbsdaRBVbEu0VX6dRbOSL2I6DgY97woq5NMOOOz+xtDsm418vqq+Vx10KMtra3kdHMRMf0hXLWrk2RMg==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
 
   /@repeaterjs/repeater@3.0.4:
     resolution: {integrity: sha512-AW8PKd6iX3vAZ0vA43nOUOnbq/X5ihgU+mSXXqunMkeQADGiqw/PY0JNeYtD5sr0PAy51YPgAPbDoeapv9r8WA==}

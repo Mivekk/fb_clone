@@ -1,6 +1,8 @@
 "use client";
 
+import { getAccessToken, setAccessToken } from "@/token";
 import { ApolloLink, HttpLink, split } from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { getMainDefinition } from "@apollo/client/utilities";
 import {
@@ -9,10 +11,8 @@ import {
   NextSSRInMemoryCache,
   SSRMultipartLink,
 } from "@apollo/experimental-nextjs-app-support/ssr";
-import { setContext } from "@apollo/client/link/context";
-import { createClient } from "graphql-ws";
-import { getAccessToken, setAccessToken } from "@/token";
 import { TokenRefreshLink } from "apollo-link-token-refresh";
+import { createClient } from "graphql-ws";
 import jwt_decode from "jwt-decode";
 
 function makeClient() {
@@ -77,7 +77,7 @@ function makeClient() {
       }
     },
     fetchAccessToken: () => {
-      return fetch("http://localhost:4000/refresh_token", {
+      return fetch("http://localhost:4000/auth/refresh-token", {
         method: "POST",
         credentials: "include",
       });
@@ -124,12 +124,9 @@ function makeClient() {
 
 interface Props {
   children: React.ReactNode;
-  accessToken: string;
 }
 
-export function ApolloWrapper({ children, accessToken }: Props) {
-  setAccessToken(accessToken);
-
+export function ApolloWrapper({ children }: Props) {
   return (
     <ApolloNextAppProvider makeClient={makeClient}>
       {children}
