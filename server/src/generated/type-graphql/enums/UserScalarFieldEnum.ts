@@ -7,6 +7,8 @@ export enum UserScalarFieldEnum {
   email = "email",
   password = "password",
   tokenVersion = "tokenVersion",
+  external_type = "external_type",
+  external_id = "external_id",
   createdAt = "createdAt",
   updatedAt = "updatedAt"
 }

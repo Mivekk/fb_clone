@@ -100,6 +100,10 @@ export class UserResolver {
       return { error: "user does not exist" };
     }
 
+    if (!user.password) {
+      return { error: "link accounts" };
+    }
+
     const passwordsMatch = await argon2.verify(user.password, data.password);
 
     if (!passwordsMatch) {

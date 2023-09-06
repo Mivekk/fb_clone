@@ -33,14 +33,24 @@ export class UserGroupBy {
   email!: string;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: false
+    nullable: true
   })
-  password!: string;
+  password!: string | null;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
     nullable: false
   })
   tokenVersion!: number;
+
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  external_type!: string | null;
+
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  external_id!: string | null;
 
   @TypeGraphQL.Field(_type => Date, {
     nullable: false

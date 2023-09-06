@@ -37,6 +37,16 @@ export class UserMaxAggregate {
   })
   tokenVersion!: number | null;
 
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  external_type!: string | null;
+
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  external_id!: string | null;
+
   @TypeGraphQL.Field(_type => Date, {
     nullable: true
   })

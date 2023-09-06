@@ -31,7 +31,7 @@ export class User {
   })
   email!: string;
 
-  password?: string;
+  password?: string | null;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
     nullable: false
@@ -43,6 +43,16 @@ export class User {
   comments?: Comment[];
 
   reactions?: Reaction[];
+
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  external_type?: string | null;
+
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  external_id?: string | null;
 
   @TypeGraphQL.Field(_type => Date, {
     nullable: false

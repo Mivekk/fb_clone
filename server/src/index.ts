@@ -11,11 +11,9 @@ import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHt
 import { createServer } from "http";
 import { WebSocketServer } from "ws";
 import { useServer } from "graphql-ws/lib/use/ws";
-import { OAuth2Client } from "google-auth-library";
 
 import prisma from "./client";
-import { refreshTokenRoute } from "./routes/refreshToken";
-import { googleAuthRoute } from "./routes/googleAuth";
+import authRouter from "./routes/auth/router";
 import { MyApolloContext, MyApolloSubscriptionContext } from "./context";
 import { createSchema } from "./schema";
 
@@ -29,13 +27,7 @@ const main = async () => {
     json()
   );
 
-  app.post("/auth/refresh-token", (req, res) => {
-    return refreshTokenRoute(req, res);
-  });
-
-  app.post("/auth/google", (req, res) => {
-    return googleAuthRoute(req, res);
-  });
+  app.use("/auth", authRouter);
 
   const wsServer = new WebSocketServer({
     server: httpServer,

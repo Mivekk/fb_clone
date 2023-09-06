@@ -1,11 +1,15 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
 
-import prisma from "../client";
-import { createAccessToken, createRefreshToken } from "../auth/auth";
-import { sendRefreshToken } from "../auth/sendRefreshToken";
+import prisma from "../../../client";
+import { createAccessToken, createRefreshToken } from "../../../auth/auth";
+import { sendRefreshToken } from "../../../auth/sendRefreshToken";
 
-export const refreshTokenRoute = async (req: Request, res: Response) => {
+export const refreshToken = async (
+  req: Request,
+  res: Response,
+  _next: NextFunction
+) => {
   const token = req.cookies.fbc;
   if (!token) {
     return res.send({ accessToken: "" });
@@ -16,12 +20,14 @@ export const refreshTokenRoute = async (req: Request, res: Response) => {
     payload = verify(token, process.env.REFRESH_TOKEN_SECRET!);
   } catch (err) {
     console.log(err);
+
     return res.send({ accessToken: "" });
   }
 
   const user = await prisma.user.findUnique({
     where: { id: payload.userId },
   });
+
   if (!user) {
     return res.send({ accessToken: "" });
   }

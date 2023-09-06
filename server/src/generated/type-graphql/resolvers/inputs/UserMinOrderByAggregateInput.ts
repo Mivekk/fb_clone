@@ -35,4 +35,14 @@ export class UserMinOrderByAggregateInput {
     nullable: true
   })
   tokenVersion?: "asc" | "desc" | undefined;
+
+  @TypeGraphQL.Field(_type => SortOrder, {
+    nullable: true
+  })
+  external_type?: "asc" | "desc" | undefined;
+
+  @TypeGraphQL.Field(_type => SortOrder, {
+    nullable: true
+  })
+  external_id?: "asc" | "desc" | undefined;
 }
