@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext } from "react";
+import React from "react";
 
 const Feed: React.FC<{}> = ({}) => {
   return <>elo</>;

@@ -15,6 +15,7 @@ import { LoginInput, RegisterInput } from "./utils/inputs";
 import { LoginResponseObject, RegisterResponseObject } from "./utils/outputs";
 import { User } from "../generated/type-graphql";
 import { verify } from "jsonwebtoken";
+import { isAuth } from "../middleware/isAuth";
 
 const MAX_INPUT_LENGTH = 32;
 
@@ -116,18 +117,24 @@ export class UserResolver {
   }
 
   @Mutation(() => Boolean)
-  async revokeRefreshToken(
-    @Ctx() { prisma }: MyApolloContext,
-    @Arg("userId") userId: number
+  @UseMiddleware(isAuth)
+  async logout(
+    @Ctx() { prisma, res, payload }: MyApolloContext
   ): Promise<boolean> {
+    if (!payload?.userId) {
+      throw new Error("invalid cookie");
+    }
+
     const user = await prisma.user.update({
-      where: { id: userId },
+      where: { id: payload.userId },
       data: { tokenVersion: { increment: 1 } },
     });
 
     if (!user) {
-      return false;
+      throw new Error("user not found");
     }
+
+    res.clearCookie(process.env.COOKIE_NAME!);
 
     return true;
   }

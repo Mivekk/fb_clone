@@ -14,8 +14,8 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
-  /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
-  DateTime: { input: any; output: any; }
+  /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.This scalar is serialized to a string in ISO 8601 format and parsed from a string in ISO 8601 format. */
+  DateTimeISO: { input: any; output: any; }
 };
 
 export type AddCommentInput = {
@@ -81,7 +81,7 @@ export type Comment = {
   author: User;
   authorId: Scalars['Int']['output'];
   body: Scalars['String']['output'];
-  createdAt: Scalars['DateTime']['output'];
+  createdAt: Scalars['DateTimeISO']['output'];
   id: Scalars['Int']['output'];
   post: Post;
   postId: Scalars['Int']['output'];
@@ -89,7 +89,7 @@ export type Comment = {
   replies: Array<Comment>;
   reply?: Maybe<Comment>;
   replyId?: Maybe<Scalars['Int']['output']>;
-  updatedAt: Scalars['DateTime']['output'];
+  updatedAt: Scalars['DateTimeISO']['output'];
 };
 
 
@@ -328,11 +328,11 @@ export type CommentGroupBy = {
   _sum?: Maybe<CommentSumAggregate>;
   authorId: Scalars['Int']['output'];
   body: Scalars['String']['output'];
-  createdAt: Scalars['DateTime']['output'];
+  createdAt: Scalars['DateTimeISO']['output'];
   id: Scalars['Int']['output'];
   postId: Scalars['Int']['output'];
   replyId?: Maybe<Scalars['Int']['output']>;
-  updatedAt: Scalars['DateTime']['output'];
+  updatedAt: Scalars['DateTimeISO']['output'];
 };
 
 export type CommentListRelationFilter = {
@@ -345,11 +345,11 @@ export type CommentMaxAggregate = {
   __typename?: 'CommentMaxAggregate';
   authorId?: Maybe<Scalars['Int']['output']>;
   body?: Maybe<Scalars['String']['output']>;
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  createdAt?: Maybe<Scalars['DateTimeISO']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
   postId?: Maybe<Scalars['Int']['output']>;
   replyId?: Maybe<Scalars['Int']['output']>;
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt?: Maybe<Scalars['DateTimeISO']['output']>;
 };
 
 export type CommentMaxOrderByAggregateInput = {
@@ -364,11 +364,11 @@ export type CommentMinAggregate = {
   __typename?: 'CommentMinAggregate';
   authorId?: Maybe<Scalars['Int']['output']>;
   body?: Maybe<Scalars['String']['output']>;
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  createdAt?: Maybe<Scalars['DateTimeISO']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
   postId?: Maybe<Scalars['Int']['output']>;
   replyId?: Maybe<Scalars['Int']['output']>;
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt?: Maybe<Scalars['DateTimeISO']['output']>;
 };
 
 export type CommentMinOrderByAggregateInput = {
@@ -807,9 +807,9 @@ export type Mutation = {
   deleteOneUser?: Maybe<User>;
   deletePost: Scalars['Boolean']['output'];
   login: LoginResponseObject;
+  logout: Scalars['Boolean']['output'];
   react: Reaction;
   register: RegisterResponseObject;
-  revokeRefreshToken: Scalars['Boolean']['output'];
   updateManyComment: AffectedRowsOutput;
   updateManyPost: AffectedRowsOutput;
   updateManyReaction: AffectedRowsOutput;
@@ -941,11 +941,6 @@ export type MutationReactArgs = {
 
 export type MutationRegisterArgs = {
   data: RegisterInput;
-};
-
-
-export type MutationRevokeRefreshTokenArgs = {
-  userId: Scalars['Float']['input'];
 };
 
 
@@ -1131,6 +1126,37 @@ export type NestedStringFilter = {
   startsWith?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type NestedStringNullableFilter = {
+  contains?: InputMaybe<Scalars['String']['input']>;
+  endsWith?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  gt?: InputMaybe<Scalars['String']['input']>;
+  gte?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<Scalars['String']['input']>>;
+  lt?: InputMaybe<Scalars['String']['input']>;
+  lte?: InputMaybe<Scalars['String']['input']>;
+  not?: InputMaybe<NestedStringNullableFilter>;
+  notIn?: InputMaybe<Array<Scalars['String']['input']>>;
+  startsWith?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type NestedStringNullableWithAggregatesFilter = {
+  _count?: InputMaybe<NestedIntNullableFilter>;
+  _max?: InputMaybe<NestedStringNullableFilter>;
+  _min?: InputMaybe<NestedStringNullableFilter>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  endsWith?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  gt?: InputMaybe<Scalars['String']['input']>;
+  gte?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<Scalars['String']['input']>>;
+  lt?: InputMaybe<Scalars['String']['input']>;
+  lte?: InputMaybe<Scalars['String']['input']>;
+  not?: InputMaybe<NestedStringNullableWithAggregatesFilter>;
+  notIn?: InputMaybe<Array<Scalars['String']['input']>>;
+  startsWith?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type NestedStringWithAggregatesFilter = {
   _count?: InputMaybe<NestedIntFilter>;
   _max?: InputMaybe<NestedStringFilter>;
@@ -1148,6 +1174,10 @@ export type NestedStringWithAggregatesFilter = {
   startsWith?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: InputMaybe<Scalars['String']['input']>;
+};
+
 export enum NullsOrder {
   First = 'first',
   Last = 'last'
@@ -1160,11 +1190,11 @@ export type Post = {
   authorId: Scalars['Int']['output'];
   body: Scalars['String']['output'];
   comments: Array<Comment>;
-  createdAt: Scalars['DateTime']['output'];
+  createdAt: Scalars['DateTimeISO']['output'];
   id: Scalars['Int']['output'];
   reactions: Array<Reaction>;
   title: Scalars['String']['output'];
-  updatedAt: Scalars['DateTime']['output'];
+  updatedAt: Scalars['DateTimeISO']['output'];
 };
 
 
@@ -1322,10 +1352,10 @@ export type PostGroupBy = {
   _sum?: Maybe<PostSumAggregate>;
   authorId: Scalars['Int']['output'];
   body: Scalars['String']['output'];
-  createdAt: Scalars['DateTime']['output'];
+  createdAt: Scalars['DateTimeISO']['output'];
   id: Scalars['Int']['output'];
   title: Scalars['String']['output'];
-  updatedAt: Scalars['DateTime']['output'];
+  updatedAt: Scalars['DateTimeISO']['output'];
 };
 
 export type PostListRelationFilter = {
@@ -1338,10 +1368,10 @@ export type PostMaxAggregate = {
   __typename?: 'PostMaxAggregate';
   authorId?: Maybe<Scalars['Int']['output']>;
   body?: Maybe<Scalars['String']['output']>;
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  createdAt?: Maybe<Scalars['DateTimeISO']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
   title?: Maybe<Scalars['String']['output']>;
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt?: Maybe<Scalars['DateTimeISO']['output']>;
 };
 
 export type PostMaxOrderByAggregateInput = {
@@ -1355,10 +1385,10 @@ export type PostMinAggregate = {
   __typename?: 'PostMinAggregate';
   authorId?: Maybe<Scalars['Int']['output']>;
   body?: Maybe<Scalars['String']['output']>;
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  createdAt?: Maybe<Scalars['DateTimeISO']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
   title?: Maybe<Scalars['String']['output']>;
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt?: Maybe<Scalars['DateTimeISO']['output']>;
 };
 
 export type PostMinOrderByAggregateInput = {
@@ -1847,12 +1877,12 @@ export type Reaction = {
   authorId: Scalars['Int']['output'];
   comment?: Maybe<Comment>;
   commentId?: Maybe<Scalars['Int']['output']>;
-  createdAt: Scalars['DateTime']['output'];
+  createdAt: Scalars['DateTimeISO']['output'];
   id: Scalars['Int']['output'];
   post: Post;
   postId: Scalars['Int']['output'];
   type: ReactionType;
-  updatedAt: Scalars['DateTime']['output'];
+  updatedAt: Scalars['DateTimeISO']['output'];
 };
 
 
@@ -2009,11 +2039,11 @@ export type ReactionGroupBy = {
   _sum?: Maybe<ReactionSumAggregate>;
   authorId: Scalars['Int']['output'];
   commentId?: Maybe<Scalars['Int']['output']>;
-  createdAt: Scalars['DateTime']['output'];
+  createdAt: Scalars['DateTimeISO']['output'];
   id: Scalars['Int']['output'];
   postId: Scalars['Int']['output'];
   type: ReactionType;
-  updatedAt: Scalars['DateTime']['output'];
+  updatedAt: Scalars['DateTimeISO']['output'];
 };
 
 export type ReactionListRelationFilter = {
@@ -2026,11 +2056,11 @@ export type ReactionMaxAggregate = {
   __typename?: 'ReactionMaxAggregate';
   authorId?: Maybe<Scalars['Int']['output']>;
   commentId?: Maybe<Scalars['Int']['output']>;
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  createdAt?: Maybe<Scalars['DateTimeISO']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
   postId?: Maybe<Scalars['Int']['output']>;
   type?: Maybe<ReactionType>;
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt?: Maybe<Scalars['DateTimeISO']['output']>;
 };
 
 export type ReactionMaxOrderByAggregateInput = {
@@ -2045,11 +2075,11 @@ export type ReactionMinAggregate = {
   __typename?: 'ReactionMinAggregate';
   authorId?: Maybe<Scalars['Int']['output']>;
   commentId?: Maybe<Scalars['Int']['output']>;
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  createdAt?: Maybe<Scalars['DateTimeISO']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
   postId?: Maybe<Scalars['Int']['output']>;
   type?: Maybe<ReactionType>;
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt?: Maybe<Scalars['DateTimeISO']['output']>;
 };
 
 export type ReactionMinOrderByAggregateInput = {
@@ -2329,6 +2359,39 @@ export type StringFilter = {
   startsWith?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type StringNullableFilter = {
+  contains?: InputMaybe<Scalars['String']['input']>;
+  endsWith?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  gt?: InputMaybe<Scalars['String']['input']>;
+  gte?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<Scalars['String']['input']>>;
+  lt?: InputMaybe<Scalars['String']['input']>;
+  lte?: InputMaybe<Scalars['String']['input']>;
+  mode?: InputMaybe<QueryMode>;
+  not?: InputMaybe<NestedStringNullableFilter>;
+  notIn?: InputMaybe<Array<Scalars['String']['input']>>;
+  startsWith?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type StringNullableWithAggregatesFilter = {
+  _count?: InputMaybe<NestedIntNullableFilter>;
+  _max?: InputMaybe<NestedStringNullableFilter>;
+  _min?: InputMaybe<NestedStringNullableFilter>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  endsWith?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  gt?: InputMaybe<Scalars['String']['input']>;
+  gte?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<Scalars['String']['input']>>;
+  lt?: InputMaybe<Scalars['String']['input']>;
+  lte?: InputMaybe<Scalars['String']['input']>;
+  mode?: InputMaybe<QueryMode>;
+  not?: InputMaybe<NestedStringNullableWithAggregatesFilter>;
+  notIn?: InputMaybe<Array<Scalars['String']['input']>>;
+  startsWith?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type StringWithAggregatesFilter = {
   _count?: InputMaybe<NestedIntFilter>;
   _max?: InputMaybe<NestedStringFilter>;
@@ -2356,15 +2419,17 @@ export type User = {
   __typename?: 'User';
   _count?: Maybe<UserCount>;
   comments: Array<Comment>;
-  createdAt: Scalars['DateTime']['output'];
+  createdAt: Scalars['DateTimeISO']['output'];
   email: Scalars['String']['output'];
+  external_id?: Maybe<Scalars['String']['output']>;
+  external_type?: Maybe<Scalars['String']['output']>;
   firstName: Scalars['String']['output'];
   id: Scalars['Int']['output'];
   lastName: Scalars['String']['output'];
   posts: Array<Post>;
   reactions: Array<Reaction>;
   tokenVersion: Scalars['Int']['output'];
-  updatedAt: Scalars['DateTime']['output'];
+  updatedAt: Scalars['DateTimeISO']['output'];
 };
 
 
@@ -2435,6 +2500,8 @@ export type UserCountAggregate = {
   _all: Scalars['Int']['output'];
   createdAt: Scalars['Int']['output'];
   email: Scalars['Int']['output'];
+  external_id: Scalars['Int']['output'];
+  external_type: Scalars['Int']['output'];
   firstName: Scalars['Int']['output'];
   id: Scalars['Int']['output'];
   lastName: Scalars['Int']['output'];
@@ -2445,6 +2512,8 @@ export type UserCountAggregate = {
 
 export type UserCountOrderByAggregateInput = {
   email?: InputMaybe<SortOrder>;
+  external_id?: InputMaybe<SortOrder>;
+  external_type?: InputMaybe<SortOrder>;
   firstName?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   lastName?: InputMaybe<SortOrder>;
@@ -2455,9 +2524,11 @@ export type UserCountOrderByAggregateInput = {
 export type UserCreateInput = {
   comments?: InputMaybe<CommentCreateNestedManyWithoutAuthorInput>;
   email: Scalars['String']['input'];
+  external_id?: InputMaybe<Scalars['String']['input']>;
+  external_type?: InputMaybe<Scalars['String']['input']>;
   firstName: Scalars['String']['input'];
   lastName: Scalars['String']['input'];
-  password: Scalars['String']['input'];
+  password?: InputMaybe<Scalars['String']['input']>;
   posts?: InputMaybe<PostCreateNestedManyWithoutAuthorInput>;
   reactions?: InputMaybe<ReactionCreateNestedManyWithoutAuthorInput>;
   tokenVersion?: InputMaybe<Scalars['Int']['input']>;
@@ -2465,10 +2536,12 @@ export type UserCreateInput = {
 
 export type UserCreateManyInput = {
   email: Scalars['String']['input'];
+  external_id?: InputMaybe<Scalars['String']['input']>;
+  external_type?: InputMaybe<Scalars['String']['input']>;
   firstName: Scalars['String']['input'];
   id?: InputMaybe<Scalars['Int']['input']>;
   lastName: Scalars['String']['input'];
-  password: Scalars['String']['input'];
+  password?: InputMaybe<Scalars['String']['input']>;
   tokenVersion?: InputMaybe<Scalars['Int']['input']>;
 };
 
@@ -2507,9 +2580,11 @@ export type UserCreateOrConnectWithoutReactionsInput = {
 
 export type UserCreateWithoutCommentsInput = {
   email: Scalars['String']['input'];
+  external_id?: InputMaybe<Scalars['String']['input']>;
+  external_type?: InputMaybe<Scalars['String']['input']>;
   firstName: Scalars['String']['input'];
   lastName: Scalars['String']['input'];
-  password: Scalars['String']['input'];
+  password?: InputMaybe<Scalars['String']['input']>;
   posts?: InputMaybe<PostCreateNestedManyWithoutAuthorInput>;
   reactions?: InputMaybe<ReactionCreateNestedManyWithoutAuthorInput>;
   tokenVersion?: InputMaybe<Scalars['Int']['input']>;
@@ -2518,9 +2593,11 @@ export type UserCreateWithoutCommentsInput = {
 export type UserCreateWithoutPostsInput = {
   comments?: InputMaybe<CommentCreateNestedManyWithoutAuthorInput>;
   email: Scalars['String']['input'];
+  external_id?: InputMaybe<Scalars['String']['input']>;
+  external_type?: InputMaybe<Scalars['String']['input']>;
   firstName: Scalars['String']['input'];
   lastName: Scalars['String']['input'];
-  password: Scalars['String']['input'];
+  password?: InputMaybe<Scalars['String']['input']>;
   reactions?: InputMaybe<ReactionCreateNestedManyWithoutAuthorInput>;
   tokenVersion?: InputMaybe<Scalars['Int']['input']>;
 };
@@ -2528,9 +2605,11 @@ export type UserCreateWithoutPostsInput = {
 export type UserCreateWithoutReactionsInput = {
   comments?: InputMaybe<CommentCreateNestedManyWithoutAuthorInput>;
   email: Scalars['String']['input'];
+  external_id?: InputMaybe<Scalars['String']['input']>;
+  external_type?: InputMaybe<Scalars['String']['input']>;
   firstName: Scalars['String']['input'];
   lastName: Scalars['String']['input'];
-  password: Scalars['String']['input'];
+  password?: InputMaybe<Scalars['String']['input']>;
   posts?: InputMaybe<PostCreateNestedManyWithoutAuthorInput>;
   tokenVersion?: InputMaybe<Scalars['Int']['input']>;
 };
@@ -2542,30 +2621,36 @@ export type UserGroupBy = {
   _max?: Maybe<UserMaxAggregate>;
   _min?: Maybe<UserMinAggregate>;
   _sum?: Maybe<UserSumAggregate>;
-  createdAt: Scalars['DateTime']['output'];
+  createdAt: Scalars['DateTimeISO']['output'];
   email: Scalars['String']['output'];
+  external_id?: Maybe<Scalars['String']['output']>;
+  external_type?: Maybe<Scalars['String']['output']>;
   firstName: Scalars['String']['output'];
   id: Scalars['Int']['output'];
   lastName: Scalars['String']['output'];
-  password: Scalars['String']['output'];
+  password?: Maybe<Scalars['String']['output']>;
   tokenVersion: Scalars['Int']['output'];
-  updatedAt: Scalars['DateTime']['output'];
+  updatedAt: Scalars['DateTimeISO']['output'];
 };
 
 export type UserMaxAggregate = {
   __typename?: 'UserMaxAggregate';
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  createdAt?: Maybe<Scalars['DateTimeISO']['output']>;
   email?: Maybe<Scalars['String']['output']>;
+  external_id?: Maybe<Scalars['String']['output']>;
+  external_type?: Maybe<Scalars['String']['output']>;
   firstName?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
   lastName?: Maybe<Scalars['String']['output']>;
   password?: Maybe<Scalars['String']['output']>;
   tokenVersion?: Maybe<Scalars['Int']['output']>;
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt?: Maybe<Scalars['DateTimeISO']['output']>;
 };
 
 export type UserMaxOrderByAggregateInput = {
   email?: InputMaybe<SortOrder>;
+  external_id?: InputMaybe<SortOrder>;
+  external_type?: InputMaybe<SortOrder>;
   firstName?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   lastName?: InputMaybe<SortOrder>;
@@ -2575,18 +2660,22 @@ export type UserMaxOrderByAggregateInput = {
 
 export type UserMinAggregate = {
   __typename?: 'UserMinAggregate';
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  createdAt?: Maybe<Scalars['DateTimeISO']['output']>;
   email?: Maybe<Scalars['String']['output']>;
+  external_id?: Maybe<Scalars['String']['output']>;
+  external_type?: Maybe<Scalars['String']['output']>;
   firstName?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
   lastName?: Maybe<Scalars['String']['output']>;
   password?: Maybe<Scalars['String']['output']>;
   tokenVersion?: Maybe<Scalars['Int']['output']>;
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt?: Maybe<Scalars['DateTimeISO']['output']>;
 };
 
 export type UserMinOrderByAggregateInput = {
   email?: InputMaybe<SortOrder>;
+  external_id?: InputMaybe<SortOrder>;
+  external_type?: InputMaybe<SortOrder>;
   firstName?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   lastName?: InputMaybe<SortOrder>;
@@ -2601,20 +2690,24 @@ export type UserOrderByWithAggregationInput = {
   _min?: InputMaybe<UserMinOrderByAggregateInput>;
   _sum?: InputMaybe<UserSumOrderByAggregateInput>;
   email?: InputMaybe<SortOrder>;
+  external_id?: InputMaybe<SortOrderInput>;
+  external_type?: InputMaybe<SortOrderInput>;
   firstName?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   lastName?: InputMaybe<SortOrder>;
-  password?: InputMaybe<SortOrder>;
+  password?: InputMaybe<SortOrderInput>;
   tokenVersion?: InputMaybe<SortOrder>;
 };
 
 export type UserOrderByWithRelationInput = {
   comments?: InputMaybe<CommentOrderByRelationAggregateInput>;
   email?: InputMaybe<SortOrder>;
+  external_id?: InputMaybe<SortOrderInput>;
+  external_type?: InputMaybe<SortOrderInput>;
   firstName?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   lastName?: InputMaybe<SortOrder>;
-  password?: InputMaybe<SortOrder>;
+  password?: InputMaybe<SortOrderInput>;
   posts?: InputMaybe<PostOrderByRelationAggregateInput>;
   reactions?: InputMaybe<ReactionOrderByRelationAggregateInput>;
   tokenVersion?: InputMaybe<SortOrder>;
@@ -2628,6 +2721,8 @@ export type UserRelationFilter = {
 export enum UserScalarFieldEnum {
   CreatedAt = 'createdAt',
   Email = 'email',
+  ExternalId = 'external_id',
+  ExternalType = 'external_type',
   FirstName = 'firstName',
   Id = 'id',
   LastName = 'lastName',
@@ -2641,10 +2736,12 @@ export type UserScalarWhereWithAggregatesInput = {
   NOT?: InputMaybe<Array<UserScalarWhereWithAggregatesInput>>;
   OR?: InputMaybe<Array<UserScalarWhereWithAggregatesInput>>;
   email?: InputMaybe<StringWithAggregatesFilter>;
+  external_id?: InputMaybe<StringNullableWithAggregatesFilter>;
+  external_type?: InputMaybe<StringNullableWithAggregatesFilter>;
   firstName?: InputMaybe<StringWithAggregatesFilter>;
   id?: InputMaybe<IntWithAggregatesFilter>;
   lastName?: InputMaybe<StringWithAggregatesFilter>;
-  password?: InputMaybe<StringWithAggregatesFilter>;
+  password?: InputMaybe<StringNullableWithAggregatesFilter>;
   tokenVersion?: InputMaybe<IntWithAggregatesFilter>;
 };
 
@@ -2662,9 +2759,11 @@ export type UserSumOrderByAggregateInput = {
 export type UserUpdateInput = {
   comments?: InputMaybe<CommentUpdateManyWithoutAuthorNestedInput>;
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
+  external_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  external_type?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   firstName?: InputMaybe<StringFieldUpdateOperationsInput>;
   lastName?: InputMaybe<StringFieldUpdateOperationsInput>;
-  password?: InputMaybe<StringFieldUpdateOperationsInput>;
+  password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   posts?: InputMaybe<PostUpdateManyWithoutAuthorNestedInput>;
   reactions?: InputMaybe<ReactionUpdateManyWithoutAuthorNestedInput>;
   tokenVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
@@ -2672,9 +2771,11 @@ export type UserUpdateInput = {
 
 export type UserUpdateManyMutationInput = {
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
+  external_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  external_type?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   firstName?: InputMaybe<StringFieldUpdateOperationsInput>;
   lastName?: InputMaybe<StringFieldUpdateOperationsInput>;
-  password?: InputMaybe<StringFieldUpdateOperationsInput>;
+  password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   tokenVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
 };
 
@@ -2719,9 +2820,11 @@ export type UserUpdateToOneWithWhereWithoutReactionsInput = {
 
 export type UserUpdateWithoutCommentsInput = {
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
+  external_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  external_type?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   firstName?: InputMaybe<StringFieldUpdateOperationsInput>;
   lastName?: InputMaybe<StringFieldUpdateOperationsInput>;
-  password?: InputMaybe<StringFieldUpdateOperationsInput>;
+  password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   posts?: InputMaybe<PostUpdateManyWithoutAuthorNestedInput>;
   reactions?: InputMaybe<ReactionUpdateManyWithoutAuthorNestedInput>;
   tokenVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
@@ -2730,9 +2833,11 @@ export type UserUpdateWithoutCommentsInput = {
 export type UserUpdateWithoutPostsInput = {
   comments?: InputMaybe<CommentUpdateManyWithoutAuthorNestedInput>;
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
+  external_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  external_type?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   firstName?: InputMaybe<StringFieldUpdateOperationsInput>;
   lastName?: InputMaybe<StringFieldUpdateOperationsInput>;
-  password?: InputMaybe<StringFieldUpdateOperationsInput>;
+  password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   reactions?: InputMaybe<ReactionUpdateManyWithoutAuthorNestedInput>;
   tokenVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
 };
@@ -2740,9 +2845,11 @@ export type UserUpdateWithoutPostsInput = {
 export type UserUpdateWithoutReactionsInput = {
   comments?: InputMaybe<CommentUpdateManyWithoutAuthorNestedInput>;
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
+  external_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  external_type?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   firstName?: InputMaybe<StringFieldUpdateOperationsInput>;
   lastName?: InputMaybe<StringFieldUpdateOperationsInput>;
-  password?: InputMaybe<StringFieldUpdateOperationsInput>;
+  password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   posts?: InputMaybe<PostUpdateManyWithoutAuthorNestedInput>;
   tokenVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
 };
@@ -2771,10 +2878,12 @@ export type UserWhereInput = {
   OR?: InputMaybe<Array<UserWhereInput>>;
   comments?: InputMaybe<CommentListRelationFilter>;
   email?: InputMaybe<StringFilter>;
+  external_id?: InputMaybe<StringNullableFilter>;
+  external_type?: InputMaybe<StringNullableFilter>;
   firstName?: InputMaybe<StringFilter>;
   id?: InputMaybe<IntFilter>;
   lastName?: InputMaybe<StringFilter>;
-  password?: InputMaybe<StringFilter>;
+  password?: InputMaybe<StringNullableFilter>;
   posts?: InputMaybe<PostListRelationFilter>;
   reactions?: InputMaybe<ReactionListRelationFilter>;
   tokenVersion?: InputMaybe<IntFilter>;
@@ -2786,14 +2895,40 @@ export type UserWhereUniqueInput = {
   OR?: InputMaybe<Array<UserWhereInput>>;
   comments?: InputMaybe<CommentListRelationFilter>;
   email?: InputMaybe<Scalars['String']['input']>;
+  external_id?: InputMaybe<StringNullableFilter>;
+  external_type?: InputMaybe<StringNullableFilter>;
   firstName?: InputMaybe<StringFilter>;
   id?: InputMaybe<Scalars['Int']['input']>;
   lastName?: InputMaybe<StringFilter>;
-  password?: InputMaybe<StringFilter>;
+  password?: InputMaybe<StringNullableFilter>;
   posts?: InputMaybe<PostListRelationFilter>;
   reactions?: InputMaybe<ReactionListRelationFilter>;
   tokenVersion?: InputMaybe<IntFilter>;
 };
+
+export type CommentFieldsFragment = { __typename?: 'Comment', id: number, postId: number, replyId?: number | null, body: string, updatedAt: any, createdAt: any, author: (
+    { __typename?: 'User' }
+    & { ' $fragmentRefs'?: { 'UserFieldsFragment': UserFieldsFragment } }
+  ), reactions: Array<(
+    { __typename?: 'Reaction' }
+    & { ' $fragmentRefs'?: { 'ReactionFieldsFragment': ReactionFieldsFragment } }
+  )> } & { ' $fragmentName'?: 'CommentFieldsFragment' };
+
+export type PostFieldsFragment = { __typename?: 'Post', id: number, title: string, body: string, createdAt: any, updatedAt: any, author: (
+    { __typename?: 'User' }
+    & { ' $fragmentRefs'?: { 'UserFieldsFragment': UserFieldsFragment } }
+  ), comments: Array<(
+    { __typename?: 'Comment' }
+    & { ' $fragmentRefs'?: { 'CommentFieldsFragment': CommentFieldsFragment } }
+  )>, reactions: Array<(
+    { __typename?: 'Reaction' }
+    & { ' $fragmentRefs'?: { 'ReactionFieldsFragment': ReactionFieldsFragment } }
+  )> } & { ' $fragmentName'?: 'PostFieldsFragment' };
+
+export type ReactionFieldsFragment = { __typename?: 'Reaction', id: number, postId: number, commentId?: number | null, type: ReactionType, createdAt: any, updatedAt: any, author: (
+    { __typename?: 'User' }
+    & { ' $fragmentRefs'?: { 'UserFieldsFragment': UserFieldsFragment } }
+  ) } & { ' $fragmentName'?: 'ReactionFieldsFragment' };
 
 export type UserFieldsFragment = { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, createdAt: any, updatedAt: any } & { ' $fragmentName'?: 'UserFieldsFragment' };
 
@@ -2806,6 +2941,11 @@ export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'Lo
       { __typename?: 'User' }
       & { ' $fragmentRefs'?: { 'UserFieldsFragment': UserFieldsFragment } }
     ) | null } };
+
+export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LogoutMutation = { __typename?: 'Mutation', logout: boolean };
 
 export type RegisterMutationVariables = Exact<{
   data: RegisterInput;
@@ -2825,7 +2965,25 @@ export type MeQuery = { __typename?: 'Query', me?: (
     & { ' $fragmentRefs'?: { 'UserFieldsFragment': UserFieldsFragment } }
   ) | null };
 
+export type PostsQueryVariables = Exact<{
+  cursor?: InputMaybe<PostWhereUniqueInput>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<PostOrderByWithRelationInput> | PostOrderByWithRelationInput>;
+}>;
+
+
+export type PostsQuery = { __typename?: 'Query', posts: Array<(
+    { __typename?: 'Post' }
+    & { ' $fragmentRefs'?: { 'PostFieldsFragment': PostFieldsFragment } }
+  )> };
+
 export const UserFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]} as unknown as DocumentNode<UserFieldsFragment, unknown>;
+export const ReactionFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ReactionFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Reaction"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"postId"}},{"kind":"Field","name":{"kind":"Name","value":"commentId"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]} as unknown as DocumentNode<ReactionFieldsFragment, unknown>;
+export const CommentFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CommentFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Comment"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"postId"}},{"kind":"Field","name":{"kind":"Name","value":"replyId"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ReactionFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ReactionFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Reaction"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"postId"}},{"kind":"Field","name":{"kind":"Name","value":"commentId"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]} as unknown as DocumentNode<CommentFieldsFragment, unknown>;
+export const PostFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PostFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Post"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"comments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CommentFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ReactionFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ReactionFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Reaction"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"postId"}},{"kind":"Field","name":{"kind":"Name","value":"commentId"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CommentFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Comment"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"postId"}},{"kind":"Field","name":{"kind":"Name","value":"replyId"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ReactionFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]} as unknown as DocumentNode<PostFieldsFragment, unknown>;
 export const LoginDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Login"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LoginInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"error"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]} as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;
+export const LogoutDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Logout"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"logout"}}]}}]} as unknown as DocumentNode<LogoutMutation, LogoutMutationVariables>;
 export const RegisterDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Register"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"RegisterInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"register"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]} as unknown as DocumentNode<RegisterMutation, RegisterMutationVariables>;
 export const MeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]} as unknown as DocumentNode<MeQuery, MeQueryVariables>;
+export const PostsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Posts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PostWhereUniqueInput"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"take"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"skip"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PostOrderByWithRelationInput"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"cursor"},"value":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}}},{"kind":"Argument","name":{"kind":"Name","value":"take"},"value":{"kind":"Variable","name":{"kind":"Name","value":"take"}}},{"kind":"Argument","name":{"kind":"Name","value":"skip"},"value":{"kind":"Variable","name":{"kind":"Name","value":"skip"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PostFields"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ReactionFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Reaction"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"postId"}},{"kind":"Field","name":{"kind":"Name","value":"commentId"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CommentFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Comment"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"postId"}},{"kind":"Field","name":{"kind":"Name","value":"replyId"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ReactionFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PostFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Post"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"comments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CommentFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ReactionFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]} as unknown as DocumentNode<PostsQuery, PostsQueryVariables>;

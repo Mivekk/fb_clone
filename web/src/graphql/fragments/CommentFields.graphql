@@ -1,0 +1,14 @@
+fragment CommentFields on Comment {
+  id
+  postId
+  replyId
+  body
+  author {
+    ...UserFields
+  }
+  reactions {
+    ...ReactionFields
+  }
+  updatedAt
+  createdAt
+}

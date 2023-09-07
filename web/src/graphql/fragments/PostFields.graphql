@@ -1,0 +1,16 @@
+fragment PostFields on Post {
+  id
+  title
+  body
+  author {
+    ...UserFields
+  }
+  comments {
+    ...CommentFields
+  }
+  reactions {
+    ...ReactionFields
+  }
+  createdAt
+  updatedAt
+}

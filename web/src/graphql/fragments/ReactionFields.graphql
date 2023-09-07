@@ -1,0 +1,11 @@
+fragment ReactionFields on Reaction {
+  id
+  postId
+  commentId
+  type
+  author {
+    ...UserFields
+  }
+  createdAt
+  updatedAt
+}

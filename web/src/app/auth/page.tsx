@@ -3,7 +3,7 @@ import Login from "./components/Login";
 import { getUser } from "@/functions";
 import { redirect } from "next/navigation";
 
-const Authenticate: React.FC<{}> = async ({}) => {
+const Auth: React.FC<{}> = async ({}) => {
   const user = await getUser();
 
   if (user.data.me) {
@@ -17,4 +17,4 @@ const Authenticate: React.FC<{}> = async ({}) => {
   );
 };
 
-export default Authenticate;
+export default Auth;

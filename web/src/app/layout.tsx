@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { cookies } from "next/dist/client/components/headers";
 import { ApolloWrapper } from "@/lib/apollo-wrapper";
 import { setAccessToken } from "@/token";
-import NavBar from "./components/NavBar";
 import TokenWrapper from "@/wrapper/TokenWrapper";
 import GoogleWrapper from "@/lib/google-wrapper";
 
@@ -11,8 +10,6 @@ export const metadata: Metadata = {
   title: "fb-clone",
   description: "fb-clone",
 };
-
-export const dynamic = "force-dynamic";
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   const refreshTokenData = await fetch(
@@ -35,10 +32,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
       <body>
         <ApolloWrapper>
           <TokenWrapper accessToken={accessToken}>
-            <GoogleWrapper>
-              <NavBar />
-              {children}
-            </GoogleWrapper>
+            <GoogleWrapper>{children}</GoogleWrapper>
           </TokenWrapper>
         </ApolloWrapper>
       </body>

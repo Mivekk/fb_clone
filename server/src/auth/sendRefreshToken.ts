@@ -1,5 +1,5 @@
 import { Response } from "express";
 
 export const sendRefreshToken = (res: Response, token: string) => {
-  res.cookie("fbc", token, { httpOnly: true });
+  res.cookie(process.env.COOKIE_NAME!, token, { httpOnly: true });
 };

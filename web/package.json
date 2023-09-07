@@ -10,10 +10,10 @@
     "codegen": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
-    "@apollo/client": "^3.8.1",
-    "@apollo/experimental-nextjs-app-support": "^0.4.1",
+    "@apollo/client": "^3.8.3",
+    "@apollo/experimental-nextjs-app-support": "^0.4.2",
     "@react-oauth/google": "^0.11.1",
-    "@types/node": "20.5.7",
+    "@types/node": "20.5.9",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "apollo-link-token-refresh": "^0.6.0",

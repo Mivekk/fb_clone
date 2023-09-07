@@ -6,12 +6,11 @@ const Home: React.FC<{}> = async ({}) => {
   const user = await getUser();
 
   if (!user.data.me) {
-    redirect("/authenticate");
+    redirect("/auth");
   }
 
   return (
     <div>
-      Hello {user.data.me.firstName}
       <Feed />
     </div>
   );
