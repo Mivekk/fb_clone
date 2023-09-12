@@ -122,9 +122,9 @@ function makeClient() {
   });
 }
 
-interface Props {
+type Props = {
   children: React.ReactNode;
-}
+};
 
 export function ApolloWrapper({ children }: Props) {
   return (

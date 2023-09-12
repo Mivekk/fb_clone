@@ -1,6 +1,7 @@
 import { getUser } from "@/functions";
 import { redirect } from "next/navigation";
 import Feed from "./components/Feed";
+import { Suspense } from "react";
 
 const Home: React.FC<{}> = async ({}) => {
   const user = await getUser();
@@ -11,6 +12,7 @@ const Home: React.FC<{}> = async ({}) => {
 
   return (
     <div>
+      <div>elo</div>
       <Feed />
     </div>
   );

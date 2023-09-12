@@ -1,0 +1,11 @@
+subscription UdpatePost {
+  udpatePost {
+    id
+    comments {
+      ...CommentFields
+    }
+    reactions {
+      ...ReactionFields
+    }
+  }
+}

@@ -1,0 +1,14 @@
+query Comments($where: CommentWhereInput) {
+  comments(where: $where) {
+    id
+    postId
+    replyId
+    body
+    author {
+      firstName
+      lastName
+    }
+    createdAt
+    updatedAt
+  }
+}

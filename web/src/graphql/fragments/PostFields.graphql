@@ -1,5 +1,6 @@
 fragment PostFields on Post {
   id
+  authorId
   title
   body
   author {

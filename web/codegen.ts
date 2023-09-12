@@ -7,6 +7,9 @@ const config: CodegenConfig = {
   generates: {
     "src/generated/": {
       preset: "client",
+      presetConfig: {
+        fragmentMasking: false,
+      },
       plugins: [],
     },
   },

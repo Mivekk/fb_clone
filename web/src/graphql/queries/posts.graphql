@@ -5,6 +5,14 @@ query Posts(
   $orderBy: [PostOrderByWithRelationInput!]
 ) {
   posts(cursor: $cursor, take: $take, skip: $skip, orderBy: $orderBy) {
-    ...PostFields
+    id
+    title
+    body
+    author {
+      firstName
+      lastName
+    }
+    createdAt
+    updatedAt
   }
 }

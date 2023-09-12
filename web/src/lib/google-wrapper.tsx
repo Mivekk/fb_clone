@@ -3,9 +3,9 @@
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import React from "react";
 
-interface Props {
+type Props = {
   children: React.ReactNode;
-}
+};
 
 const GoogleWrapper: React.FC<Props> = ({ children }) => {
   return (

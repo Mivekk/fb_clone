@@ -2,10 +2,10 @@
 
 import { setAccessToken } from "@/token";
 
-interface Props {
+type Props = {
   accessToken: string;
   children: React.ReactNode;
-}
+};
 
 const TokenWrapper: React.FC<Props> = ({ accessToken, children }) => {
   setAccessToken(accessToken);
