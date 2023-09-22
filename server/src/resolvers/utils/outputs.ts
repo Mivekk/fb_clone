@@ -27,6 +27,18 @@ export class CreatePostResponseObject {
 }
 
 @ObjectType()
+export class PostEngagementMetricsObject {
+  @Field(() => Number)
+  comments: number;
+
+  @Field(() => Number)
+  likes: number;
+
+  @Field(() => Number)
+  dislikes: number;
+}
+
+@ObjectType()
 export class AddCommentResponseObject {
   @Field(() => Comment, { nullable: true })
   comment?: Comment;

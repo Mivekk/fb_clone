@@ -11,10 +11,16 @@ const Login: React.FC<{}> = ({}) => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [file, setFile] = useState<File>();
+
   const [login] = useMutation(LoginDocument);
 
-  const submitForm = async (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (!file) {
+      return;
+    }
 
     const result = await login({
       variables: { data: { email, password } },
@@ -22,13 +28,14 @@ const Login: React.FC<{}> = ({}) => {
 
     if (result.errors) {
       console.log(result.errors);
+      return;
     }
 
     router.refresh();
     router.push("/");
   };
 
-  const authGoogle = async (credentialsResponse: CredentialResponse) => {
+  const onGoogleAuth = async (credentialsResponse: CredentialResponse) => {
     if (!credentialsResponse.credential) {
       throw new Error("error");
     }
@@ -53,11 +60,11 @@ const Login: React.FC<{}> = ({}) => {
 
   return (
     <form
-      onSubmit={async (e) => submitForm(e)}
+      onSubmit={async (e) => onSubmit(e)}
       className="flex flex-col w-[200px]"
     >
       <GoogleLogin
-        onSuccess={(credentialResponse) => authGoogle(credentialResponse)}
+        onSuccess={(credentialResponse) => onGoogleAuth(credentialResponse)}
         onError={() => {
           throw new Error("error");
         }}
@@ -74,6 +81,12 @@ const Login: React.FC<{}> = ({}) => {
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+      />
+      <input
+        type="file"
+        onChange={(e) => {
+          setFile(e.target.files?.[0]);
+        }}
       />
       <button>Submit</button>
     </form>

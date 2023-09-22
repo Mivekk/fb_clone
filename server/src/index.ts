@@ -11,6 +11,8 @@ import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHt
 import { createServer } from "http";
 import { WebSocketServer } from "ws";
 import { useServer } from "graphql-ws/lib/use/ws";
+import S3rver from "s3rver";
+import fs from "fs";
 
 import prisma from "./client";
 import authRouter from "./routes/auth/router";
@@ -74,6 +76,16 @@ const main = async () => {
       }),
     })
   );
+
+  const s3rver = new S3rver({
+    port: 9000,
+    directory: "./s3",
+    configureBuckets: [
+      { name: "fb_clone", configs: [fs.readFileSync("./cors.xml")] },
+    ],
+  });
+
+  await s3rver.run();
 
   const PORT = 4000;
   httpServer.listen(PORT, () => {

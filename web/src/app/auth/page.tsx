@@ -4,11 +4,11 @@ import { getUser } from "@/functions";
 import { redirect } from "next/navigation";
 
 const Auth: React.FC<{}> = async ({}) => {
-  const user = await getUser();
+  // const user = await getUser();
 
-  if (user.data.me) {
-    redirect("/");
-  }
+  // if (user.data.me) {
+  //   redirect("/");
+  // }
 
   return (
     <div>

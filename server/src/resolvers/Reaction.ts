@@ -15,7 +15,7 @@ import { Topic } from "./utils/topics";
 export class ReactionResolver {
   @Mutation(() => Reaction)
   @UseMiddleware(isAuth)
-  async react(
+  async addReaction(
     @Arg("data") data: AddReactionInput,
     @Ctx() { prisma, payload }: MyApolloContext,
     @PubSub() pubSub: PubSubEngine

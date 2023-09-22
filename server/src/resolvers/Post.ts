@@ -2,6 +2,7 @@ import {
   Arg,
   Ctx,
   Mutation,
+  Query,
   Resolver,
   Root,
   Subscription,
@@ -12,7 +13,10 @@ import { MyApolloContext, MyApolloSubscriptionContext } from "../context";
 import { Post } from "../generated/type-graphql";
 import { isAuth } from "../middleware/isAuth";
 import { CreatePostInput } from "./utils/inputs";
-import { CreatePostResponseObject } from "./utils/outputs";
+import {
+  CreatePostResponseObject,
+  PostEngagementMetricsObject,
+} from "./utils/outputs";
 import { Topic } from "./utils/topics";
 
 const MAX_TITLE_LENGTH = 128;
@@ -95,5 +99,25 @@ export class PostResolver {
     await prisma.post.delete({ where: post });
 
     return true;
+  }
+
+  @Query(() => PostEngagementMetricsObject)
+  async postEngagementMetrics(
+    @Ctx() { prisma }: MyApolloContext,
+    @Arg("postId") postId: number
+  ): Promise<PostEngagementMetricsObject> {
+    const comments = await prisma.comment.count({ where: { postId } });
+    const likes = await prisma.reaction.count({
+      where: { postId, type: "LIKE" },
+    });
+    const dislikes = await prisma.reaction.count({
+      where: { postId, type: "DISLIKE" },
+    });
+
+    return {
+      comments,
+      likes,
+      dislikes,
+    };
   }
 }

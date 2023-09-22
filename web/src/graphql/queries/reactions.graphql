@@ -1,0 +1,15 @@
+query Reactions($where: ReactionWhereInput) {
+  reactions(where: $where) {
+    id
+    type
+    postId
+    commentId
+    author {
+      id
+      firstName
+      lastName
+    }
+    createdAt
+    updatedAt
+  }
+}

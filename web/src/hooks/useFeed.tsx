@@ -2,6 +2,7 @@ import {
   CommentsDocument,
   PostsDocument,
   PostsQuery,
+  ReactionsDocument,
   UdpatePostDocument,
 } from "@/generated/graphql";
 import { useSubscription } from "@apollo/client";
@@ -24,16 +25,26 @@ export const useFeed = (): {
         return;
       }
 
+      const postId = subscriptionData.data.udpatePost.id;
+
+      const reactions = subscriptionData.data.udpatePost.reactions;
+      client.cache.updateQuery(
+        {
+          query: ReactionsDocument,
+          variables: { where: { postId: { equals: postId } } },
+        },
+        () => ({ reactions })
+      );
+
+      const comments = subscriptionData.data.udpatePost.comments;
       client.cache.updateQuery(
         {
           query: CommentsDocument,
           variables: {
-            where: { postId: { equals: subscriptionData.data.udpatePost.id } },
+            where: { postId: { equals: postId } },
           },
         },
-        (_data) => ({
-          comments: subscriptionData.data!.udpatePost!.comments,
-        })
+        () => ({ comments })
       );
     },
   });

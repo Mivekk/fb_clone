@@ -1,0 +1,5 @@
+mutation AddReaction($data: AddReactionInput!) {
+  addReaction(data: $data) {
+    id
+  }
+}
