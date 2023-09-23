@@ -2,6 +2,8 @@
 
 import { AddReactionDocument, ReactionType } from "@/generated/graphql";
 import { useMutation } from "@apollo/client";
+import { BiComment, BiDislike, BiLike, BiShare } from "react-icons/bi";
+import PostActionButton from "./PostActionButton";
 import React from "react";
 
 type PostActionsProps = {
@@ -24,11 +26,19 @@ const PostActions: React.FC<PostActionsProps> = ({ postId }) => {
   };
 
   return (
-    <div className="flex gap-1">
-      <button onClick={() => handleLike()}>Like</button>
-      <button onClick={() => handleDislike()}>Dislike</button>
-      <button>Comment</button>
-      <button>Share</button>
+    <div className="grid grid-cols-4 pt-2 pb-1">
+      <PostActionButton handleClick={() => handleLike()} type="Like">
+        <BiLike />
+      </PostActionButton>
+      <PostActionButton handleClick={() => handleDislike()} type="Dislike">
+        <BiDislike />
+      </PostActionButton>
+      <PostActionButton handleClick={() => 0} type="Comment">
+        <BiComment />
+      </PostActionButton>
+      <PostActionButton handleClick={() => null} type="Share">
+        <BiShare />
+      </PostActionButton>
     </div>
   );
 };

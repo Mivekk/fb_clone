@@ -3,19 +3,20 @@ import "dotenv/config";
 
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import express from "express";
+import express, { json } from "express";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
-import { json } from "body-parser";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 import { createServer } from "http";
 import { WebSocketServer } from "ws";
 import { useServer } from "graphql-ws/lib/use/ws";
 import S3rver from "s3rver";
 import fs from "fs";
+import multer from "multer";
 
 import prisma from "./client";
 import authRouter from "./routes/auth/router";
+import apiRouter from "./routes/api/router";
 import { MyApolloContext, MyApolloSubscriptionContext } from "./context";
 import { createSchema } from "./schema";
 
@@ -28,8 +29,6 @@ const main = async () => {
     cors({ credentials: true, origin: ["http://localhost:3000"] }),
     json()
   );
-
-  app.use("/auth", authRouter);
 
   const wsServer = new WebSocketServer({
     server: httpServer,
@@ -86,6 +85,9 @@ const main = async () => {
   });
 
   await s3rver.run();
+
+  app.use("/auth", authRouter);
+  app.use("/api", multer().none(), apiRouter);
 
   const PORT = 4000;
   httpServer.listen(PORT, () => {

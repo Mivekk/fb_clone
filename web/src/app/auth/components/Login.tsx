@@ -18,10 +18,6 @@ const Login: React.FC<{}> = ({}) => {
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!file) {
-      return;
-    }
-
     const result = await login({
       variables: { data: { email, password } },
     });
@@ -35,7 +31,7 @@ const Login: React.FC<{}> = ({}) => {
     router.push("/");
   };
 
-  const onGoogleAuth = async (credentialsResponse: CredentialResponse) => {
+  const onGoogleLogin = async (credentialsResponse: CredentialResponse) => {
     if (!credentialsResponse.credential) {
       throw new Error("error");
     }
@@ -64,7 +60,7 @@ const Login: React.FC<{}> = ({}) => {
       className="flex flex-col w-[200px]"
     >
       <GoogleLogin
-        onSuccess={(credentialResponse) => onGoogleAuth(credentialResponse)}
+        onSuccess={(credentialResponse) => onGoogleLogin(credentialResponse)}
         onError={() => {
           throw new Error("error");
         }}

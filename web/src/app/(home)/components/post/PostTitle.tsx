@@ -7,7 +7,7 @@ type PostTitleProps = {
 };
 
 const PostTitle: React.FC<PostTitleProps> = ({ title }) => {
-  return <div>{title}</div>;
+  return <h4 className="text-xl font-semibold tracking-tight">{title}</h4>;
 };
 
 export default PostTitle;

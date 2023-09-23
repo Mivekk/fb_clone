@@ -29,7 +29,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
 
   return (
     <html lang="en">
-      <body>
+      <body className="bg-gray-100">
         <ApolloWrapper>
           <TokenWrapper accessToken={accessToken}>
             <GoogleWrapper>{children}</GoogleWrapper>
