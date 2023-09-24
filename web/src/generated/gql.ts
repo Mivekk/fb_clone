@@ -19,6 +19,7 @@ const documents = {
     "fragment UserFields on User {\n  id\n  firstName\n  lastName\n  email\n  createdAt\n  updatedAt\n}": types.UserFieldsFragmentDoc,
     "mutation AddComment($data: AddCommentInput!) {\n  addComment(data: $data) {\n    comment {\n      id\n    }\n    error\n  }\n}": types.AddCommentDocument,
     "mutation AddReaction($data: AddReactionInput!) {\n  addReaction(data: $data) {\n    id\n  }\n}": types.AddReactionDocument,
+    "mutation CreatePost($data: CreatePostInput!) {\n  createPost(data: $data) {\n    post {\n      id\n      title\n      body\n      author {\n        id\n        firstName\n        lastName\n      }\n      createdAt\n      updatedAt\n    }\n    error\n  }\n}": types.CreatePostDocument,
     "mutation Login($data: LoginInput!) {\n  login(data: $data) {\n    user {\n      id\n    }\n    accessToken\n    error\n  }\n}": types.LoginDocument,
     "mutation Logout {\n  logout\n}": types.LogoutDocument,
     "mutation Register($data: RegisterInput!) {\n  register(data: $data) {\n    user {\n      id\n    }\n    error\n  }\n}": types.RegisterDocument,
@@ -67,6 +68,10 @@ export function graphql(source: "mutation AddComment($data: AddCommentInput!) {\
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "mutation AddReaction($data: AddReactionInput!) {\n  addReaction(data: $data) {\n    id\n  }\n}"): (typeof documents)["mutation AddReaction($data: AddReactionInput!) {\n  addReaction(data: $data) {\n    id\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation CreatePost($data: CreatePostInput!) {\n  createPost(data: $data) {\n    post {\n      id\n      title\n      body\n      author {\n        id\n        firstName\n        lastName\n      }\n      createdAt\n      updatedAt\n    }\n    error\n  }\n}"): (typeof documents)["mutation CreatePost($data: CreatePostInput!) {\n  createPost(data: $data) {\n    post {\n      id\n      title\n      body\n      author {\n        id\n        firstName\n        lastName\n      }\n      createdAt\n      updatedAt\n    }\n    error\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

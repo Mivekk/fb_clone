@@ -77,7 +77,7 @@ function makeClient() {
       }
     },
     fetchAccessToken: () => {
-      return fetch("http://localhost:4000/auth/refresh-token", {
+      return fetch("http://localhost:4000/api/auth/refresh-token", {
         method: "POST",
         credentials: "include",
       });

@@ -12,10 +12,8 @@ import { WebSocketServer } from "ws";
 import { useServer } from "graphql-ws/lib/use/ws";
 import S3rver from "s3rver";
 import fs from "fs";
-import multer from "multer";
 
 import prisma from "./client";
-import authRouter from "./routes/auth/router";
 import apiRouter from "./routes/api/router";
 import { MyApolloContext, MyApolloSubscriptionContext } from "./context";
 import { createSchema } from "./schema";
@@ -86,8 +84,7 @@ const main = async () => {
 
   await s3rver.run();
 
-  app.use("/auth", authRouter);
-  app.use("/api", multer().none(), apiRouter);
+  app.use("/api", apiRouter);
 
   const PORT = 4000;
   httpServer.listen(PORT, () => {

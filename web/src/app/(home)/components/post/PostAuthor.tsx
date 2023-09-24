@@ -1,9 +1,11 @@
 "use client";
 
-import { AvatarFallback } from "@/app/components/ui/avatar";
-import { Skeleton } from "@/app/components/ui/skeleton";
 import { UserFieldsFragment } from "@/generated/graphql";
-import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/app/components/ui/avatar";
 import React from "react";
 
 type PostAuthorProps = Partial<UserFieldsFragment>;

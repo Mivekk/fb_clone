@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   const refreshTokenData = await fetch(
-    "http://localhost:4000/auth/refresh-token",
+    "http://localhost:4000/api/auth/refresh-token",
     {
       method: "POST",
       credentials: "include",

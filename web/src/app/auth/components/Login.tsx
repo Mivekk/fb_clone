@@ -36,7 +36,7 @@ const Login: React.FC<{}> = ({}) => {
       throw new Error("error");
     }
 
-    const result = await fetch("http://localhost:4000/auth/google", {
+    const result = await fetch("http://localhost:4000/api/auth/google", {
       credentials: "include",
       method: "POST",
       referrerPolicy: "no-referrer-when-downgrade",
