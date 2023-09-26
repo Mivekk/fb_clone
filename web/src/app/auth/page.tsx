@@ -2,6 +2,7 @@ import React from "react";
 import Login from "./components/Login";
 import { getUser } from "@/functions";
 import { redirect } from "next/navigation";
+import Register from "./components/Register";
 
 const Auth: React.FC<{}> = async ({}) => {
   // const user = await getUser();
@@ -11,8 +12,9 @@ const Auth: React.FC<{}> = async ({}) => {
   // }
 
   return (
-    <div>
+    <div className="flex gap-12">
       <Login />
+      <Register />
     </div>
   );
 };

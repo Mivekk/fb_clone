@@ -9,7 +9,7 @@ type PostDateProps = {
 
 const PostDate: React.FC<PostDateProps> = ({ createdAt }) => {
   return (
-    <div>
+    <div className="-mt-2">
       <TimeAgo date={createdAt} className="text-sm" />
     </div>
   );

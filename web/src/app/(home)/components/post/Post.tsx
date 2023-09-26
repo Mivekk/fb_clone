@@ -1,15 +1,13 @@
 "use client";
 
-import { PostFieldsFragment } from "@/generated/graphql";
-import React, { Suspense, useState } from "react";
-import PostAuthor from "./PostAuthor";
-import PostComments from "./PostComments";
-import PostTitle from "./PostTitle";
-import PostBody from "./PostBody";
-import PostReactions from "./PostReactions";
+import React, { Suspense } from "react";
 import PostActions from "./PostActions";
-import PostEngagementBar from "./PostEngagementBar";
+import PostAuthor from "./PostAuthor";
+import PostBody from "./PostBody";
+import PostComments from "./PostComments";
 import PostDate from "./PostDate";
+import PostEngagementBar from "./PostEngagementBar";
+import PostTitle from "./PostTitle";
 
 type PostProps = {
   id: number;
@@ -23,17 +21,10 @@ type PostProps = {
   };
 };
 
-export type EngagementCountType = {
-  commentCount: number;
-  likeCount: number;
-  dislikeCount: number;
-};
-
 const Post: React.FC<PostProps> = ({ id, author, title, body, createdAt }) => {
   return (
     <div className="mt-4 pl-2 pr-2 pb-1 rounded-md md:w-[32rem] sm:w-[24rem] w-[18rem] shadow-md bg-white">
-      <PostDate createdAt={createdAt} />
-      <PostAuthor {...author} />
+      <PostAuthor {...author} postCreatedAt={createdAt} />
       <PostTitle title={title} />
       <PostBody body={body} />
       <div className="divide-y-2">

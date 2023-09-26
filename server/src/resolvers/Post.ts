@@ -1,5 +1,6 @@
 import {
   Arg,
+  Args,
   Ctx,
   Mutation,
   Query,
@@ -10,7 +11,7 @@ import {
 } from "type-graphql";
 
 import { MyApolloContext, MyApolloSubscriptionContext } from "../context";
-import { Post } from "../generated/type-graphql";
+import { FindManyPostArgs, Post } from "../generated/type-graphql";
 import { isAuth } from "../middleware/isAuth";
 import { CreatePostInput } from "./utils/inputs";
 import {
@@ -24,6 +25,17 @@ const MAX_BODY_LENGTH = 4096;
 
 @Resolver()
 export class PostResolver {
+  @Query(() => [Post])
+  @UseMiddleware(isAuth)
+  async posts(
+    @Ctx() { prisma }: MyApolloContext,
+    @Args() args: FindManyPostArgs
+  ) {
+    const posts = await prisma.post.findMany({ ...(args as any) });
+
+    return posts;
+  }
+
   @Mutation(() => CreatePostResponseObject)
   @UseMiddleware(isAuth)
   async createPost(

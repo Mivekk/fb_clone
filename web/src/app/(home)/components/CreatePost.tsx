@@ -55,8 +55,8 @@ const CreatePost: React.FC<{}> = ({}) => {
         <AvatarFallback />
       </Avatar>
       <Dialog>
-        <DialogTrigger className="grow h-9 ml-2 bg-gray-200 rounded-full flex justify-start items-center">
-          <div className="ml-4">Create post...</div>
+        <DialogTrigger className="grow h-10 ml-2 bg-gray-200 rounded-full flex justify-start items-center text-md">
+          <div className="ml-4 select-none">Create post...</div>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>

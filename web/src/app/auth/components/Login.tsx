@@ -11,11 +11,10 @@ const Login: React.FC<{}> = ({}) => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [file, setFile] = useState<File>();
 
   const [login] = useMutation(LoginDocument);
 
-  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const result = await login({
@@ -31,7 +30,7 @@ const Login: React.FC<{}> = ({}) => {
     router.push("/");
   };
 
-  const onGoogleLogin = async (credentialsResponse: CredentialResponse) => {
+  const handleGoogleLogin = async (credentialsResponse: CredentialResponse) => {
     if (!credentialsResponse.credential) {
       throw new Error("error");
     }
@@ -55,37 +54,36 @@ const Login: React.FC<{}> = ({}) => {
   };
 
   return (
-    <form
-      onSubmit={async (e) => onSubmit(e)}
-      className="flex flex-col w-[200px]"
-    >
-      <GoogleLogin
-        onSuccess={(credentialResponse) => onGoogleLogin(credentialResponse)}
-        onError={() => {
-          throw new Error("error");
-        }}
-      />
+    <div>
+      <div className="text-xl font-bold">Login</div>
+      <form
+        onSubmit={async (e) => handleSubmit(e)}
+        className="flex flex-col w-[200px]"
+      >
+        <GoogleLogin
+          onSuccess={(credentialResponse) =>
+            handleGoogleLogin(credentialResponse)
+          }
+          onError={() => {
+            throw new Error("error");
+          }}
+        />
 
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <input
-        type="file"
-        onChange={(e) => {
-          setFile(e.target.files?.[0]);
-        }}
-      />
-      <button>Submit</button>
-    </form>
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button>Submit</button>
+      </form>
+    </div>
   );
 };
 

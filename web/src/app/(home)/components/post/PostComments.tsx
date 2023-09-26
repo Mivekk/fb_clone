@@ -3,6 +3,7 @@
 import { CommentsDocument } from "@/generated/graphql";
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import React from "react";
+import Comment from "../comment/Comment";
 
 type PostCommentsProps = {
   postId: number;
@@ -14,7 +15,7 @@ const PostComments: React.FC<PostCommentsProps> = ({ postId }) => {
   });
 
   const comments = data.comments.map((comment) => (
-    <div key={comment.id}>{comment.body}</div>
+    <Comment key={comment.id} {...comment} />
   ));
 
   return <div>{comments}</div>;
