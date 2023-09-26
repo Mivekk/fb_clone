@@ -16,16 +16,16 @@ const documents = {
     "fragment CommentFields on Comment {\n  id\n  postId\n  replyId\n  body\n  author {\n    ...UserFields\n  }\n  reactions {\n    ...ReactionFields\n  }\n  updatedAt\n  createdAt\n}": types.CommentFieldsFragmentDoc,
     "fragment PostFields on Post {\n  id\n  authorId\n  title\n  body\n  author {\n    ...UserFields\n  }\n  comments {\n    ...CommentFields\n  }\n  reactions {\n    ...ReactionFields\n  }\n  createdAt\n  updatedAt\n}": types.PostFieldsFragmentDoc,
     "fragment ReactionFields on Reaction {\n  id\n  postId\n  commentId\n  type\n  author {\n    ...UserFields\n  }\n  createdAt\n  updatedAt\n}": types.ReactionFieldsFragmentDoc,
-    "fragment UserFields on User {\n  id\n  firstName\n  lastName\n  email\n  createdAt\n  updatedAt\n}": types.UserFieldsFragmentDoc,
+    "fragment UserFields on User {\n  id\n  firstName\n  lastName\n  email\n  image_url\n  createdAt\n  updatedAt\n}": types.UserFieldsFragmentDoc,
     "mutation AddComment($data: AddCommentInput!) {\n  addComment(data: $data) {\n    comment {\n      id\n    }\n    error\n  }\n}": types.AddCommentDocument,
     "mutation AddReaction($data: AddReactionInput!) {\n  addReaction(data: $data) {\n    id\n  }\n}": types.AddReactionDocument,
     "mutation CreatePost($data: CreatePostInput!) {\n  createPost(data: $data) {\n    post {\n      id\n      title\n      body\n      author {\n        id\n        firstName\n        lastName\n      }\n      createdAt\n      updatedAt\n    }\n    error\n  }\n}": types.CreatePostDocument,
     "mutation Login($data: LoginInput!) {\n  login(data: $data) {\n    user {\n      id\n    }\n    accessToken\n    error\n  }\n}": types.LoginDocument,
     "mutation Logout {\n  logout\n}": types.LogoutDocument,
     "mutation Register($data: RegisterInput!) {\n  register(data: $data) {\n    user {\n      id\n    }\n    error\n  }\n}": types.RegisterDocument,
-    "query Comments($where: CommentWhereInput) {\n  comments(where: $where) {\n    id\n    postId\n    replyId\n    body\n    author {\n      firstName\n      lastName\n    }\n    createdAt\n    updatedAt\n  }\n}": types.CommentsDocument,
+    "query Comments($where: CommentWhereInput) {\n  comments(where: $where) {\n    id\n    postId\n    replyId\n    body\n    author {\n      firstName\n      lastName\n      image_url\n    }\n    createdAt\n    updatedAt\n  }\n}": types.CommentsDocument,
     "query Me {\n  me {\n    ...UserFields\n  }\n}": types.MeDocument,
-    "query Posts($cursor: PostWhereUniqueInput, $take: Int, $skip: Int, $orderBy: [PostOrderByWithRelationInput!]) {\n  posts(cursor: $cursor, take: $take, skip: $skip, orderBy: $orderBy) {\n    id\n    title\n    body\n    author {\n      id\n      firstName\n      lastName\n    }\n    createdAt\n    updatedAt\n  }\n}": types.PostsDocument,
+    "query Posts($cursor: PostWhereUniqueInput, $take: Int, $skip: Int, $orderBy: [PostOrderByWithRelationInput!]) {\n  posts(cursor: $cursor, take: $take, skip: $skip, orderBy: $orderBy) {\n    id\n    title\n    body\n    author {\n      id\n      firstName\n      lastName\n      image_url\n    }\n    createdAt\n    updatedAt\n  }\n}": types.PostsDocument,
     "query Reactions($where: ReactionWhereInput) {\n  reactions(where: $where) {\n    id\n    type\n    postId\n    commentId\n    author {\n      id\n      firstName\n      lastName\n    }\n    createdAt\n    updatedAt\n  }\n}": types.ReactionsDocument,
     "subscription UdpatePost {\n  udpatePost {\n    id\n    comments {\n      ...CommentFields\n    }\n    reactions {\n      ...ReactionFields\n    }\n  }\n}": types.UdpatePostDocument,
 };
@@ -59,7 +59,7 @@ export function graphql(source: "fragment ReactionFields on Reaction {\n  id\n  
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "fragment UserFields on User {\n  id\n  firstName\n  lastName\n  email\n  createdAt\n  updatedAt\n}"): (typeof documents)["fragment UserFields on User {\n  id\n  firstName\n  lastName\n  email\n  createdAt\n  updatedAt\n}"];
+export function graphql(source: "fragment UserFields on User {\n  id\n  firstName\n  lastName\n  email\n  image_url\n  createdAt\n  updatedAt\n}"): (typeof documents)["fragment UserFields on User {\n  id\n  firstName\n  lastName\n  email\n  image_url\n  createdAt\n  updatedAt\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -87,7 +87,7 @@ export function graphql(source: "mutation Register($data: RegisterInput!) {\n  r
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query Comments($where: CommentWhereInput) {\n  comments(where: $where) {\n    id\n    postId\n    replyId\n    body\n    author {\n      firstName\n      lastName\n    }\n    createdAt\n    updatedAt\n  }\n}"): (typeof documents)["query Comments($where: CommentWhereInput) {\n  comments(where: $where) {\n    id\n    postId\n    replyId\n    body\n    author {\n      firstName\n      lastName\n    }\n    createdAt\n    updatedAt\n  }\n}"];
+export function graphql(source: "query Comments($where: CommentWhereInput) {\n  comments(where: $where) {\n    id\n    postId\n    replyId\n    body\n    author {\n      firstName\n      lastName\n      image_url\n    }\n    createdAt\n    updatedAt\n  }\n}"): (typeof documents)["query Comments($where: CommentWhereInput) {\n  comments(where: $where) {\n    id\n    postId\n    replyId\n    body\n    author {\n      firstName\n      lastName\n      image_url\n    }\n    createdAt\n    updatedAt\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -95,7 +95,7 @@ export function graphql(source: "query Me {\n  me {\n    ...UserFields\n  }\n}")
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query Posts($cursor: PostWhereUniqueInput, $take: Int, $skip: Int, $orderBy: [PostOrderByWithRelationInput!]) {\n  posts(cursor: $cursor, take: $take, skip: $skip, orderBy: $orderBy) {\n    id\n    title\n    body\n    author {\n      id\n      firstName\n      lastName\n    }\n    createdAt\n    updatedAt\n  }\n}"): (typeof documents)["query Posts($cursor: PostWhereUniqueInput, $take: Int, $skip: Int, $orderBy: [PostOrderByWithRelationInput!]) {\n  posts(cursor: $cursor, take: $take, skip: $skip, orderBy: $orderBy) {\n    id\n    title\n    body\n    author {\n      id\n      firstName\n      lastName\n    }\n    createdAt\n    updatedAt\n  }\n}"];
+export function graphql(source: "query Posts($cursor: PostWhereUniqueInput, $take: Int, $skip: Int, $orderBy: [PostOrderByWithRelationInput!]) {\n  posts(cursor: $cursor, take: $take, skip: $skip, orderBy: $orderBy) {\n    id\n    title\n    body\n    author {\n      id\n      firstName\n      lastName\n      image_url\n    }\n    createdAt\n    updatedAt\n  }\n}"): (typeof documents)["query Posts($cursor: PostWhereUniqueInput, $take: Int, $skip: Int, $orderBy: [PostOrderByWithRelationInput!]) {\n  posts(cursor: $cursor, take: $take, skip: $skip, orderBy: $orderBy) {\n    id\n    title\n    body\n    author {\n      id\n      firstName\n      lastName\n      image_url\n    }\n    createdAt\n    updatedAt\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

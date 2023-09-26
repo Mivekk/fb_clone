@@ -14,6 +14,7 @@ type PostAuthorProps = Partial<UserFieldsFragment> & {
 };
 
 const PostAuthor: React.FC<PostAuthorProps> = ({
+  image_url,
   firstName,
   lastName,
   postCreatedAt,
@@ -21,7 +22,10 @@ const PostAuthor: React.FC<PostAuthorProps> = ({
   return (
     <div className="flex gap-1 items-center pt-2">
       <Avatar>
-        <AvatarImage src="/pic.png" className="h-10 w-10 rounded-full" />
+        <AvatarImage
+          src={`http://localhost:5000/fb_clone/${image_url}`}
+          className="h-10 w-10 rounded-full"
+        />
         <AvatarFallback />
       </Avatar>
       <div className="flex flex-col">

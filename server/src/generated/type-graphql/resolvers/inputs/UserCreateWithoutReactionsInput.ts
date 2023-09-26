@@ -27,6 +27,11 @@ export class UserCreateWithoutReactionsInput {
   })
   password?: string | undefined;
 
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  image_url?: string | undefined;
+
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
     nullable: true
   })

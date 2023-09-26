@@ -75,11 +75,8 @@ const main = async () => {
   );
 
   const s3rver = new S3rver({
-    port: 9000,
+    port: 5000,
     directory: "./s3",
-    configureBuckets: [
-      { name: "fb_clone", configs: [fs.readFileSync("./cors.xml")] },
-    ],
   });
 
   await s3rver.run();

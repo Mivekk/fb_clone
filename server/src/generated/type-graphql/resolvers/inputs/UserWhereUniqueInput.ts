@@ -53,6 +53,11 @@ export class UserWhereUniqueInput {
   })
   password?: StringNullableFilter | undefined;
 
+  @TypeGraphQL.Field(_type => StringNullableFilter, {
+    nullable: true
+  })
+  image_url?: StringNullableFilter | undefined;
+
   @TypeGraphQL.Field(_type => IntFilter, {
     nullable: true
   })

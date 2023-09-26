@@ -33,6 +33,11 @@ export class Post {
   })
   body!: string;
 
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  image_url?: string | null;
+
   comments?: Comment[];
 
   reactions?: Reaction[];

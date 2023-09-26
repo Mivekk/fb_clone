@@ -12,13 +12,17 @@ type CommentProps = {
   body: string;
   postId: number;
   createdAt: any;
+  image_url?: string | null;
 };
 
-const Comment: React.FC<CommentProps> = ({ body, createdAt }) => {
+const Comment: React.FC<CommentProps> = ({ body, createdAt, image_url }) => {
   return (
     <div className="flex mt-2">
       <Avatar className="h-8 w-8">
-        <AvatarImage src="/pic.png" className="h-8 w-8 rounded-full" />
+        <AvatarImage
+          src={`http://localhost:5000/fb_clone/${image_url}`}
+          className="h-8 w-8 rounded-full"
+        />
         <AvatarFallback />
       </Avatar>
       <div className="flex flex-col">

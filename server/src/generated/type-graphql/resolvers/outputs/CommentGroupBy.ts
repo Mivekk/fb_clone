@@ -37,6 +37,11 @@ export class CommentGroupBy {
   })
   body!: string;
 
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  image_url!: string | null;
+
   @TypeGraphQL.Field(_type => Date, {
     nullable: false
   })

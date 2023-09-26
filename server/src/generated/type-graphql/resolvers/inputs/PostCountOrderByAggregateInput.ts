@@ -25,4 +25,9 @@ export class PostCountOrderByAggregateInput {
     nullable: true
   })
   body?: "asc" | "desc" | undefined;
+
+  @TypeGraphQL.Field(_type => SortOrder, {
+    nullable: true
+  })
+  image_url?: "asc" | "desc" | undefined;
 }

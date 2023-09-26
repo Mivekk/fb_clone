@@ -5,6 +5,7 @@ import { DecimalJSScalar } from "../../scalars";
 import { CommentUpdateManyWithoutReplyNestedInput } from "../inputs/CommentUpdateManyWithoutReplyNestedInput";
 import { CommentUpdateOneWithoutRepliesNestedInput } from "../inputs/CommentUpdateOneWithoutRepliesNestedInput";
 import { DateTimeFieldUpdateOperationsInput } from "../inputs/DateTimeFieldUpdateOperationsInput";
+import { NullableStringFieldUpdateOperationsInput } from "../inputs/NullableStringFieldUpdateOperationsInput";
 import { ReactionUpdateManyWithoutCommentNestedInput } from "../inputs/ReactionUpdateManyWithoutCommentNestedInput";
 import { StringFieldUpdateOperationsInput } from "../inputs/StringFieldUpdateOperationsInput";
 import { UserUpdateOneRequiredWithoutCommentsNestedInput } from "../inputs/UserUpdateOneRequiredWithoutCommentsNestedInput";
@@ -15,6 +16,11 @@ export class CommentUpdateWithoutPostInput {
     nullable: true
   })
   body?: StringFieldUpdateOperationsInput | undefined;
+
+  @TypeGraphQL.Field(_type => NullableStringFieldUpdateOperationsInput, {
+    nullable: true
+  })
+  image_url?: NullableStringFieldUpdateOperationsInput | undefined;
 
   @TypeGraphQL.Field(_type => UserUpdateOneRequiredWithoutCommentsNestedInput, {
     nullable: true

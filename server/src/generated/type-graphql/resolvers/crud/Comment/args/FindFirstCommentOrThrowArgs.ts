@@ -35,5 +35,5 @@ export class FindFirstCommentOrThrowArgs {
   @TypeGraphQL.Field(_type => [CommentScalarFieldEnum], {
     nullable: true
   })
-  distinct?: Array<"id" | "authorId" | "postId" | "replyId" | "body" | "createdAt" | "updatedAt"> | undefined;
+  distinct?: Array<"id" | "authorId" | "postId" | "replyId" | "body" | "image_url" | "createdAt" | "updatedAt"> | undefined;
 }

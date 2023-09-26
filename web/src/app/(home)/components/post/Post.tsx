@@ -16,6 +16,7 @@ type PostProps = {
   createdAt: any;
   author: {
     id: number;
+    image_url?: string | null;
     firstName: string;
     lastName: string;
   };

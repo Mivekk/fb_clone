@@ -36,6 +36,11 @@ export class CommentOrderByWithRelationInput {
   })
   body?: "asc" | "desc" | undefined;
 
+  @TypeGraphQL.Field(_type => SortOrderInput, {
+    nullable: true
+  })
+  image_url?: SortOrderInput | undefined;
+
   @TypeGraphQL.Field(_type => UserOrderByWithRelationInput, {
     nullable: true
   })

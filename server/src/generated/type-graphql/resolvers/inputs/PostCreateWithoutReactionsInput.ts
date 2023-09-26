@@ -17,6 +17,11 @@ export class PostCreateWithoutReactionsInput {
   })
   body!: string;
 
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  image_url?: string | undefined;
+
   @TypeGraphQL.Field(_type => UserCreateNestedOneWithoutPostsInput, {
     nullable: false
   })

@@ -24,6 +24,7 @@ model User {
   lastName      String
   email         String     @unique
   password      String?
+  image_url     String?
   tokenVersion  Int        @default(0)
   posts         Post[]
   comments      Comment[]
@@ -40,6 +41,7 @@ model Post {
   authorId  Int
   title     String
   body      String
+  image_url String?
   comments  Comment[]
   reactions Reaction[]
   createdAt DateTime   @default(now())
@@ -57,6 +59,7 @@ model Comment {
   reply     Comment?   @relation("Replying", fields: [replyId], references: [id])
   replyId   Int?
   body      String
+  image_url String?
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
 }

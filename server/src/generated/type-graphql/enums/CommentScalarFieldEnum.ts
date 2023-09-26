@@ -6,6 +6,7 @@ export enum CommentScalarFieldEnum {
   postId = "postId",
   replyId = "replyId",
   body = "body",
+  image_url = "image_url",
   createdAt = "createdAt",
   updatedAt = "updatedAt"
 }

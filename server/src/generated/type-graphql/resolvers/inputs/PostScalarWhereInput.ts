@@ -5,6 +5,7 @@ import { DecimalJSScalar } from "../../scalars";
 import { DateTimeFilter } from "../inputs/DateTimeFilter";
 import { IntFilter } from "../inputs/IntFilter";
 import { StringFilter } from "../inputs/StringFilter";
+import { StringNullableFilter } from "../inputs/StringNullableFilter";
 
 @TypeGraphQL.InputType("PostScalarWhereInput", {})
 export class PostScalarWhereInput {
@@ -42,4 +43,9 @@ export class PostScalarWhereInput {
     nullable: true
   })
   body?: StringFilter | undefined;
+
+  @TypeGraphQL.Field(_type => StringNullableFilter, {
+    nullable: true
+  })
+  image_url?: StringNullableFilter | undefined;
 }

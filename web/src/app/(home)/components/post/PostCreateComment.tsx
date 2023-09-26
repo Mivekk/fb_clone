@@ -10,7 +10,8 @@ import { BiSend } from "react-icons/bi";
 import React, { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useMutation } from "@apollo/client";
-import { AddCommentDocument } from "@/generated/graphql";
+import { AddCommentDocument, MeDocument } from "@/generated/graphql";
+import { useQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 
 type PostCreateCommentProps = {
   postId: number;
@@ -24,6 +25,8 @@ const PostCreateComment: React.FC<PostCreateCommentProps> = ({
   setExpanded,
 }) => {
   const [text, setText] = useState<string>("");
+
+  const { data } = useQuery(MeDocument);
   const [addComment] = useMutation(AddCommentDocument);
 
   const ref = useRef<HTMLTextAreaElement>(null);
@@ -51,7 +54,12 @@ const PostCreateComment: React.FC<PostCreateCommentProps> = ({
   return (
     <div className="flex pt-2 pb-1">
       <Avatar className="h-8 w-8">
-        <AvatarImage src="/pic.png" className="h-8 w-8 rounded-full" />
+        {data?.me?.image_url && (
+          <AvatarImage
+            src={`http://localhost:5000/fb_clone/${data?.me?.image_url}`}
+            className="h-8 w-8 rounded-full"
+          />
+        )}
         <AvatarFallback />
       </Avatar>
       <form

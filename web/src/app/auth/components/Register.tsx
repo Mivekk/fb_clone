@@ -1,20 +1,37 @@
 "use client";
 
+import { RegisterDocument } from "@/generated/graphql";
+import { useMutation } from "@apollo/client";
+import { useRouter } from "next/navigation";
 import React, { useRef, useState } from "react";
 
-type RegisterUserData = Partial<{
+type RegisterUserData = {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
-}>;
+};
+
+export type ImageInfo = {
+  type: "user" | "post" | "comment";
+  id: number;
+};
 
 const Register: React.FC<{}> = ({}) => {
-  const [userData, setUserData] = useState<RegisterUserData>({});
+  const router = useRouter();
+
+  const [userData, setUserData] = useState<RegisterUserData>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
+
+  const [register] = useMutation(RegisterDocument);
 
   const ref = useRef<HTMLInputElement>(null);
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
     if (!ref.current?.files) {
@@ -22,7 +39,35 @@ const Register: React.FC<{}> = ({}) => {
       return;
     }
 
-    console.log("image:", ref.current.files[0]);
+    const result = await register({ variables: { data: userData } });
+
+    if (!result.data?.register.user) {
+      console.log("could not register");
+      return;
+    }
+
+    const image = ref.current.files[0];
+    const imageDbData: ImageInfo = {
+      type: "user",
+      id: result.data.register.user.id,
+    };
+
+    const formData = new FormData();
+    formData.append("dbData", JSON.stringify(imageDbData));
+    formData.append("image", image);
+
+    const response = await fetch("http://localhost:4000/api/image-upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response) {
+      console.log("could not fetch image-upload");
+      return;
+    }
+
+    router.refresh();
+    router.push("/");
   };
 
   return (
@@ -31,6 +76,7 @@ const Register: React.FC<{}> = ({}) => {
       <form
         onSubmit={(e) => handleSubmit(e)}
         className="flex flex-col w-[200px]"
+        encType="multipart/form-data"
       >
         <input
           type="text"
@@ -64,7 +110,7 @@ const Register: React.FC<{}> = ({}) => {
             setUserData((prev) => ({ ...prev, password: e.target.value }))
           }
         />
-        <input type="file" ref={ref} />
+        <input type="file" name="image" ref={ref} />
         <button>Submit</button>
       </form>
     </div>

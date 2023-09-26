@@ -32,6 +32,11 @@ export class UserMaxAggregate {
   })
   password!: string | null;
 
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  image_url!: string | null;
+
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
     nullable: true
   })

@@ -15,7 +15,11 @@ const PostComments: React.FC<PostCommentsProps> = ({ postId }) => {
   });
 
   const comments = data.comments.map((comment) => (
-    <Comment key={comment.id} {...comment} />
+    <Comment
+      key={comment.id}
+      {...comment}
+      image_url={comment.author.image_url}
+    />
   ));
 
   return <div>{comments}</div>;

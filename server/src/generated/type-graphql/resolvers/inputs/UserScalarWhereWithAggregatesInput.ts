@@ -49,6 +49,11 @@ export class UserScalarWhereWithAggregatesInput {
   })
   password?: StringNullableWithAggregatesFilter | undefined;
 
+  @TypeGraphQL.Field(_type => StringNullableWithAggregatesFilter, {
+    nullable: true
+  })
+  image_url?: StringNullableWithAggregatesFilter | undefined;
+
   @TypeGraphQL.Field(_type => IntWithAggregatesFilter, {
     nullable: true
   })

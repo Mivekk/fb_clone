@@ -53,7 +53,7 @@ export class UserResolver {
 
   @Mutation(() => RegisterResponseObject)
   async register(
-    @Ctx() { prisma }: MyApolloContext,
+    @Ctx() { prisma, res }: MyApolloContext,
     @Arg("data") data: RegisterInput
   ): Promise<RegisterResponseObject> {
     const userExists = await prisma.user.findUnique({
@@ -86,6 +86,8 @@ export class UserResolver {
     const user = await prisma.user.create({
       data: { ...data, password: hashedPassword },
     });
+
+    sendRefreshToken(res, createRefreshToken(user));
 
     return { user };
   }

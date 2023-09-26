@@ -17,6 +17,11 @@ export class PostCreateWithoutAuthorInput {
   })
   body!: string;
 
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  image_url?: string | undefined;
+
   @TypeGraphQL.Field(_type => CommentCreateNestedManyWithoutPostInput, {
     nullable: true
   })

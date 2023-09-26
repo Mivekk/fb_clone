@@ -12,6 +12,7 @@ query Posts(
       id
       firstName
       lastName
+      image_url
     }
     createdAt
     updatedAt

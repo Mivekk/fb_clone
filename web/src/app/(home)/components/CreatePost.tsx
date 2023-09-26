@@ -18,8 +18,13 @@ import {
 import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
 import { Textarea } from "@/app/components/ui/textarea";
-import { CreatePostDocument, PostsDocument } from "@/generated/graphql";
+import {
+  CreatePostDocument,
+  MeDocument,
+  PostsDocument,
+} from "@/generated/graphql";
 import { useMutation } from "@apollo/client";
+import { useQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import { DialogClose } from "@radix-ui/react-dialog";
 import React, { useState } from "react";
 
@@ -27,6 +32,7 @@ const CreatePost: React.FC<{}> = ({}) => {
   const [title, setTitle] = useState<string>("");
   const [body, setBody] = useState<string>("");
 
+  const { data } = useQuery(MeDocument);
   const [createPost, { client }] = useMutation(CreatePostDocument);
 
   const handleClick = async () => {
@@ -51,7 +57,12 @@ const CreatePost: React.FC<{}> = ({}) => {
   return (
     <div className="p-2 mt-2 rounded-md md:w-[32rem] sm:w-[24rem] w-[18rem] shadow-md bg-white flex items-center">
       <Avatar>
-        <AvatarImage src="/pic.png" className="h-10 w-10 rounded-full" />
+        {data?.me?.image_url && (
+          <AvatarImage
+            src={`http://localhost:5000/fb_clone/${data?.me?.image_url}`}
+            className="h-10 w-10 rounded-full"
+          />
+        )}
         <AvatarFallback />
       </Avatar>
       <Dialog>

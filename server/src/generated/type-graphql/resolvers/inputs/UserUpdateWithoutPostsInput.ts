@@ -31,6 +31,11 @@ export class UserUpdateWithoutPostsInput {
   })
   password?: NullableStringFieldUpdateOperationsInput | undefined;
 
+  @TypeGraphQL.Field(_type => NullableStringFieldUpdateOperationsInput, {
+    nullable: true
+  })
+  image_url?: NullableStringFieldUpdateOperationsInput | undefined;
+
   @TypeGraphQL.Field(_type => IntFieldUpdateOperationsInput, {
     nullable: true
   })

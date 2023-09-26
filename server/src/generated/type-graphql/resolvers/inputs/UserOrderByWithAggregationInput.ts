@@ -37,6 +37,11 @@ export class UserOrderByWithAggregationInput {
   })
   password?: SortOrderInput | undefined;
 
+  @TypeGraphQL.Field(_type => SortOrderInput, {
+    nullable: true
+  })
+  image_url?: SortOrderInput | undefined;
+
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
   })

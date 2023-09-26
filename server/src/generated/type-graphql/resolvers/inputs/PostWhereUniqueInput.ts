@@ -8,6 +8,7 @@ import { IntFilter } from "../inputs/IntFilter";
 import { PostWhereInput } from "../inputs/PostWhereInput";
 import { ReactionListRelationFilter } from "../inputs/ReactionListRelationFilter";
 import { StringFilter } from "../inputs/StringFilter";
+import { StringNullableFilter } from "../inputs/StringNullableFilter";
 import { UserRelationFilter } from "../inputs/UserRelationFilter";
 
 @TypeGraphQL.InputType("PostWhereUniqueInput", {})
@@ -46,6 +47,11 @@ export class PostWhereUniqueInput {
     nullable: true
   })
   body?: StringFilter | undefined;
+
+  @TypeGraphQL.Field(_type => StringNullableFilter, {
+    nullable: true
+  })
+  image_url?: StringNullableFilter | undefined;
 
   @TypeGraphQL.Field(_type => UserRelationFilter, {
     nullable: true

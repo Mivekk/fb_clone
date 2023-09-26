@@ -11,6 +11,7 @@ import { IntNullableFilter } from "../inputs/IntNullableFilter";
 import { PostRelationFilter } from "../inputs/PostRelationFilter";
 import { ReactionListRelationFilter } from "../inputs/ReactionListRelationFilter";
 import { StringFilter } from "../inputs/StringFilter";
+import { StringNullableFilter } from "../inputs/StringNullableFilter";
 import { UserRelationFilter } from "../inputs/UserRelationFilter";
 
 @TypeGraphQL.InputType("CommentWhereUniqueInput", {})
@@ -54,6 +55,11 @@ export class CommentWhereUniqueInput {
     nullable: true
   })
   body?: StringFilter | undefined;
+
+  @TypeGraphQL.Field(_type => StringNullableFilter, {
+    nullable: true
+  })
+  image_url?: StringNullableFilter | undefined;
 
   @TypeGraphQL.Field(_type => UserRelationFilter, {
     nullable: true

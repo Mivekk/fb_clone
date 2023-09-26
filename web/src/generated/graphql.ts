@@ -83,6 +83,7 @@ export type Comment = {
   body: Scalars['String']['output'];
   createdAt: Scalars['DateTimeISO']['output'];
   id: Scalars['Int']['output'];
+  image_url?: Maybe<Scalars['String']['output']>;
   post: Post;
   postId: Scalars['Int']['output'];
   reactions: Array<Reaction>;
@@ -155,6 +156,7 @@ export type CommentCountAggregate = {
   body: Scalars['Int']['output'];
   createdAt: Scalars['Int']['output'];
   id: Scalars['Int']['output'];
+  image_url: Scalars['Int']['output'];
   postId: Scalars['Int']['output'];
   replyId: Scalars['Int']['output'];
   updatedAt: Scalars['Int']['output'];
@@ -164,6 +166,7 @@ export type CommentCountOrderByAggregateInput = {
   authorId?: InputMaybe<SortOrder>;
   body?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  image_url?: InputMaybe<SortOrder>;
   postId?: InputMaybe<SortOrder>;
   replyId?: InputMaybe<SortOrder>;
 };
@@ -171,6 +174,7 @@ export type CommentCountOrderByAggregateInput = {
 export type CommentCreateInput = {
   author: UserCreateNestedOneWithoutCommentsInput;
   body: Scalars['String']['input'];
+  image_url?: InputMaybe<Scalars['String']['input']>;
   post: PostCreateNestedOneWithoutCommentsInput;
   reactions?: InputMaybe<ReactionCreateNestedManyWithoutCommentInput>;
   replies?: InputMaybe<CommentCreateNestedManyWithoutReplyInput>;
@@ -180,6 +184,7 @@ export type CommentCreateInput = {
 export type CommentCreateManyAuthorInput = {
   body: Scalars['String']['input'];
   id?: InputMaybe<Scalars['Int']['input']>;
+  image_url?: InputMaybe<Scalars['String']['input']>;
   postId: Scalars['Int']['input'];
   replyId?: InputMaybe<Scalars['Int']['input']>;
 };
@@ -193,6 +198,7 @@ export type CommentCreateManyInput = {
   authorId: Scalars['Int']['input'];
   body: Scalars['String']['input'];
   id?: InputMaybe<Scalars['Int']['input']>;
+  image_url?: InputMaybe<Scalars['String']['input']>;
   postId: Scalars['Int']['input'];
   replyId?: InputMaybe<Scalars['Int']['input']>;
 };
@@ -201,6 +207,7 @@ export type CommentCreateManyPostInput = {
   authorId: Scalars['Int']['input'];
   body: Scalars['String']['input'];
   id?: InputMaybe<Scalars['Int']['input']>;
+  image_url?: InputMaybe<Scalars['String']['input']>;
   replyId?: InputMaybe<Scalars['Int']['input']>;
 };
 
@@ -213,6 +220,7 @@ export type CommentCreateManyReplyInput = {
   authorId: Scalars['Int']['input'];
   body: Scalars['String']['input'];
   id?: InputMaybe<Scalars['Int']['input']>;
+  image_url?: InputMaybe<Scalars['String']['input']>;
   postId: Scalars['Int']['input'];
 };
 
@@ -281,6 +289,7 @@ export type CommentCreateOrConnectWithoutReplyInput = {
 
 export type CommentCreateWithoutAuthorInput = {
   body: Scalars['String']['input'];
+  image_url?: InputMaybe<Scalars['String']['input']>;
   post: PostCreateNestedOneWithoutCommentsInput;
   reactions?: InputMaybe<ReactionCreateNestedManyWithoutCommentInput>;
   replies?: InputMaybe<CommentCreateNestedManyWithoutReplyInput>;
@@ -290,6 +299,7 @@ export type CommentCreateWithoutAuthorInput = {
 export type CommentCreateWithoutPostInput = {
   author: UserCreateNestedOneWithoutCommentsInput;
   body: Scalars['String']['input'];
+  image_url?: InputMaybe<Scalars['String']['input']>;
   reactions?: InputMaybe<ReactionCreateNestedManyWithoutCommentInput>;
   replies?: InputMaybe<CommentCreateNestedManyWithoutReplyInput>;
   reply?: InputMaybe<CommentCreateNestedOneWithoutRepliesInput>;
@@ -298,6 +308,7 @@ export type CommentCreateWithoutPostInput = {
 export type CommentCreateWithoutReactionsInput = {
   author: UserCreateNestedOneWithoutCommentsInput;
   body: Scalars['String']['input'];
+  image_url?: InputMaybe<Scalars['String']['input']>;
   post: PostCreateNestedOneWithoutCommentsInput;
   replies?: InputMaybe<CommentCreateNestedManyWithoutReplyInput>;
   reply?: InputMaybe<CommentCreateNestedOneWithoutRepliesInput>;
@@ -306,6 +317,7 @@ export type CommentCreateWithoutReactionsInput = {
 export type CommentCreateWithoutRepliesInput = {
   author: UserCreateNestedOneWithoutCommentsInput;
   body: Scalars['String']['input'];
+  image_url?: InputMaybe<Scalars['String']['input']>;
   post: PostCreateNestedOneWithoutCommentsInput;
   reactions?: InputMaybe<ReactionCreateNestedManyWithoutCommentInput>;
   reply?: InputMaybe<CommentCreateNestedOneWithoutRepliesInput>;
@@ -314,6 +326,7 @@ export type CommentCreateWithoutRepliesInput = {
 export type CommentCreateWithoutReplyInput = {
   author: UserCreateNestedOneWithoutCommentsInput;
   body: Scalars['String']['input'];
+  image_url?: InputMaybe<Scalars['String']['input']>;
   post: PostCreateNestedOneWithoutCommentsInput;
   reactions?: InputMaybe<ReactionCreateNestedManyWithoutCommentInput>;
   replies?: InputMaybe<CommentCreateNestedManyWithoutReplyInput>;
@@ -330,6 +343,7 @@ export type CommentGroupBy = {
   body: Scalars['String']['output'];
   createdAt: Scalars['DateTimeISO']['output'];
   id: Scalars['Int']['output'];
+  image_url?: Maybe<Scalars['String']['output']>;
   postId: Scalars['Int']['output'];
   replyId?: Maybe<Scalars['Int']['output']>;
   updatedAt: Scalars['DateTimeISO']['output'];
@@ -347,6 +361,7 @@ export type CommentMaxAggregate = {
   body?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['DateTimeISO']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
+  image_url?: Maybe<Scalars['String']['output']>;
   postId?: Maybe<Scalars['Int']['output']>;
   replyId?: Maybe<Scalars['Int']['output']>;
   updatedAt?: Maybe<Scalars['DateTimeISO']['output']>;
@@ -356,6 +371,7 @@ export type CommentMaxOrderByAggregateInput = {
   authorId?: InputMaybe<SortOrder>;
   body?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  image_url?: InputMaybe<SortOrder>;
   postId?: InputMaybe<SortOrder>;
   replyId?: InputMaybe<SortOrder>;
 };
@@ -366,6 +382,7 @@ export type CommentMinAggregate = {
   body?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['DateTimeISO']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
+  image_url?: Maybe<Scalars['String']['output']>;
   postId?: Maybe<Scalars['Int']['output']>;
   replyId?: Maybe<Scalars['Int']['output']>;
   updatedAt?: Maybe<Scalars['DateTimeISO']['output']>;
@@ -375,6 +392,7 @@ export type CommentMinOrderByAggregateInput = {
   authorId?: InputMaybe<SortOrder>;
   body?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  image_url?: InputMaybe<SortOrder>;
   postId?: InputMaybe<SortOrder>;
   replyId?: InputMaybe<SortOrder>;
 };
@@ -397,6 +415,7 @@ export type CommentOrderByWithAggregationInput = {
   authorId?: InputMaybe<SortOrder>;
   body?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  image_url?: InputMaybe<SortOrderInput>;
   postId?: InputMaybe<SortOrder>;
   replyId?: InputMaybe<SortOrderInput>;
 };
@@ -406,6 +425,7 @@ export type CommentOrderByWithRelationInput = {
   authorId?: InputMaybe<SortOrder>;
   body?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  image_url?: InputMaybe<SortOrderInput>;
   post?: InputMaybe<PostOrderByWithRelationInput>;
   postId?: InputMaybe<SortOrder>;
   reactions?: InputMaybe<ReactionOrderByRelationAggregateInput>;
@@ -419,6 +439,7 @@ export enum CommentScalarFieldEnum {
   Body = 'body',
   CreatedAt = 'createdAt',
   Id = 'id',
+  ImageUrl = 'image_url',
   PostId = 'postId',
   ReplyId = 'replyId',
   UpdatedAt = 'updatedAt'
@@ -431,6 +452,7 @@ export type CommentScalarWhereInput = {
   authorId?: InputMaybe<IntFilter>;
   body?: InputMaybe<StringFilter>;
   id?: InputMaybe<IntFilter>;
+  image_url?: InputMaybe<StringNullableFilter>;
   postId?: InputMaybe<IntFilter>;
   replyId?: InputMaybe<IntNullableFilter>;
 };
@@ -442,6 +464,7 @@ export type CommentScalarWhereWithAggregatesInput = {
   authorId?: InputMaybe<IntWithAggregatesFilter>;
   body?: InputMaybe<StringWithAggregatesFilter>;
   id?: InputMaybe<IntWithAggregatesFilter>;
+  image_url?: InputMaybe<StringNullableWithAggregatesFilter>;
   postId?: InputMaybe<IntWithAggregatesFilter>;
   replyId?: InputMaybe<IntNullableWithAggregatesFilter>;
 };
@@ -464,6 +487,7 @@ export type CommentSumOrderByAggregateInput = {
 export type CommentUpdateInput = {
   author?: InputMaybe<UserUpdateOneRequiredWithoutCommentsNestedInput>;
   body?: InputMaybe<StringFieldUpdateOperationsInput>;
+  image_url?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   post?: InputMaybe<PostUpdateOneRequiredWithoutCommentsNestedInput>;
   reactions?: InputMaybe<ReactionUpdateManyWithoutCommentNestedInput>;
   replies?: InputMaybe<CommentUpdateManyWithoutReplyNestedInput>;
@@ -472,6 +496,7 @@ export type CommentUpdateInput = {
 
 export type CommentUpdateManyMutationInput = {
   body?: InputMaybe<StringFieldUpdateOperationsInput>;
+  image_url?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
 };
 
 export type CommentUpdateManyWithWhereWithoutAuthorInput = {
@@ -578,6 +603,7 @@ export type CommentUpdateWithWhereUniqueWithoutReplyInput = {
 
 export type CommentUpdateWithoutAuthorInput = {
   body?: InputMaybe<StringFieldUpdateOperationsInput>;
+  image_url?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   post?: InputMaybe<PostUpdateOneRequiredWithoutCommentsNestedInput>;
   reactions?: InputMaybe<ReactionUpdateManyWithoutCommentNestedInput>;
   replies?: InputMaybe<CommentUpdateManyWithoutReplyNestedInput>;
@@ -587,6 +613,7 @@ export type CommentUpdateWithoutAuthorInput = {
 export type CommentUpdateWithoutPostInput = {
   author?: InputMaybe<UserUpdateOneRequiredWithoutCommentsNestedInput>;
   body?: InputMaybe<StringFieldUpdateOperationsInput>;
+  image_url?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   reactions?: InputMaybe<ReactionUpdateManyWithoutCommentNestedInput>;
   replies?: InputMaybe<CommentUpdateManyWithoutReplyNestedInput>;
   reply?: InputMaybe<CommentUpdateOneWithoutRepliesNestedInput>;
@@ -595,6 +622,7 @@ export type CommentUpdateWithoutPostInput = {
 export type CommentUpdateWithoutReactionsInput = {
   author?: InputMaybe<UserUpdateOneRequiredWithoutCommentsNestedInput>;
   body?: InputMaybe<StringFieldUpdateOperationsInput>;
+  image_url?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   post?: InputMaybe<PostUpdateOneRequiredWithoutCommentsNestedInput>;
   replies?: InputMaybe<CommentUpdateManyWithoutReplyNestedInput>;
   reply?: InputMaybe<CommentUpdateOneWithoutRepliesNestedInput>;
@@ -603,6 +631,7 @@ export type CommentUpdateWithoutReactionsInput = {
 export type CommentUpdateWithoutRepliesInput = {
   author?: InputMaybe<UserUpdateOneRequiredWithoutCommentsNestedInput>;
   body?: InputMaybe<StringFieldUpdateOperationsInput>;
+  image_url?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   post?: InputMaybe<PostUpdateOneRequiredWithoutCommentsNestedInput>;
   reactions?: InputMaybe<ReactionUpdateManyWithoutCommentNestedInput>;
   reply?: InputMaybe<CommentUpdateOneWithoutRepliesNestedInput>;
@@ -611,6 +640,7 @@ export type CommentUpdateWithoutRepliesInput = {
 export type CommentUpdateWithoutReplyInput = {
   author?: InputMaybe<UserUpdateOneRequiredWithoutCommentsNestedInput>;
   body?: InputMaybe<StringFieldUpdateOperationsInput>;
+  image_url?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   post?: InputMaybe<PostUpdateOneRequiredWithoutCommentsNestedInput>;
   reactions?: InputMaybe<ReactionUpdateManyWithoutCommentNestedInput>;
   replies?: InputMaybe<CommentUpdateManyWithoutReplyNestedInput>;
@@ -654,6 +684,7 @@ export type CommentWhereInput = {
   authorId?: InputMaybe<IntFilter>;
   body?: InputMaybe<StringFilter>;
   id?: InputMaybe<IntFilter>;
+  image_url?: InputMaybe<StringNullableFilter>;
   post?: InputMaybe<PostRelationFilter>;
   postId?: InputMaybe<IntFilter>;
   reactions?: InputMaybe<ReactionListRelationFilter>;
@@ -670,6 +701,7 @@ export type CommentWhereUniqueInput = {
   authorId?: InputMaybe<IntFilter>;
   body?: InputMaybe<StringFilter>;
   id?: InputMaybe<Scalars['Int']['input']>;
+  image_url?: InputMaybe<StringNullableFilter>;
   post?: InputMaybe<PostRelationFilter>;
   postId?: InputMaybe<IntFilter>;
   reactions?: InputMaybe<ReactionListRelationFilter>;
@@ -1192,6 +1224,7 @@ export type Post = {
   comments: Array<Comment>;
   createdAt: Scalars['DateTimeISO']['output'];
   id: Scalars['Int']['output'];
+  image_url?: Maybe<Scalars['String']['output']>;
   reactions: Array<Reaction>;
   title: Scalars['String']['output'];
   updatedAt: Scalars['DateTimeISO']['output'];
@@ -1251,6 +1284,7 @@ export type PostCountAggregate = {
   body: Scalars['Int']['output'];
   createdAt: Scalars['Int']['output'];
   id: Scalars['Int']['output'];
+  image_url: Scalars['Int']['output'];
   title: Scalars['Int']['output'];
   updatedAt: Scalars['Int']['output'];
 };
@@ -1259,6 +1293,7 @@ export type PostCountOrderByAggregateInput = {
   authorId?: InputMaybe<SortOrder>;
   body?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  image_url?: InputMaybe<SortOrder>;
   title?: InputMaybe<SortOrder>;
 };
 
@@ -1266,6 +1301,7 @@ export type PostCreateInput = {
   author: UserCreateNestedOneWithoutPostsInput;
   body: Scalars['String']['input'];
   comments?: InputMaybe<CommentCreateNestedManyWithoutPostInput>;
+  image_url?: InputMaybe<Scalars['String']['input']>;
   reactions?: InputMaybe<ReactionCreateNestedManyWithoutPostInput>;
   title: Scalars['String']['input'];
 };
@@ -1273,6 +1309,7 @@ export type PostCreateInput = {
 export type PostCreateManyAuthorInput = {
   body: Scalars['String']['input'];
   id?: InputMaybe<Scalars['Int']['input']>;
+  image_url?: InputMaybe<Scalars['String']['input']>;
   title: Scalars['String']['input'];
 };
 
@@ -1285,6 +1322,7 @@ export type PostCreateManyInput = {
   authorId: Scalars['Int']['input'];
   body: Scalars['String']['input'];
   id?: InputMaybe<Scalars['Int']['input']>;
+  image_url?: InputMaybe<Scalars['String']['input']>;
   title: Scalars['String']['input'];
 };
 
@@ -1325,6 +1363,7 @@ export type PostCreateOrConnectWithoutReactionsInput = {
 export type PostCreateWithoutAuthorInput = {
   body: Scalars['String']['input'];
   comments?: InputMaybe<CommentCreateNestedManyWithoutPostInput>;
+  image_url?: InputMaybe<Scalars['String']['input']>;
   reactions?: InputMaybe<ReactionCreateNestedManyWithoutPostInput>;
   title: Scalars['String']['input'];
 };
@@ -1332,6 +1371,7 @@ export type PostCreateWithoutAuthorInput = {
 export type PostCreateWithoutCommentsInput = {
   author: UserCreateNestedOneWithoutPostsInput;
   body: Scalars['String']['input'];
+  image_url?: InputMaybe<Scalars['String']['input']>;
   reactions?: InputMaybe<ReactionCreateNestedManyWithoutPostInput>;
   title: Scalars['String']['input'];
 };
@@ -1340,6 +1380,7 @@ export type PostCreateWithoutReactionsInput = {
   author: UserCreateNestedOneWithoutPostsInput;
   body: Scalars['String']['input'];
   comments?: InputMaybe<CommentCreateNestedManyWithoutPostInput>;
+  image_url?: InputMaybe<Scalars['String']['input']>;
   title: Scalars['String']['input'];
 };
 
@@ -1361,6 +1402,7 @@ export type PostGroupBy = {
   body: Scalars['String']['output'];
   createdAt: Scalars['DateTimeISO']['output'];
   id: Scalars['Int']['output'];
+  image_url?: Maybe<Scalars['String']['output']>;
   title: Scalars['String']['output'];
   updatedAt: Scalars['DateTimeISO']['output'];
 };
@@ -1377,6 +1419,7 @@ export type PostMaxAggregate = {
   body?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['DateTimeISO']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
+  image_url?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTimeISO']['output']>;
 };
@@ -1385,6 +1428,7 @@ export type PostMaxOrderByAggregateInput = {
   authorId?: InputMaybe<SortOrder>;
   body?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  image_url?: InputMaybe<SortOrder>;
   title?: InputMaybe<SortOrder>;
 };
 
@@ -1394,6 +1438,7 @@ export type PostMinAggregate = {
   body?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['DateTimeISO']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
+  image_url?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTimeISO']['output']>;
 };
@@ -1402,6 +1447,7 @@ export type PostMinOrderByAggregateInput = {
   authorId?: InputMaybe<SortOrder>;
   body?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  image_url?: InputMaybe<SortOrder>;
   title?: InputMaybe<SortOrder>;
 };
 
@@ -1418,6 +1464,7 @@ export type PostOrderByWithAggregationInput = {
   authorId?: InputMaybe<SortOrder>;
   body?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  image_url?: InputMaybe<SortOrderInput>;
   title?: InputMaybe<SortOrder>;
 };
 
@@ -1427,6 +1474,7 @@ export type PostOrderByWithRelationInput = {
   body?: InputMaybe<SortOrder>;
   comments?: InputMaybe<CommentOrderByRelationAggregateInput>;
   id?: InputMaybe<SortOrder>;
+  image_url?: InputMaybe<SortOrderInput>;
   reactions?: InputMaybe<ReactionOrderByRelationAggregateInput>;
   title?: InputMaybe<SortOrder>;
 };
@@ -1441,6 +1489,7 @@ export enum PostScalarFieldEnum {
   Body = 'body',
   CreatedAt = 'createdAt',
   Id = 'id',
+  ImageUrl = 'image_url',
   Title = 'title',
   UpdatedAt = 'updatedAt'
 }
@@ -1452,6 +1501,7 @@ export type PostScalarWhereInput = {
   authorId?: InputMaybe<IntFilter>;
   body?: InputMaybe<StringFilter>;
   id?: InputMaybe<IntFilter>;
+  image_url?: InputMaybe<StringNullableFilter>;
   title?: InputMaybe<StringFilter>;
 };
 
@@ -1462,6 +1512,7 @@ export type PostScalarWhereWithAggregatesInput = {
   authorId?: InputMaybe<IntWithAggregatesFilter>;
   body?: InputMaybe<StringWithAggregatesFilter>;
   id?: InputMaybe<IntWithAggregatesFilter>;
+  image_url?: InputMaybe<StringNullableWithAggregatesFilter>;
   title?: InputMaybe<StringWithAggregatesFilter>;
 };
 
@@ -1480,12 +1531,14 @@ export type PostUpdateInput = {
   author?: InputMaybe<UserUpdateOneRequiredWithoutPostsNestedInput>;
   body?: InputMaybe<StringFieldUpdateOperationsInput>;
   comments?: InputMaybe<CommentUpdateManyWithoutPostNestedInput>;
+  image_url?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   reactions?: InputMaybe<ReactionUpdateManyWithoutPostNestedInput>;
   title?: InputMaybe<StringFieldUpdateOperationsInput>;
 };
 
 export type PostUpdateManyMutationInput = {
   body?: InputMaybe<StringFieldUpdateOperationsInput>;
+  image_url?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   title?: InputMaybe<StringFieldUpdateOperationsInput>;
 };
 
@@ -1542,6 +1595,7 @@ export type PostUpdateWithWhereUniqueWithoutAuthorInput = {
 export type PostUpdateWithoutAuthorInput = {
   body?: InputMaybe<StringFieldUpdateOperationsInput>;
   comments?: InputMaybe<CommentUpdateManyWithoutPostNestedInput>;
+  image_url?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   reactions?: InputMaybe<ReactionUpdateManyWithoutPostNestedInput>;
   title?: InputMaybe<StringFieldUpdateOperationsInput>;
 };
@@ -1549,6 +1603,7 @@ export type PostUpdateWithoutAuthorInput = {
 export type PostUpdateWithoutCommentsInput = {
   author?: InputMaybe<UserUpdateOneRequiredWithoutPostsNestedInput>;
   body?: InputMaybe<StringFieldUpdateOperationsInput>;
+  image_url?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   reactions?: InputMaybe<ReactionUpdateManyWithoutPostNestedInput>;
   title?: InputMaybe<StringFieldUpdateOperationsInput>;
 };
@@ -1557,6 +1612,7 @@ export type PostUpdateWithoutReactionsInput = {
   author?: InputMaybe<UserUpdateOneRequiredWithoutPostsNestedInput>;
   body?: InputMaybe<StringFieldUpdateOperationsInput>;
   comments?: InputMaybe<CommentUpdateManyWithoutPostNestedInput>;
+  image_url?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   title?: InputMaybe<StringFieldUpdateOperationsInput>;
 };
 
@@ -1587,6 +1643,7 @@ export type PostWhereInput = {
   body?: InputMaybe<StringFilter>;
   comments?: InputMaybe<CommentListRelationFilter>;
   id?: InputMaybe<IntFilter>;
+  image_url?: InputMaybe<StringNullableFilter>;
   reactions?: InputMaybe<ReactionListRelationFilter>;
   title?: InputMaybe<StringFilter>;
 };
@@ -1600,6 +1657,7 @@ export type PostWhereUniqueInput = {
   body?: InputMaybe<StringFilter>;
   comments?: InputMaybe<CommentListRelationFilter>;
   id?: InputMaybe<Scalars['Int']['input']>;
+  image_url?: InputMaybe<StringNullableFilter>;
   reactions?: InputMaybe<ReactionListRelationFilter>;
   title?: InputMaybe<StringFilter>;
 };
@@ -2438,6 +2496,7 @@ export type User = {
   external_type?: Maybe<Scalars['String']['output']>;
   firstName: Scalars['String']['output'];
   id: Scalars['Int']['output'];
+  image_url?: Maybe<Scalars['String']['output']>;
   lastName: Scalars['String']['output'];
   posts: Array<Post>;
   reactions: Array<Reaction>;
@@ -2517,6 +2576,7 @@ export type UserCountAggregate = {
   external_type: Scalars['Int']['output'];
   firstName: Scalars['Int']['output'];
   id: Scalars['Int']['output'];
+  image_url: Scalars['Int']['output'];
   lastName: Scalars['Int']['output'];
   password: Scalars['Int']['output'];
   tokenVersion: Scalars['Int']['output'];
@@ -2529,6 +2589,7 @@ export type UserCountOrderByAggregateInput = {
   external_type?: InputMaybe<SortOrder>;
   firstName?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  image_url?: InputMaybe<SortOrder>;
   lastName?: InputMaybe<SortOrder>;
   password?: InputMaybe<SortOrder>;
   tokenVersion?: InputMaybe<SortOrder>;
@@ -2540,6 +2601,7 @@ export type UserCreateInput = {
   external_id?: InputMaybe<Scalars['String']['input']>;
   external_type?: InputMaybe<Scalars['String']['input']>;
   firstName: Scalars['String']['input'];
+  image_url?: InputMaybe<Scalars['String']['input']>;
   lastName: Scalars['String']['input'];
   password?: InputMaybe<Scalars['String']['input']>;
   posts?: InputMaybe<PostCreateNestedManyWithoutAuthorInput>;
@@ -2553,6 +2615,7 @@ export type UserCreateManyInput = {
   external_type?: InputMaybe<Scalars['String']['input']>;
   firstName: Scalars['String']['input'];
   id?: InputMaybe<Scalars['Int']['input']>;
+  image_url?: InputMaybe<Scalars['String']['input']>;
   lastName: Scalars['String']['input'];
   password?: InputMaybe<Scalars['String']['input']>;
   tokenVersion?: InputMaybe<Scalars['Int']['input']>;
@@ -2596,6 +2659,7 @@ export type UserCreateWithoutCommentsInput = {
   external_id?: InputMaybe<Scalars['String']['input']>;
   external_type?: InputMaybe<Scalars['String']['input']>;
   firstName: Scalars['String']['input'];
+  image_url?: InputMaybe<Scalars['String']['input']>;
   lastName: Scalars['String']['input'];
   password?: InputMaybe<Scalars['String']['input']>;
   posts?: InputMaybe<PostCreateNestedManyWithoutAuthorInput>;
@@ -2609,6 +2673,7 @@ export type UserCreateWithoutPostsInput = {
   external_id?: InputMaybe<Scalars['String']['input']>;
   external_type?: InputMaybe<Scalars['String']['input']>;
   firstName: Scalars['String']['input'];
+  image_url?: InputMaybe<Scalars['String']['input']>;
   lastName: Scalars['String']['input'];
   password?: InputMaybe<Scalars['String']['input']>;
   reactions?: InputMaybe<ReactionCreateNestedManyWithoutAuthorInput>;
@@ -2621,6 +2686,7 @@ export type UserCreateWithoutReactionsInput = {
   external_id?: InputMaybe<Scalars['String']['input']>;
   external_type?: InputMaybe<Scalars['String']['input']>;
   firstName: Scalars['String']['input'];
+  image_url?: InputMaybe<Scalars['String']['input']>;
   lastName: Scalars['String']['input'];
   password?: InputMaybe<Scalars['String']['input']>;
   posts?: InputMaybe<PostCreateNestedManyWithoutAuthorInput>;
@@ -2640,6 +2706,7 @@ export type UserGroupBy = {
   external_type?: Maybe<Scalars['String']['output']>;
   firstName: Scalars['String']['output'];
   id: Scalars['Int']['output'];
+  image_url?: Maybe<Scalars['String']['output']>;
   lastName: Scalars['String']['output'];
   password?: Maybe<Scalars['String']['output']>;
   tokenVersion: Scalars['Int']['output'];
@@ -2654,6 +2721,7 @@ export type UserMaxAggregate = {
   external_type?: Maybe<Scalars['String']['output']>;
   firstName?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
+  image_url?: Maybe<Scalars['String']['output']>;
   lastName?: Maybe<Scalars['String']['output']>;
   password?: Maybe<Scalars['String']['output']>;
   tokenVersion?: Maybe<Scalars['Int']['output']>;
@@ -2666,6 +2734,7 @@ export type UserMaxOrderByAggregateInput = {
   external_type?: InputMaybe<SortOrder>;
   firstName?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  image_url?: InputMaybe<SortOrder>;
   lastName?: InputMaybe<SortOrder>;
   password?: InputMaybe<SortOrder>;
   tokenVersion?: InputMaybe<SortOrder>;
@@ -2679,6 +2748,7 @@ export type UserMinAggregate = {
   external_type?: Maybe<Scalars['String']['output']>;
   firstName?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
+  image_url?: Maybe<Scalars['String']['output']>;
   lastName?: Maybe<Scalars['String']['output']>;
   password?: Maybe<Scalars['String']['output']>;
   tokenVersion?: Maybe<Scalars['Int']['output']>;
@@ -2691,6 +2761,7 @@ export type UserMinOrderByAggregateInput = {
   external_type?: InputMaybe<SortOrder>;
   firstName?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  image_url?: InputMaybe<SortOrder>;
   lastName?: InputMaybe<SortOrder>;
   password?: InputMaybe<SortOrder>;
   tokenVersion?: InputMaybe<SortOrder>;
@@ -2707,6 +2778,7 @@ export type UserOrderByWithAggregationInput = {
   external_type?: InputMaybe<SortOrderInput>;
   firstName?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  image_url?: InputMaybe<SortOrderInput>;
   lastName?: InputMaybe<SortOrder>;
   password?: InputMaybe<SortOrderInput>;
   tokenVersion?: InputMaybe<SortOrder>;
@@ -2719,6 +2791,7 @@ export type UserOrderByWithRelationInput = {
   external_type?: InputMaybe<SortOrderInput>;
   firstName?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  image_url?: InputMaybe<SortOrderInput>;
   lastName?: InputMaybe<SortOrder>;
   password?: InputMaybe<SortOrderInput>;
   posts?: InputMaybe<PostOrderByRelationAggregateInput>;
@@ -2738,6 +2811,7 @@ export enum UserScalarFieldEnum {
   ExternalType = 'external_type',
   FirstName = 'firstName',
   Id = 'id',
+  ImageUrl = 'image_url',
   LastName = 'lastName',
   Password = 'password',
   TokenVersion = 'tokenVersion',
@@ -2753,6 +2827,7 @@ export type UserScalarWhereWithAggregatesInput = {
   external_type?: InputMaybe<StringNullableWithAggregatesFilter>;
   firstName?: InputMaybe<StringWithAggregatesFilter>;
   id?: InputMaybe<IntWithAggregatesFilter>;
+  image_url?: InputMaybe<StringNullableWithAggregatesFilter>;
   lastName?: InputMaybe<StringWithAggregatesFilter>;
   password?: InputMaybe<StringNullableWithAggregatesFilter>;
   tokenVersion?: InputMaybe<IntWithAggregatesFilter>;
@@ -2775,6 +2850,7 @@ export type UserUpdateInput = {
   external_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   external_type?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   firstName?: InputMaybe<StringFieldUpdateOperationsInput>;
+  image_url?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   lastName?: InputMaybe<StringFieldUpdateOperationsInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   posts?: InputMaybe<PostUpdateManyWithoutAuthorNestedInput>;
@@ -2787,6 +2863,7 @@ export type UserUpdateManyMutationInput = {
   external_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   external_type?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   firstName?: InputMaybe<StringFieldUpdateOperationsInput>;
+  image_url?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   lastName?: InputMaybe<StringFieldUpdateOperationsInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   tokenVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
@@ -2836,6 +2913,7 @@ export type UserUpdateWithoutCommentsInput = {
   external_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   external_type?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   firstName?: InputMaybe<StringFieldUpdateOperationsInput>;
+  image_url?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   lastName?: InputMaybe<StringFieldUpdateOperationsInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   posts?: InputMaybe<PostUpdateManyWithoutAuthorNestedInput>;
@@ -2849,6 +2927,7 @@ export type UserUpdateWithoutPostsInput = {
   external_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   external_type?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   firstName?: InputMaybe<StringFieldUpdateOperationsInput>;
+  image_url?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   lastName?: InputMaybe<StringFieldUpdateOperationsInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   reactions?: InputMaybe<ReactionUpdateManyWithoutAuthorNestedInput>;
@@ -2861,6 +2940,7 @@ export type UserUpdateWithoutReactionsInput = {
   external_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   external_type?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   firstName?: InputMaybe<StringFieldUpdateOperationsInput>;
+  image_url?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   lastName?: InputMaybe<StringFieldUpdateOperationsInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   posts?: InputMaybe<PostUpdateManyWithoutAuthorNestedInput>;
@@ -2895,6 +2975,7 @@ export type UserWhereInput = {
   external_type?: InputMaybe<StringNullableFilter>;
   firstName?: InputMaybe<StringFilter>;
   id?: InputMaybe<IntFilter>;
+  image_url?: InputMaybe<StringNullableFilter>;
   lastName?: InputMaybe<StringFilter>;
   password?: InputMaybe<StringNullableFilter>;
   posts?: InputMaybe<PostListRelationFilter>;
@@ -2912,6 +2993,7 @@ export type UserWhereUniqueInput = {
   external_type?: InputMaybe<StringNullableFilter>;
   firstName?: InputMaybe<StringFilter>;
   id?: InputMaybe<Scalars['Int']['input']>;
+  image_url?: InputMaybe<StringNullableFilter>;
   lastName?: InputMaybe<StringFilter>;
   password?: InputMaybe<StringNullableFilter>;
   posts?: InputMaybe<PostListRelationFilter>;
@@ -2919,13 +3001,13 @@ export type UserWhereUniqueInput = {
   tokenVersion?: InputMaybe<IntFilter>;
 };
 
-export type CommentFieldsFragment = { __typename?: 'Comment', id: number, postId: number, replyId?: number | null, body: string, updatedAt: any, createdAt: any, author: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, createdAt: any, updatedAt: any }, reactions: Array<{ __typename?: 'Reaction', id: number, postId: number, commentId?: number | null, type: ReactionType, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, createdAt: any, updatedAt: any } }> };
+export type CommentFieldsFragment = { __typename?: 'Comment', id: number, postId: number, replyId?: number | null, body: string, updatedAt: any, createdAt: any, author: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, image_url?: string | null, createdAt: any, updatedAt: any }, reactions: Array<{ __typename?: 'Reaction', id: number, postId: number, commentId?: number | null, type: ReactionType, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, image_url?: string | null, createdAt: any, updatedAt: any } }> };
 
-export type PostFieldsFragment = { __typename?: 'Post', id: number, authorId: number, title: string, body: string, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, createdAt: any, updatedAt: any }, comments: Array<{ __typename?: 'Comment', id: number, postId: number, replyId?: number | null, body: string, updatedAt: any, createdAt: any, author: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, createdAt: any, updatedAt: any }, reactions: Array<{ __typename?: 'Reaction', id: number, postId: number, commentId?: number | null, type: ReactionType, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, createdAt: any, updatedAt: any } }> }>, reactions: Array<{ __typename?: 'Reaction', id: number, postId: number, commentId?: number | null, type: ReactionType, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, createdAt: any, updatedAt: any } }> };
+export type PostFieldsFragment = { __typename?: 'Post', id: number, authorId: number, title: string, body: string, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, image_url?: string | null, createdAt: any, updatedAt: any }, comments: Array<{ __typename?: 'Comment', id: number, postId: number, replyId?: number | null, body: string, updatedAt: any, createdAt: any, author: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, image_url?: string | null, createdAt: any, updatedAt: any }, reactions: Array<{ __typename?: 'Reaction', id: number, postId: number, commentId?: number | null, type: ReactionType, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, image_url?: string | null, createdAt: any, updatedAt: any } }> }>, reactions: Array<{ __typename?: 'Reaction', id: number, postId: number, commentId?: number | null, type: ReactionType, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, image_url?: string | null, createdAt: any, updatedAt: any } }> };
 
-export type ReactionFieldsFragment = { __typename?: 'Reaction', id: number, postId: number, commentId?: number | null, type: ReactionType, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, createdAt: any, updatedAt: any } };
+export type ReactionFieldsFragment = { __typename?: 'Reaction', id: number, postId: number, commentId?: number | null, type: ReactionType, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, image_url?: string | null, createdAt: any, updatedAt: any } };
 
-export type UserFieldsFragment = { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, createdAt: any, updatedAt: any };
+export type UserFieldsFragment = { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, image_url?: string | null, createdAt: any, updatedAt: any };
 
 export type AddCommentMutationVariables = Exact<{
   data: AddCommentInput;
@@ -2972,12 +3054,12 @@ export type CommentsQueryVariables = Exact<{
 }>;
 
 
-export type CommentsQuery = { __typename?: 'Query', comments: Array<{ __typename?: 'Comment', id: number, postId: number, replyId?: number | null, body: string, createdAt: any, updatedAt: any, author: { __typename?: 'User', firstName: string, lastName: string } }> };
+export type CommentsQuery = { __typename?: 'Query', comments: Array<{ __typename?: 'Comment', id: number, postId: number, replyId?: number | null, body: string, createdAt: any, updatedAt: any, author: { __typename?: 'User', firstName: string, lastName: string, image_url?: string | null } }> };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, createdAt: any, updatedAt: any } | null };
+export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, image_url?: string | null, createdAt: any, updatedAt: any } | null };
 
 export type PostsQueryVariables = Exact<{
   cursor?: InputMaybe<PostWhereUniqueInput>;
@@ -2987,7 +3069,7 @@ export type PostsQueryVariables = Exact<{
 }>;
 
 
-export type PostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', id: number, title: string, body: string, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: number, firstName: string, lastName: string } }> };
+export type PostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', id: number, title: string, body: string, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: number, firstName: string, lastName: string, image_url?: string | null } }> };
 
 export type ReactionsQueryVariables = Exact<{
   where?: InputMaybe<ReactionWhereInput>;
@@ -2999,20 +3081,20 @@ export type ReactionsQuery = { __typename?: 'Query', reactions: Array<{ __typena
 export type UdpatePostSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UdpatePostSubscription = { __typename?: 'Subscription', udpatePost?: { __typename?: 'Post', id: number, comments: Array<{ __typename?: 'Comment', id: number, postId: number, replyId?: number | null, body: string, updatedAt: any, createdAt: any, author: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, createdAt: any, updatedAt: any }, reactions: Array<{ __typename?: 'Reaction', id: number, postId: number, commentId?: number | null, type: ReactionType, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, createdAt: any, updatedAt: any } }> }>, reactions: Array<{ __typename?: 'Reaction', id: number, postId: number, commentId?: number | null, type: ReactionType, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, createdAt: any, updatedAt: any } }> } | null };
+export type UdpatePostSubscription = { __typename?: 'Subscription', udpatePost?: { __typename?: 'Post', id: number, comments: Array<{ __typename?: 'Comment', id: number, postId: number, replyId?: number | null, body: string, updatedAt: any, createdAt: any, author: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, image_url?: string | null, createdAt: any, updatedAt: any }, reactions: Array<{ __typename?: 'Reaction', id: number, postId: number, commentId?: number | null, type: ReactionType, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, image_url?: string | null, createdAt: any, updatedAt: any } }> }>, reactions: Array<{ __typename?: 'Reaction', id: number, postId: number, commentId?: number | null, type: ReactionType, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: number, firstName: string, lastName: string, email: string, image_url?: string | null, createdAt: any, updatedAt: any } }> } | null };
 
-export const UserFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]} as unknown as DocumentNode<UserFieldsFragment, unknown>;
-export const ReactionFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ReactionFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Reaction"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"postId"}},{"kind":"Field","name":{"kind":"Name","value":"commentId"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]} as unknown as DocumentNode<ReactionFieldsFragment, unknown>;
-export const CommentFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CommentFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Comment"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"postId"}},{"kind":"Field","name":{"kind":"Name","value":"replyId"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ReactionFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ReactionFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Reaction"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"postId"}},{"kind":"Field","name":{"kind":"Name","value":"commentId"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]} as unknown as DocumentNode<CommentFieldsFragment, unknown>;
-export const PostFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PostFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Post"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"authorId"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"comments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CommentFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ReactionFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ReactionFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Reaction"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"postId"}},{"kind":"Field","name":{"kind":"Name","value":"commentId"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CommentFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Comment"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"postId"}},{"kind":"Field","name":{"kind":"Name","value":"replyId"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ReactionFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]} as unknown as DocumentNode<PostFieldsFragment, unknown>;
+export const UserFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"image_url"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]} as unknown as DocumentNode<UserFieldsFragment, unknown>;
+export const ReactionFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ReactionFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Reaction"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"postId"}},{"kind":"Field","name":{"kind":"Name","value":"commentId"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"image_url"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]} as unknown as DocumentNode<ReactionFieldsFragment, unknown>;
+export const CommentFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CommentFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Comment"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"postId"}},{"kind":"Field","name":{"kind":"Name","value":"replyId"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ReactionFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"image_url"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ReactionFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Reaction"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"postId"}},{"kind":"Field","name":{"kind":"Name","value":"commentId"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]} as unknown as DocumentNode<CommentFieldsFragment, unknown>;
+export const PostFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PostFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Post"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"authorId"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"comments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CommentFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ReactionFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"image_url"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ReactionFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Reaction"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"postId"}},{"kind":"Field","name":{"kind":"Name","value":"commentId"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CommentFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Comment"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"postId"}},{"kind":"Field","name":{"kind":"Name","value":"replyId"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ReactionFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]} as unknown as DocumentNode<PostFieldsFragment, unknown>;
 export const AddCommentDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddComment"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AddCommentInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addComment"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"comment"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"}}]}}]}}]} as unknown as DocumentNode<AddCommentMutation, AddCommentMutationVariables>;
 export const AddReactionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddReaction"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AddReactionInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addReaction"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<AddReactionMutation, AddReactionMutationVariables>;
 export const CreatePostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreatePost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreatePostInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createPost"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"post"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"}}]}}]}}]} as unknown as DocumentNode<CreatePostMutation, CreatePostMutationVariables>;
 export const LoginDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Login"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LoginInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"error"}}]}}]}}]} as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;
 export const LogoutDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Logout"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"logout"}}]}}]} as unknown as DocumentNode<LogoutMutation, LogoutMutationVariables>;
 export const RegisterDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Register"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"RegisterInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"register"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"error"}}]}}]}}]} as unknown as DocumentNode<RegisterMutation, RegisterMutationVariables>;
-export const CommentsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Comments"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"CommentWhereInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"comments"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"postId"}},{"kind":"Field","name":{"kind":"Name","value":"replyId"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<CommentsQuery, CommentsQueryVariables>;
-export const MeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]} as unknown as DocumentNode<MeQuery, MeQueryVariables>;
-export const PostsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Posts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PostWhereUniqueInput"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"take"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"skip"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PostOrderByWithRelationInput"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"cursor"},"value":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}}},{"kind":"Argument","name":{"kind":"Name","value":"take"},"value":{"kind":"Variable","name":{"kind":"Name","value":"take"}}},{"kind":"Argument","name":{"kind":"Name","value":"skip"},"value":{"kind":"Variable","name":{"kind":"Name","value":"skip"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<PostsQuery, PostsQueryVariables>;
+export const CommentsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Comments"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"CommentWhereInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"comments"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"postId"}},{"kind":"Field","name":{"kind":"Name","value":"replyId"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"image_url"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<CommentsQuery, CommentsQueryVariables>;
+export const MeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"image_url"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]} as unknown as DocumentNode<MeQuery, MeQueryVariables>;
+export const PostsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Posts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PostWhereUniqueInput"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"take"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"skip"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PostOrderByWithRelationInput"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"cursor"},"value":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}}},{"kind":"Argument","name":{"kind":"Name","value":"take"},"value":{"kind":"Variable","name":{"kind":"Name","value":"take"}}},{"kind":"Argument","name":{"kind":"Name","value":"skip"},"value":{"kind":"Variable","name":{"kind":"Name","value":"skip"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"image_url"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<PostsQuery, PostsQueryVariables>;
 export const ReactionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Reactions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ReactionWhereInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"reactions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"postId"}},{"kind":"Field","name":{"kind":"Name","value":"commentId"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<ReactionsQuery, ReactionsQueryVariables>;
-export const UdpatePostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"UdpatePost"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"udpatePost"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"comments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CommentFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ReactionFields"}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ReactionFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Reaction"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"postId"}},{"kind":"Field","name":{"kind":"Name","value":"commentId"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CommentFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Comment"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"postId"}},{"kind":"Field","name":{"kind":"Name","value":"replyId"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ReactionFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]} as unknown as DocumentNode<UdpatePostSubscription, UdpatePostSubscriptionVariables>;
+export const UdpatePostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"UdpatePost"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"udpatePost"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"comments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CommentFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ReactionFields"}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"image_url"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ReactionFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Reaction"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"postId"}},{"kind":"Field","name":{"kind":"Name","value":"commentId"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CommentFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Comment"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"postId"}},{"kind":"Field","name":{"kind":"Name","value":"replyId"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ReactionFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]} as unknown as DocumentNode<UdpatePostSubscription, UdpatePostSubscriptionVariables>;

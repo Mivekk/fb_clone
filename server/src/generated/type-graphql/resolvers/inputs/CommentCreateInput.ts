@@ -15,6 +15,11 @@ export class CommentCreateInput {
   })
   body!: string;
 
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  image_url?: string | undefined;
+
   @TypeGraphQL.Field(_type => UserCreateNestedOneWithoutCommentsInput, {
     nullable: false
   })

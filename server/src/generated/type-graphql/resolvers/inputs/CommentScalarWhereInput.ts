@@ -6,6 +6,7 @@ import { DateTimeFilter } from "../inputs/DateTimeFilter";
 import { IntFilter } from "../inputs/IntFilter";
 import { IntNullableFilter } from "../inputs/IntNullableFilter";
 import { StringFilter } from "../inputs/StringFilter";
+import { StringNullableFilter } from "../inputs/StringNullableFilter";
 
 @TypeGraphQL.InputType("CommentScalarWhereInput", {})
 export class CommentScalarWhereInput {
@@ -48,4 +49,9 @@ export class CommentScalarWhereInput {
     nullable: true
   })
   body?: StringFilter | undefined;
+
+  @TypeGraphQL.Field(_type => StringNullableFilter, {
+    nullable: true
+  })
+  image_url?: StringNullableFilter | undefined;
 }

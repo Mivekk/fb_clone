@@ -30,4 +30,9 @@ export class CommentMaxOrderByAggregateInput {
     nullable: true
   })
   body?: "asc" | "desc" | undefined;
+
+  @TypeGraphQL.Field(_type => SortOrder, {
+    nullable: true
+  })
+  image_url?: "asc" | "desc" | undefined;
 }

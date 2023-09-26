@@ -29,4 +29,9 @@ export class CommentCreateManyInput {
     nullable: false
   })
   body!: string;
+
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  image_url?: string | undefined;
 }

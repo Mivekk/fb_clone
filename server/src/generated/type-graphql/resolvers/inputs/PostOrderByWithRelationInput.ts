@@ -4,6 +4,7 @@ import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { CommentOrderByRelationAggregateInput } from "../inputs/CommentOrderByRelationAggregateInput";
 import { ReactionOrderByRelationAggregateInput } from "../inputs/ReactionOrderByRelationAggregateInput";
+import { SortOrderInput } from "../inputs/SortOrderInput";
 import { UserOrderByWithRelationInput } from "../inputs/UserOrderByWithRelationInput";
 import { SortOrder } from "../../enums/SortOrder";
 
@@ -28,6 +29,11 @@ export class PostOrderByWithRelationInput {
     nullable: true
   })
   body?: "asc" | "desc" | undefined;
+
+  @TypeGraphQL.Field(_type => SortOrderInput, {
+    nullable: true
+  })
+  image_url?: SortOrderInput | undefined;
 
   @TypeGraphQL.Field(_type => UserOrderByWithRelationInput, {
     nullable: true

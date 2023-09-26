@@ -37,6 +37,11 @@ export class CommentOrderByWithAggregationInput {
   })
   body?: "asc" | "desc" | undefined;
 
+  @TypeGraphQL.Field(_type => SortOrderInput, {
+    nullable: true
+  })
+  image_url?: SortOrderInput | undefined;
+
   @TypeGraphQL.Field(_type => CommentCountOrderByAggregateInput, {
     nullable: true
   })

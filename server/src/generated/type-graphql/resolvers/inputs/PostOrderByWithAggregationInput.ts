@@ -7,6 +7,7 @@ import { PostCountOrderByAggregateInput } from "../inputs/PostCountOrderByAggreg
 import { PostMaxOrderByAggregateInput } from "../inputs/PostMaxOrderByAggregateInput";
 import { PostMinOrderByAggregateInput } from "../inputs/PostMinOrderByAggregateInput";
 import { PostSumOrderByAggregateInput } from "../inputs/PostSumOrderByAggregateInput";
+import { SortOrderInput } from "../inputs/SortOrderInput";
 import { SortOrder } from "../../enums/SortOrder";
 
 @TypeGraphQL.InputType("PostOrderByWithAggregationInput", {})
@@ -30,6 +31,11 @@ export class PostOrderByWithAggregationInput {
     nullable: true
   })
   body?: "asc" | "desc" | undefined;
+
+  @TypeGraphQL.Field(_type => SortOrderInput, {
+    nullable: true
+  })
+  image_url?: SortOrderInput | undefined;
 
   @TypeGraphQL.Field(_type => PostCountOrderByAggregateInput, {
     nullable: true
