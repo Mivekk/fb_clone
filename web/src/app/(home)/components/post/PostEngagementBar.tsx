@@ -20,7 +20,9 @@ const PostEngagementBar: React.FC<PostEngagementBarProps> = ({ postId }) => {
 
   return (
     <div className="flex gap-2">
-      <PostReactions postId={postId} />
+      <Suspense fallback={<div>...</div>}>
+        <PostReactions postId={postId} />
+      </Suspense>
       <div className="flex gap-4 ml-auto">
         <div className="">
           {commentCount} {commentCount === 1 ? "comment" : "comments"}

@@ -14,13 +14,9 @@ const PostComments: React.FC<PostCommentsProps> = ({ postId }) => {
     variables: { where: { postId: { equals: postId } } },
   });
 
-  const comments = data.comments.map((comment) => (
-    <Comment
-      key={comment.id}
-      {...comment}
-      image_url={comment.author.image_url}
-    />
-  ));
+  const comments = data.comments
+    .map((comment) => <Comment key={comment.id} {...comment} />)
+    .reverse();
 
   return <div>{comments}</div>;
 };

@@ -8,11 +8,7 @@ const upload = multer();
 
 const router = express.Router();
 
-router.post(
-  "/image-upload",
-  upload.fields([{ name: "image" }, { name: "dbData" }]),
-  imageUpload
-);
+router.post("/image-upload", upload.single("image"), imageUpload);
 router.post("/auth/refresh-token", refreshToken);
 router.post("/auth/google", googleAuth);
 

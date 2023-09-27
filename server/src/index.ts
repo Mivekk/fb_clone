@@ -74,12 +74,10 @@ const main = async () => {
     })
   );
 
-  const s3rver = new S3rver({
+  new S3rver({
     port: 5000,
     directory: "./s3",
-  });
-
-  await s3rver.run();
+  }).run();
 
   app.use("/api", apiRouter);
 

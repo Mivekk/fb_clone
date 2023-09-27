@@ -30,7 +30,7 @@ const NavBar: React.FC<{}> = ({}) => {
           <Avatar>
             {data.me?.image_url && (
               <AvatarImage
-                src={`http://localhost:5000/fb_clone/${data.me?.image_url}`}
+                src={data.me?.image_url}
                 className="h-10 w-10 rounded-full"
               />
             )}

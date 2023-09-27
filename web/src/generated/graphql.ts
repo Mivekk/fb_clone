@@ -2391,6 +2391,7 @@ export type ReactionWhereUniqueInput = {
 export type RegisterInput = {
   email: Scalars['String']['input'];
   firstName: Scalars['String']['input'];
+  image_url?: InputMaybe<Scalars['String']['input']>;
   lastName: Scalars['String']['input'];
   password: Scalars['String']['input'];
 };

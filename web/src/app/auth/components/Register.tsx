@@ -1,6 +1,7 @@
 "use client";
 
 import { RegisterDocument } from "@/generated/graphql";
+import { useImageUpload } from "@/hooks/useImageUpload";
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import React, { useRef, useState } from "react";
@@ -12,14 +13,8 @@ type RegisterUserData = {
   password: string;
 };
 
-export type ImageInfo = {
-  type: "user" | "post" | "comment";
-  id: number;
-};
-
 const Register: React.FC<{}> = ({}) => {
   const router = useRouter();
-
   const [userData, setUserData] = useState<RegisterUserData>({
     firstName: "",
     lastName: "",
@@ -27,6 +22,7 @@ const Register: React.FC<{}> = ({}) => {
     password: "",
   });
 
+  const [uploadImage] = useImageUpload();
   const [register] = useMutation(RegisterDocument);
 
   const ref = useRef<HTMLInputElement>(null);
@@ -39,30 +35,19 @@ const Register: React.FC<{}> = ({}) => {
       return;
     }
 
-    const result = await register({ variables: { data: userData } });
+    const { image_url, error } = await uploadImage(ref.current.files[0]);
 
-    if (!result.data?.register.user) {
-      console.log("could not register");
+    if (error) {
+      console.log(error);
       return;
     }
 
-    const image = ref.current.files[0];
-    const imageDbData: ImageInfo = {
-      type: "user",
-      id: result.data.register.user.id,
-    };
-
-    const formData = new FormData();
-    formData.append("dbData", JSON.stringify(imageDbData));
-    formData.append("image", image);
-
-    const response = await fetch("http://localhost:4000/api/image-upload", {
-      method: "POST",
-      body: formData,
+    const result = await register({
+      variables: { data: { ...userData, image_url } },
     });
 
-    if (!response) {
-      console.log("could not fetch image-upload");
+    if (!result.data?.register.user) {
+      console.log("could not register");
       return;
     }
 

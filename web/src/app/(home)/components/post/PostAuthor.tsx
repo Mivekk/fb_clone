@@ -10,22 +10,19 @@ import React from "react";
 import PostDate from "./PostDate";
 
 type PostAuthorProps = Partial<UserFieldsFragment> & {
-  postCreatedAt: any;
+  createdAt: any;
 };
 
 const PostAuthor: React.FC<PostAuthorProps> = ({
   image_url,
   firstName,
   lastName,
-  postCreatedAt,
+  createdAt,
 }) => {
   return (
     <div className="flex gap-1 items-center pt-2">
       <Avatar>
-        <AvatarImage
-          src={`http://localhost:5000/fb_clone/${image_url}`}
-          className="h-10 w-10 rounded-full"
-        />
+        <AvatarImage src={image_url!} className="h-10 w-10 rounded-full" />
         <AvatarFallback />
       </Avatar>
       <div className="flex flex-col">
@@ -33,7 +30,7 @@ const PostAuthor: React.FC<PostAuthorProps> = ({
           <div>{firstName}</div>
           <div>{lastName}</div>
         </div>
-        <PostDate createdAt={postCreatedAt} />
+        <PostDate createdAt={createdAt} />
       </div>
     </div>
   );

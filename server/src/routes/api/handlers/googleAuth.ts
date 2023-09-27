@@ -46,6 +46,7 @@ export const googleAuth = async (
           firstName: payload.given_name!,
           lastName: payload.family_name!,
           email: payload.email!,
+          image_url: payload.picture,
           external_id: payload.sub,
           external_type: "GOOGLE",
         },
@@ -66,7 +67,7 @@ export const googleAuth = async (
     return res.send({ accessToken: "" });
   }
 
-  // google signup
+  // existing user
   if (user.external_id === payload.sub) {
     sendRefreshToken(res, createRefreshToken(user));
 

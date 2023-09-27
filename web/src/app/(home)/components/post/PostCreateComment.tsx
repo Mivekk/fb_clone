@@ -56,7 +56,7 @@ const PostCreateComment: React.FC<PostCreateCommentProps> = ({
       <Avatar className="h-8 w-8">
         {data?.me?.image_url && (
           <AvatarImage
-            src={`http://localhost:5000/fb_clone/${data?.me?.image_url}`}
+            src={data?.me?.image_url}
             className="h-8 w-8 rounded-full"
           />
         )}

@@ -14,6 +14,9 @@ export class RegisterInput {
 
   @Field(() => String)
   password: string;
+
+  @Field(() => String, { nullable: true })
+  image_url?: string;
 }
 
 @InputType()

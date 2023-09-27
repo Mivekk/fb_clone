@@ -2,7 +2,7 @@
 
 import { ReactionsDocument } from "@/generated/graphql";
 import { splitReactionCount } from "@/utils/splitReactionCount";
-import { useQuery } from "@apollo/experimental-nextjs-app-support/ssr";
+import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import React from "react";
 import { BiSolidDislike, BiSolidLike } from "react-icons/bi";
 
@@ -11,13 +11,9 @@ type PostReactionsProps = {
 };
 
 const PostReactions: React.FC<PostReactionsProps> = ({ postId }) => {
-  const { data, loading } = useQuery(ReactionsDocument, {
+  const { data } = useSuspenseQuery(ReactionsDocument, {
     variables: { where: { postId: { equals: postId } } },
   });
-
-  if (!data || loading) {
-    return <div>loading...</div>;
-  }
 
   const { likeCount, dislikeCount } = splitReactionCount(data.reactions);
 
