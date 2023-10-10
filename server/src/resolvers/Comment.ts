@@ -1,23 +1,70 @@
 import {
   Arg,
+  Args,
   Ctx,
   Mutation,
   PubSub,
   PubSubEngine,
+  Query,
   Resolver,
   UseMiddleware,
 } from "type-graphql";
 
-import { isAuth } from "../middleware/isAuth";
 import { MyApolloContext } from "../context";
-import { AddCommentInput } from "./utils/inputs";
-import { AddCommentResponseObject } from "./utils/outputs";
+import { Comment, CommentWhereInput } from "../generated/type-graphql";
+import { isAuth } from "../middleware/isAuth";
+import { AddCommentInput, PaginationArgs } from "./utils/inputs";
+import {
+  AddCommentResponseObject,
+  PaginatedCommentsObject,
+} from "./utils/outputs";
 import { Topic } from "./utils/topics";
 
 const MAX_COMMENT_LENGTH = 2048;
 
 @Resolver()
 export class CommentResolver {
+  @Query(() => [Comment])
+  @UseMiddleware(isAuth)
+  async comments(
+    @Ctx() { prisma }: MyApolloContext,
+    @Arg("where") where?: CommentWhereInput
+  ): Promise<Comment[]> {
+    const comments = await prisma.comment.findMany({
+      where,
+    });
+
+    return comments;
+  }
+
+  @Query(() => PaginatedCommentsObject)
+  @UseMiddleware(isAuth)
+  async paginatedComments(
+    @Ctx() { prisma }: MyApolloContext,
+    @Args() { where, cursor, take }: PaginationArgs
+  ): Promise<PaginatedCommentsObject> {
+    const realTake = take + 1;
+
+    const comments = await prisma.comment.findMany({
+      where,
+      cursor: cursor ? { id: cursor } : undefined,
+      take: realTake,
+      orderBy: { id: "desc" },
+      skip: cursor ? 1 : undefined,
+      include: { replies: true },
+    });
+
+    const commentsWithReplies = comments.map((comment) => ({
+      comment,
+      hasReplies: comment.replies.length > 0,
+    }));
+
+    return {
+      comments: commentsWithReplies.slice(0, realTake),
+      hasMore: comments.length === realTake,
+    };
+  }
+
   @Mutation(() => AddCommentResponseObject)
   @UseMiddleware(isAuth)
   async addComment(

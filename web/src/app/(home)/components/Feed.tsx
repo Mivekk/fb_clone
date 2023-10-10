@@ -5,19 +5,16 @@ import { useFeed } from "@/hooks/useFeed";
 import FetchMoreButton from "./FetchMoreButton";
 import { ErrorBoundary } from "react-error-boundary";
 import Post from "./post/Post";
+import { usePaginatedPosts } from "@/hooks/usePaginatedPosts";
 
 const Feed: React.FC<{}> = ({}) => {
-  const { data, loading, fetchMore } = useFeed();
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  const { data, hasMore, handleFetchMore } = usePaginatedPosts();
 
   if (!data) {
     return <div>No posts available!</div>;
   }
 
-  const posts = data.posts.map((post) => {
+  const posts = data.paginatedPosts.posts.map((post) => {
     return (
       <ErrorBoundary
         key={post.id}
@@ -31,7 +28,7 @@ const Feed: React.FC<{}> = ({}) => {
   return (
     <div>
       <div>{posts}</div>
-      <FetchMoreButton onClick={() => fetchMore()} />
+      <FetchMoreButton hasMore={hasMore} onClick={() => handleFetchMore()} />
     </div>
   );
 };

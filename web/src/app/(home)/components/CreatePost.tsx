@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/app/components/ui/avatar";
+import { Avatar } from "@/app/components/ui/avatar";
 import { Button } from "@/app/components/ui/button";
 import {
   Dialog,
@@ -18,17 +14,16 @@ import {
 import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
 import { Textarea } from "@/app/components/ui/textarea";
-import {
-  CreatePostDocument,
-  MeDocument,
-  PostsDocument,
-} from "@/generated/graphql";
+import { CreatePostDocument, MeDocument } from "@/generated/graphql";
+import { useProfileTransition } from "@/hooks/useProfileTransition";
 import { useMutation } from "@apollo/client";
 import { useQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import { DialogClose } from "@radix-ui/react-dialog";
 import React, { useState } from "react";
 
 const CreatePost: React.FC<{}> = ({}) => {
+  const [handleTransition] = useProfileTransition();
+
   const [title, setTitle] = useState<string>("");
   const [body, setBody] = useState<string>("");
 
@@ -43,30 +38,25 @@ const CreatePost: React.FC<{}> = ({}) => {
       return;
     }
 
-    const cachedPosts = client.cache.readQuery({ query: PostsDocument });
+    // const cachedPosts = client.cache.readQuery({ query: PostsDocument });
 
-    client.cache.modify({
-      fields: {
-        posts() {
-          return [result.data!.createPost.post, ...cachedPosts!.posts];
-        },
-      },
-    });
+    // client.cache.modify({
+    //   fields: {
+    //     posts() {
+    //       return [result.data!.createPost.post, ...cachedPosts!.posts];
+    //     },
+    //   },
+    // });
   };
 
   return (
     <div className="p-2 mt-2 rounded-md md:w-[32rem] sm:w-[24rem] w-[18rem] shadow-md bg-white flex items-center">
-      <Avatar>
-        {data?.me?.image_url && (
-          <AvatarImage
-            src={data?.me?.image_url}
-            className="h-10 w-10 rounded-full"
-          />
-        )}
-        <AvatarFallback />
-      </Avatar>
+      <Avatar
+        image_url={data?.me?.image_url}
+        onClick={() => handleTransition(data?.me?.id)}
+      />
       <Dialog>
-        <DialogTrigger className="grow h-10 ml-2 bg-gray-200 rounded-full flex justify-start items-center text-md">
+        <DialogTrigger className="grow h-8 ml-2 bg-gray-200 rounded-full flex justify-start items-center text-md">
           <div className="ml-4 select-none">Create post...</div>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">

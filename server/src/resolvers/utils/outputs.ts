@@ -46,3 +46,30 @@ export class AddCommentResponseObject {
   @Field(() => String, { nullable: true })
   error?: string;
 }
+
+@ObjectType()
+export class PaginatedPostsObject {
+  @Field(() => [Post])
+  posts: Post[];
+
+  @Field(() => Boolean)
+  hasMore: boolean;
+}
+
+@ObjectType()
+export class CommentObject {
+  @Field(() => Comment)
+  comment: Comment;
+
+  @Field(() => Boolean)
+  hasReplies: boolean;
+}
+
+@ObjectType()
+export class PaginatedCommentsObject {
+  @Field(() => [CommentObject])
+  comments: CommentObject[];
+
+  @Field(() => Boolean)
+  hasMore: boolean;
+}

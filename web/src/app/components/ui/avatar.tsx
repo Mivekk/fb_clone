@@ -7,15 +7,23 @@ import { cn } from "@/lib/utils";
 
 const Avatar = React.forwardRef<
   React.ElementRef<typeof AvatarPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root>
->(({ className, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root> & {
+    image_url?: string | null;
+  }
+>(({ className, image_url, ...props }, ref) => (
   <AvatarPrimitive.Root
     ref={ref}
     className={cn(
-      "relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full",
+      "relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full hover:cursor-pointer",
       className
     )}
     {...props}
+    children={
+      <>
+        {image_url && <AvatarImage src={image_url} />}
+        <AvatarFallback />
+      </>
+    }
   />
 ));
 Avatar.displayName = AvatarPrimitive.Root.displayName;
@@ -47,4 +55,4 @@ const AvatarFallback = React.forwardRef<
 ));
 AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName;
 
-export { Avatar, AvatarImage, AvatarFallback };
+export { Avatar };

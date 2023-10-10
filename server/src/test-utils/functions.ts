@@ -3,11 +3,11 @@ import { ReactionType } from "../generated/type-graphql";
 import { graphqlWrapper } from "./graphqlWrapper";
 import {
   addCommentMutation,
+  addReactionMutation,
   createPostMutation,
   deleteCommentMutation,
   deletePostMutation,
   loginMutation,
-  reactMutation,
   registerMutation,
 } from "./queries";
 
@@ -129,13 +129,13 @@ export const graphqlDeleteComment = async (
   });
 };
 
-export const graphqlReact = async (
+export const graphqlAddReaction = async (
   accessToken: string,
   postId: number,
   type: ReactionType
 ): Promise<any> => {
   return await graphqlWrapper({
-    source: reactMutation,
+    source: addReactionMutation,
     variableValues: {
       data: {
         type,

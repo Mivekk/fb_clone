@@ -1,0 +1,20 @@
+query User($where: UserWhereUniqueInput!) {
+  user(where: $where) {
+    id
+    firstName
+    lastName
+    email
+    image_url
+    posts {
+      id
+    }
+    comments {
+      id
+    }
+    reactions {
+      id
+    }
+    createdAt
+    updatedAt
+  }
+}

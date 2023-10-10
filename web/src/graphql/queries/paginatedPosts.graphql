@@ -1,0 +1,18 @@
+query PaginatedPosts($take: Float!, $where: PostWhereInput, $cursor: Float) {
+  paginatedPosts(take: $take, where: $where, cursor: $cursor) {
+    posts {
+      id
+      title
+      body
+      author {
+        id
+        firstName
+        lastName
+        image_url
+      }
+      createdAt
+      updatedAt
+    }
+    hasMore
+  }
+}

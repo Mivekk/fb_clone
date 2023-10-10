@@ -1,5 +1,10 @@
-import { ReactionType } from "../../generated/type-graphql";
-import { InputType, Field } from "type-graphql";
+import {
+  PostOrderByWithRelationInput,
+  PostWhereInput,
+  PostWhereUniqueInput,
+  ReactionType,
+} from "../../generated/type-graphql";
+import { InputType, Field, ArgsType } from "type-graphql";
 
 @InputType()
 export class RegisterInput {
@@ -26,6 +31,18 @@ export class LoginInput {
 
   @Field(() => String)
   password: string;
+}
+
+@ArgsType()
+export class PaginationArgs {
+  @Field(() => PostWhereInput, { nullable: true })
+  where?: PostWhereInput;
+
+  @Field(() => Number, { nullable: true })
+  cursor?: number;
+
+  @Field(() => Number)
+  take: number;
 }
 
 @InputType()

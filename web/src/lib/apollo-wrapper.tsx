@@ -97,10 +97,14 @@ function makeClient() {
       typePolicies: {
         Query: {
           fields: {
-            posts: {
+            paginatedPosts: {
               keyArgs: false,
               merge(existing = [], incoming) {
-                return [...existing, ...incoming];
+                console.log(existing, incoming);
+
+                const incomingPosts = incoming.posts;
+
+                return [...existing, ...incomingPosts];
               },
             },
           },

@@ -27,13 +27,6 @@ const Post: React.FC<PostProps> = ({ id, author, title, body, createdAt }) => {
       <PostAuthor {...author} createdAt={createdAt} />
       <PostTitle title={title} />
       <PostBody body={body} />
-      <div className="divide-y-2">
-        <PostEngagementBar postId={id} />
-        <PostActions postId={id} />
-      </div>
-      <Suspense fallback={<div>...</div>}>
-        <PostComments postId={id} />
-      </Suspense>
     </div>
   );
 };

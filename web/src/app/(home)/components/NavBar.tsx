@@ -1,47 +1,43 @@
 "use client";
 
+import { Avatar } from "@/app/components/ui/avatar";
 import {
-  Avatar,
-  AvatarImage,
-  AvatarFallback,
-} from "@/app/components/ui/avatar";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/app/components/ui/dropdown-menu";
 import { MeDocument } from "@/generated/graphql";
+import { useProfileTransition } from "@/hooks/useProfileTransition";
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import React from "react";
 import Logout from "./Logout";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuItem,
-} from "@radix-ui/react-dropdown-menu";
 
 const NavBar: React.FC<{}> = ({}) => {
+  const [handleTransition] = useProfileTransition();
   const { data } = useSuspenseQuery(MeDocument, {
     fetchPolicy: "network-only",
   });
 
   return (
-    <div className="w-full h-12 bg-gray-400 flex justify-end select-none">
-      <DropdownMenu>
+    <div className="w-full h-12 bg-white flex justify-end select-none">
+      <DropdownMenu modal={false}>
         <DropdownMenuTrigger className="mr-2">
-          <Avatar>
-            {data.me?.image_url && (
-              <AvatarImage
-                src={data.me?.image_url}
-                className="h-10 w-10 rounded-full"
-              />
-            )}
-            <AvatarFallback />
-          </Avatar>
+          <Avatar image_url={data.me?.image_url} />
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="bg-red-500 rounded-md p-2">
-          <DropdownMenuLabel>
-            {data.me?.firstName} {data.me?.lastName}
-          </DropdownMenuLabel>
-          <DropdownMenuSeparator />
+        <DropdownMenuContent className="bg-white rounded-md p-2 mr-8">
+          <DropdownMenuItem
+            className="flex items-center gap-2"
+            onClick={() => handleTransition(data.me?.id)}
+          >
+            <Avatar image_url={data.me?.image_url} />
+            <div className="font-semibold">
+              {data.me?.firstName} {data.me?.lastName}
+            </div>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator className="h-[1px] bg-gray-200" />
+          <DropdownMenuItem>Dark theme</DropdownMenuItem>
           <DropdownMenuItem>
             <Logout />
           </DropdownMenuItem>

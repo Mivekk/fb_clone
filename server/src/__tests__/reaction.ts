@@ -2,7 +2,7 @@ import "reflect-metadata";
 
 import {
   clearDatabase,
-  graphqlReact,
+  graphqlAddReaction,
   graphqlCreatePost,
   graphqlLogin,
   graphqlRegister,
@@ -10,7 +10,7 @@ import {
 } from "../test-utils/functions";
 import { ReactionType } from "../generated/type-graphql";
 import { graphqlWrapper } from "../test-utils/graphqlWrapper";
-import { reactMutation } from "../test-utils/queries";
+import { addReactionMutation } from "../test-utils/queries";
 import prisma from "../client";
 
 describe("reaction", () => {
@@ -30,24 +30,28 @@ describe("reaction", () => {
 
   describe("add reaction", () => {
     test("new like", async () => {
-      const result = await graphqlReact(accessToken, postId, ReactionType.LIKE);
+      const result = await graphqlAddReaction(
+        accessToken,
+        postId,
+        ReactionType.LIKE
+      );
 
       expect(result.errors).toBeUndefined();
-      expect(result.data?.react).toMatchObject({
+      expect(result.data?.addReaction).toMatchObject({
         postId,
         type: ReactionType.LIKE,
       });
     });
 
     test("new dislike", async () => {
-      const result = await graphqlReact(
+      const result = await graphqlAddReaction(
         accessToken,
         postId,
         ReactionType.DISLIKE
       );
 
       expect(result.errors).toBeUndefined();
-      expect(result.data?.react).toMatchObject({
+      expect(result.data?.addReaction).toMatchObject({
         postId,
         type: ReactionType.DISLIKE,
       });
@@ -55,7 +59,7 @@ describe("reaction", () => {
 
     test("invalid type", async () => {
       const result: any = await graphqlWrapper({
-        source: reactMutation,
+        source: addReactionMutation,
         variableValues: {
           data: {
             postId,
@@ -76,7 +80,7 @@ describe("reaction", () => {
     });
 
     test("not authenticated", async () => {
-      const result = await graphqlReact(
+      const result = await graphqlAddReaction(
         accessToken + "x",
         postId,
         ReactionType.LIKE
@@ -91,14 +95,18 @@ describe("reaction", () => {
     test("from like to dislike", async () => {
       const reactionCount = await prisma.reaction.count({ where: { postId } });
 
-      const react = await graphqlReact(accessToken, postId, ReactionType.LIKE);
-      expect(react.errors).toBeUndefined();
-      expect(react.data?.react).toMatchObject({
+      const addReaction = await graphqlAddReaction(
+        accessToken,
+        postId,
+        ReactionType.LIKE
+      );
+      expect(addReaction.errors).toBeUndefined();
+      expect(addReaction.data?.addReaction).toMatchObject({
         type: ReactionType.LIKE,
         postId,
       });
 
-      const result = await graphqlReact(
+      const result = await graphqlAddReaction(
         accessToken,
         postId,
         ReactionType.DISLIKE
@@ -108,7 +116,7 @@ describe("reaction", () => {
 
       expect(reactions).toBe(reactionCount + 1);
       expect(result.errors).toBeUndefined();
-      expect(result.data?.react).toMatchObject({
+      expect(result.data?.addReaction).toMatchObject({
         type: ReactionType.DISLIKE,
         postId,
       });
@@ -117,24 +125,28 @@ describe("reaction", () => {
     test("from dislike to like", async () => {
       const reactionCount = await prisma.reaction.count({ where: { postId } });
 
-      const react = await graphqlReact(
+      const addReaction = await graphqlAddReaction(
         accessToken,
         postId,
         ReactionType.DISLIKE
       );
-      expect(react.errors).toBeUndefined();
-      expect(react.data?.react).toMatchObject({
+      expect(addReaction.errors).toBeUndefined();
+      expect(addReaction.data?.addReaction).toMatchObject({
         type: ReactionType.DISLIKE,
         postId,
       });
 
-      const result = await graphqlReact(accessToken, postId, ReactionType.LIKE);
+      const result = await graphqlAddReaction(
+        accessToken,
+        postId,
+        ReactionType.LIKE
+      );
 
       const reactions = await prisma.reaction.count({ where: { postId } });
 
       expect(reactions).toBe(reactionCount + 1);
       expect(result.errors).toBeUndefined();
-      expect(result.data?.react).toMatchObject({
+      expect(result.data?.addReaction).toMatchObject({
         type: ReactionType.LIKE,
         postId,
       });
@@ -143,15 +155,19 @@ describe("reaction", () => {
     test("from like to invalid", async () => {
       const reactionCount = await prisma.reaction.count({ where: { postId } });
 
-      const react = await graphqlReact(accessToken, postId, ReactionType.LIKE);
-      expect(react.errors).toBeUndefined();
-      expect(react.data?.react).toMatchObject({
+      const addReaction = await graphqlAddReaction(
+        accessToken,
+        postId,
+        ReactionType.LIKE
+      );
+      expect(addReaction.errors).toBeUndefined();
+      expect(addReaction.data?.addReaction).toMatchObject({
         type: ReactionType.LIKE,
         postId,
       });
 
       const result: any = await graphqlWrapper({
-        source: reactMutation,
+        source: addReactionMutation,
         variableValues: {
           data: {
             postId,
@@ -177,9 +193,13 @@ describe("reaction", () => {
     test("different like author", async () => {
       const reactionCount = await prisma.reaction.count({ where: { postId } });
 
-      const react = await graphqlReact(accessToken, postId, ReactionType.LIKE);
-      expect(react.errors).toBeUndefined();
-      expect(react.data?.react).toMatchObject({
+      const addReaction = await graphqlAddReaction(
+        accessToken,
+        postId,
+        ReactionType.LIKE
+      );
+      expect(addReaction.errors).toBeUndefined();
+      expect(addReaction.data?.addReaction).toMatchObject({
         type: ReactionType.LIKE,
         postId,
       });
@@ -196,7 +216,7 @@ describe("reaction", () => {
       });
 
       const result: any = await graphqlWrapper({
-        source: reactMutation,
+        source: addReactionMutation,
         variableValues: {
           data: {
             postId,
@@ -212,7 +232,7 @@ describe("reaction", () => {
         },
       });
       expect(result.errors).toBeUndefined();
-      expect(result.data?.react).toMatchObject({
+      expect(result.data?.addReaction).toMatchObject({
         type: ReactionType.LIKE,
         postId,
       });
@@ -224,7 +244,7 @@ describe("reaction", () => {
 
     test("not authenticated", async () => {
       const result: any = await graphqlWrapper({
-        source: reactMutation,
+        source: addReactionMutation,
         variableValues: {
           data: {
             postId,
@@ -246,13 +266,17 @@ describe("reaction", () => {
 
   describe("remove reaction", () => {
     test("whole post", async () => {
-      const react = await graphqlReact(accessToken, postId, ReactionType.LIKE);
-      expect(react.data?.react).toMatchObject({
+      const addReaction = await graphqlAddReaction(
+        accessToken,
+        postId,
+        ReactionType.LIKE
+      );
+      expect(addReaction.data?.addReaction).toMatchObject({
         type: ReactionType.LIKE,
         postId,
       });
 
-      const reactId = react.data?.react.id;
+      const reactId = addReaction.data?.addReaction.id;
 
       const result = await graphqlDeletePost(accessToken, postId);
       expect(result.errors).toBeUndefined();

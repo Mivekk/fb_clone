@@ -1,17 +1,13 @@
 "use client";
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/app/components/ui/avatar";
+import { Avatar } from "@/app/components/ui/avatar";
 import { Textarea } from "@/app/components/ui/textarea";
-import { BiSend } from "react-icons/bi";
-import React, { useEffect, useRef, useState } from "react";
+import { AddCommentDocument, MeDocument } from "@/generated/graphql";
 import { cn } from "@/lib/utils";
 import { useMutation } from "@apollo/client";
-import { AddCommentDocument, MeDocument } from "@/generated/graphql";
 import { useQuery } from "@apollo/experimental-nextjs-app-support/ssr";
+import React, { useEffect, useRef, useState } from "react";
+import { BiSend } from "react-icons/bi";
 
 type PostCreateCommentProps = {
   postId: number;
@@ -53,15 +49,7 @@ const PostCreateComment: React.FC<PostCreateCommentProps> = ({
 
   return (
     <div className="flex pt-2 pb-1">
-      <Avatar className="h-8 w-8">
-        {data?.me?.image_url && (
-          <AvatarImage
-            src={data?.me?.image_url}
-            className="h-8 w-8 rounded-full"
-          />
-        )}
-        <AvatarFallback />
-      </Avatar>
+      <Avatar image_url={data?.me?.image_url} className="h-8 w-8" />
       <form
         onSubmit={(e) => handleSubmit(e)}
         onClick={() => setExpanded((prev) => prev + 1)}

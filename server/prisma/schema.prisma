@@ -55,8 +55,8 @@ model Comment {
   post      Post       @relation(fields: [postId], references: [id])
   postId    Int
   reactions Reaction[]
-  replies   Comment[]  @relation("Replying")
-  reply     Comment?   @relation("Replying", fields: [replyId], references: [id])
+  replies   Comment[]  @relation("Replies")
+  reply     Comment?   @relation("Replies", fields: [replyId], references: [id])
   replyId   Int?
   body      String
   image_url String?

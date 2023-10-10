@@ -11,7 +11,7 @@ type PostCommentsProps = {
 
 const PostComments: React.FC<PostCommentsProps> = ({ postId }) => {
   const { data } = useSuspenseQuery(CommentsDocument, {
-    variables: { where: { postId: { equals: postId } } },
+    variables: { where: { postId: { equals: postId }, replyId: undefined } },
   });
 
   const comments = data.comments

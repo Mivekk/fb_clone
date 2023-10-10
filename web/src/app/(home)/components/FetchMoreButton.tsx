@@ -3,20 +3,16 @@
 import React, { useState } from "react";
 
 type FetchMoreButtonProps = {
-  onClick: () => Promise<boolean>;
+  hasMore: boolean;
+  onClick: () => void;
 };
 
 const FetchMoreButton: React.FC<FetchMoreButtonProps> = ({
+  hasMore,
   onClick: onFetchMore,
 }) => {
-  const [hasMore, setHasMore] = useState(true);
-
   return (
-    <button
-      onClick={async () => {
-        setHasMore(await onFetchMore());
-      }}
-    >
+    <button onClick={() => onFetchMore()}>
       {hasMore ? <div>Get more</div> : <div>No more posts</div>}
     </button>
   );

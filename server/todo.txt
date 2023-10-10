@@ -1,3 +1,11 @@
-- linking accounts (user resolver login, google auth handler)
-- add tests for replies and reactions for comments (try TDD)
+- posts query
+- add hasMore to posts resolver return type (typegraphql field)
+- comments query
+- add hasReplies and hasMore to comments resolver return type (typegraphql field)
+- pagination for comments
+- fetch comment reactions at initial load
+- replies using useLazyQuery
+- add typegraphql fields friendStatus: sent fr/received fr/friends
+- friends (add new friend remove friend)
 - facebook jwt auth
+- linking accounts (user resolver login, google auth handler)

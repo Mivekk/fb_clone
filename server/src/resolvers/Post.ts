@@ -11,11 +11,12 @@ import {
 } from "type-graphql";
 
 import { MyApolloContext, MyApolloSubscriptionContext } from "../context";
-import { FindManyPostArgs, Post } from "../generated/type-graphql";
+import { Post, PostWhereInput } from "../generated/type-graphql";
 import { isAuth } from "../middleware/isAuth";
-import { CreatePostInput } from "./utils/inputs";
+import { CreatePostInput, PaginationArgs } from "./utils/inputs";
 import {
   CreatePostResponseObject,
+  PaginatedPostsObject,
   PostEngagementMetricsObject,
 } from "./utils/outputs";
 import { Topic } from "./utils/topics";
@@ -29,11 +30,37 @@ export class PostResolver {
   @UseMiddleware(isAuth)
   async posts(
     @Ctx() { prisma }: MyApolloContext,
-    @Args() args: FindManyPostArgs
+    @Arg("where") where?: PostWhereInput
   ) {
-    const posts = await prisma.post.findMany({ ...(args as any) });
+    const posts = await prisma.post.findMany({
+      where,
+    });
 
     return posts;
+  }
+
+  @Query(() => PaginatedPostsObject)
+  @UseMiddleware(isAuth)
+  async paginatedPosts(
+    @Ctx() { prisma }: MyApolloContext,
+    @Args() { where, cursor, take }: PaginationArgs
+  ): Promise<PaginatedPostsObject> {
+    const realTake = take + 1;
+
+    const posts = await prisma.post.findMany({
+      where,
+      cursor: cursor ? { id: cursor } : undefined,
+      take: realTake,
+      orderBy: { id: "desc" },
+      skip: cursor ? 1 : undefined,
+    });
+
+    console.log(posts);
+
+    return {
+      posts: posts.slice(0, realTake),
+      hasMore: posts.length === realTake,
+    };
   }
 
   @Mutation(() => CreatePostResponseObject)

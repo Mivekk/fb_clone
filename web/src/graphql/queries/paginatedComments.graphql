@@ -1,0 +1,31 @@
+query PaginatedComments($take: Float!, $where: PostWhereInput, $cursor: Float) {
+  paginatedComments(take: $take, where: $where, cursor: $cursor) {
+    comments {
+      comment {
+        id
+        postId
+        replyId
+        body
+        author {
+          id
+          firstName
+          lastName
+          image_url
+        }
+        reactions {
+          id
+          type
+          author {
+            id
+            firstName
+            lastName
+          }
+        }
+        createdAt
+        updatedAt
+      }
+      hasReplies
+    }
+    hasMore
+  }
+}
