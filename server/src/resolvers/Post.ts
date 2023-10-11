@@ -13,7 +13,7 @@ import {
 import { MyApolloContext, MyApolloSubscriptionContext } from "../context";
 import { Post, PostWhereInput } from "../generated/type-graphql";
 import { isAuth } from "../middleware/isAuth";
-import { CreatePostInput, PaginationArgs } from "./utils/inputs";
+import { CreatePostInput, PaginationPostsArgs } from "./utils/inputs";
 import {
   CreatePostResponseObject,
   PaginatedPostsObject,
@@ -43,7 +43,7 @@ export class PostResolver {
   @UseMiddleware(isAuth)
   async paginatedPosts(
     @Ctx() { prisma }: MyApolloContext,
-    @Args() { where, cursor, take }: PaginationArgs
+    @Args() { where, cursor, take }: PaginationPostsArgs
   ): Promise<PaginatedPostsObject> {
     const realTake = take + 1;
 
@@ -58,7 +58,7 @@ export class PostResolver {
     console.log(posts);
 
     return {
-      posts: posts.slice(0, realTake),
+      posts: posts.slice(0, take),
       hasMore: posts.length === realTake,
     };
   }

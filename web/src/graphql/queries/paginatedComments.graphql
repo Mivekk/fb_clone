@@ -1,4 +1,8 @@
-query PaginatedComments($take: Float!, $where: PostWhereInput, $cursor: Float) {
+query PaginatedComments(
+  $take: Float!
+  $where: CommentWhereInput
+  $cursor: Float
+) {
   paginatedComments(take: $take, where: $where, cursor: $cursor) {
     comments {
       comment {
@@ -13,13 +17,7 @@ query PaginatedComments($take: Float!, $where: PostWhereInput, $cursor: Float) {
           image_url
         }
         reactions {
-          id
-          type
-          author {
-            id
-            firstName
-            lastName
-          }
+          ...ReactionFields
         }
         createdAt
         updatedAt

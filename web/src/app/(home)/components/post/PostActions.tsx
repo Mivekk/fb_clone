@@ -19,6 +19,7 @@ import PostActionButton from "./PostActionButton";
 import React, { useState } from "react";
 import PostCreateComment from "./PostCreateComment";
 import { useQuery } from "@apollo/experimental-nextjs-app-support/ssr";
+import { useReactions } from "@/hooks/useReactions";
 
 type PostActionsProps = {
   postId: number;
@@ -28,9 +29,7 @@ const PostActions: React.FC<PostActionsProps> = ({ postId }) => {
   const [expanded, setExpanded] = useState(0);
 
   const { data: meData } = useQuery(MeDocument);
-  const { data } = useQuery(ReactionsDocument, {
-    variables: { where: { postId: { equals: postId } } },
-  });
+  const { data } = useReactions({ postId });
 
   const [addReaction] = useMutation(AddReactionDocument);
 

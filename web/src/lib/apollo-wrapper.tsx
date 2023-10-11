@@ -102,9 +102,12 @@ function makeClient() {
               merge(existing = [], incoming) {
                 console.log(existing, incoming);
 
-                const incomingPosts = incoming.posts;
+                const newPosts = {
+                  hasMore: incoming.hasMore,
+                  posts: [...(existing.posts ?? []), ...incoming.posts],
+                };
 
-                return [...existing, ...incomingPosts];
+                return newPosts;
               },
             },
           },

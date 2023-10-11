@@ -1,7 +1,6 @@
 "use client";
 
-import { CommentsDocument } from "@/generated/graphql";
-import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
+import { useComments } from "@/hooks/useComments";
 import React from "react";
 import Comment from "../comment/Comment";
 
@@ -10,13 +9,11 @@ type PostCommentsProps = {
 };
 
 const PostComments: React.FC<PostCommentsProps> = ({ postId }) => {
-  const { data } = useSuspenseQuery(CommentsDocument, {
-    variables: { where: { postId: { equals: postId }, replyId: undefined } },
-  });
+  const { data } = useComments({ postId });
 
-  const comments = data.comments
-    .map((comment) => <Comment key={comment.id} {...comment} />)
-    .reverse();
+  const comments = data.paginatedComments.comments.map(({ comment }) => (
+    <Comment key={comment.id} {...comment} />
+  ));
 
   return <div>{comments}</div>;
 };

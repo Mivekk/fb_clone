@@ -13,7 +13,7 @@ import {
 import { MyApolloContext } from "../context";
 import { Comment, CommentWhereInput } from "../generated/type-graphql";
 import { isAuth } from "../middleware/isAuth";
-import { AddCommentInput, PaginationArgs } from "./utils/inputs";
+import { AddCommentInput, PaginationCommentsArgs } from "./utils/inputs";
 import {
   AddCommentResponseObject,
   PaginatedCommentsObject,
@@ -41,7 +41,7 @@ export class CommentResolver {
   @UseMiddleware(isAuth)
   async paginatedComments(
     @Ctx() { prisma }: MyApolloContext,
-    @Args() { where, cursor, take }: PaginationArgs
+    @Args() { where, cursor, take }: PaginationCommentsArgs
   ): Promise<PaginatedCommentsObject> {
     const realTake = take + 1;
 
@@ -60,7 +60,7 @@ export class CommentResolver {
     }));
 
     return {
-      comments: commentsWithReplies.slice(0, realTake),
+      comments: commentsWithReplies.slice(0, take),
       hasMore: comments.length === realTake,
     };
   }

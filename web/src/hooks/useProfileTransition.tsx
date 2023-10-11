@@ -15,7 +15,7 @@ export const useProfileTransition = (): [
     }
 
     startTransition(() => {
-      router.push(`profile/${id}`);
+      router.push(`/profile/${id}`);
     });
   };
 

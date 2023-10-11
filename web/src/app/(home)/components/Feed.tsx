@@ -1,11 +1,10 @@
 "use client";
 
 import React from "react";
-import { useFeed } from "@/hooks/useFeed";
-import FetchMoreButton from "./FetchMoreButton";
-import { ErrorBoundary } from "react-error-boundary";
-import Post from "./post/Post";
 import { usePaginatedPosts } from "@/hooks/usePaginatedPosts";
+import { ErrorBoundary } from "react-error-boundary";
+import FetchMoreButton from "./FetchMoreButton";
+import Post from "./post/Post";
 
 const Feed: React.FC<{}> = ({}) => {
   const { data, hasMore, handleFetchMore } = usePaginatedPosts();

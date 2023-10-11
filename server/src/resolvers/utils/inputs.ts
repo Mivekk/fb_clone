@@ -1,4 +1,5 @@
 import {
+  CommentWhereInput,
   PostOrderByWithRelationInput,
   PostWhereInput,
   PostWhereUniqueInput,
@@ -34,15 +35,24 @@ export class LoginInput {
 }
 
 @ArgsType()
-export class PaginationArgs {
-  @Field(() => PostWhereInput, { nullable: true })
-  where?: PostWhereInput;
-
+class PaginationArgs {
   @Field(() => Number, { nullable: true })
   cursor?: number;
 
   @Field(() => Number)
   take: number;
+}
+
+@ArgsType()
+export class PaginationCommentsArgs extends PaginationArgs {
+  @Field(() => CommentWhereInput, { nullable: true })
+  where?: CommentWhereInput;
+}
+
+@ArgsType()
+export class PaginationPostsArgs extends PaginationArgs {
+  @Field(() => PostWhereInput, { nullable: true })
+  where?: PostWhereInput;
 }
 
 @InputType()
