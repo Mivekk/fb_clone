@@ -26,12 +26,12 @@ const MAX_COMMENT_LENGTH = 2048;
 
 @Resolver()
 export class CommentResolver {
-  @Query(() => [Comment])
+  @Query(() => [Comment], { nullable: true })
   @UseMiddleware(isAuth)
   async comments(
     @Ctx() { prisma }: MyApolloContext,
     @Arg("where") where?: CommentWhereInput
-  ): Promise<Comment[]> {
+  ): Promise<Comment[] | null> {
     const comments = await prisma.comment.findMany({
       where,
     });
@@ -40,7 +40,6 @@ export class CommentResolver {
   }
 
   @Subscription(() => PaginatedCommentsObject, {
-    nullable: true,
     topics: Topic.UpdateComments,
     filter: ({ args, payload }) => payload === args.postId,
   })
@@ -61,8 +60,11 @@ export class CommentResolver {
       hasReplies: comment.replies.length > 0,
     }));
 
+    const commentCount = await prisma.comment.count({ where: { postId } });
+
     return {
       comments: commentObjects,
+      commentCount,
       hasMore: false,
     };
   }
@@ -71,12 +73,12 @@ export class CommentResolver {
   @UseMiddleware(isAuth)
   async paginatedComments(
     @Ctx() { prisma }: MyApolloContext,
-    @Args() { where, cursor, take }: PaginationCommentsArgs
+    @Args() { postId, cursor, take }: PaginationCommentsArgs
   ): Promise<PaginatedCommentsObject> {
     const realTake = take + 1;
 
     const comments = await prisma.comment.findMany({
-      where,
+      where: { postId },
       cursor,
       take: realTake,
       orderBy: { id: "desc" },
@@ -89,8 +91,13 @@ export class CommentResolver {
       hasReplies: comment.replies.length > 0,
     }));
 
+    const commentCount = await prisma.comment.count({
+      where: { postId },
+    });
+
     return {
       comments: commentObjects.slice(0, take),
+      commentCount,
       hasMore: comments.length === realTake,
     };
   }

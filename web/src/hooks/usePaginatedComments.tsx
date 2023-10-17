@@ -8,14 +8,14 @@ import { useEffect } from "react";
 
 const TAKE_AMOUNT = 3;
 
-export const useComments = ({
+export const usePaginatedComments = ({
   postId,
 }: {
   postId: number;
 }): { data: PaginatedCommentsQuery } => {
   const { data, subscribeToMore } = useSuspenseQuery(
     PaginatedCommentsDocument,
-    { variables: { where: { postId: { equals: postId } }, take: TAKE_AMOUNT } }
+    { variables: { postId, take: TAKE_AMOUNT } }
   );
 
   const comments = data.paginatedComments.comments;

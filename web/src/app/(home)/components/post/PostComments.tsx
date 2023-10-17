@@ -1,6 +1,6 @@
 "use client";
 
-import { useComments } from "@/hooks/useComments";
+import { usePaginatedComments } from "@/hooks/usePaginatedComments";
 import React from "react";
 import Comment from "../comment/Comment";
 
@@ -9,7 +9,7 @@ type PostCommentsProps = {
 };
 
 const PostComments: React.FC<PostCommentsProps> = ({ postId }) => {
-  const { data } = useComments({ postId });
+  const { data } = usePaginatedComments({ postId });
 
   const comments = data.paginatedComments.comments.map(({ comment }) => (
     <Comment key={comment.id} {...comment} />

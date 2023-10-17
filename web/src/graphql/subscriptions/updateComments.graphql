@@ -20,6 +20,7 @@ subscription UpdateComments($postId: Float!, $cursor: Float!) {
       }
       hasReplies
     }
+    commentCount
     hasMore
   }
 }

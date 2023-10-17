@@ -1,15 +1,20 @@
-query Reactions($where: ReactionWhereInput) {
-  reactions(where: $where) {
-    id
-    type
-    postId
-    commentId
-    author {
+query Reactions($postId: Float!) {
+  reactions(postId: $postId) {
+    voted
+    reactions {
       id
-      firstName
-      lastName
+      type
+      postId
+      commentId
+      author {
+        id
+        firstName
+        lastName
+      }
+      createdAt
+      updatedAt
     }
-    createdAt
-    updatedAt
+    likeCount
+    dislikeCount
   }
 }

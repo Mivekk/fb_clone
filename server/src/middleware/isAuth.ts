@@ -6,6 +6,8 @@ import { MyApolloContext } from "../context";
 export const isAuth: MiddlewareFn<MyApolloContext> = ({ context }, next) => {
   const authorization = context.req.headers.authorization;
 
+  console.log(context);
+
   if (!authorization) {
     throw new Error("not authenticated");
   }

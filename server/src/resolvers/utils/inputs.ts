@@ -51,8 +51,8 @@ class PaginationArgs {
 
 @ArgsType()
 export class PaginationCommentsArgs extends PaginationArgs {
-  @Field(() => CommentWhereInput, { nullable: true })
-  where?: CommentWhereInput;
+  @Field(() => Number)
+  postId: number;
 }
 
 @ArgsType()

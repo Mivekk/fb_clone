@@ -1,9 +1,5 @@
-query PaginatedComments(
-  $take: Float!
-  $cursor: CursorObject
-  $where: CommentWhereInput
-) {
-  paginatedComments(take: $take, cursor: $cursor, where: $where) {
+query PaginatedComments($take: Float!, $cursor: CursorObject, $postId: Float!) {
+  paginatedComments(take: $take, cursor: $cursor, postId: $postId) {
     comments {
       comment {
         id
@@ -24,6 +20,7 @@ query PaginatedComments(
       }
       hasReplies
     }
+    commentCount
     hasMore
   }
 }

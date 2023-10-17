@@ -1,9 +1,11 @@
 import {
   Arg,
+  Args,
   Ctx,
   Mutation,
   PubSub,
   PubSubEngine,
+  Query,
   Root,
   Subscription,
   UseMiddleware,
@@ -13,21 +15,65 @@ import { isAuth } from "../middleware/isAuth";
 import { AddReactionInput } from "./utils/inputs";
 import { Reaction, ReactionType } from "../generated/type-graphql";
 import { Topic } from "./utils/topics";
+import { ReactionsObject } from "./utils/outputs";
 
 export class ReactionResolver {
-  @Subscription(() => [Reaction], {
+  @Query(() => ReactionsObject)
+  @UseMiddleware(isAuth)
+  async reactions(
+    @Ctx() { prisma, payload }: MyApolloContext,
+    @Arg("postId") postId: number
+  ): Promise<ReactionsObject> {
+    const userId = payload?.userId;
+    if (!userId) {
+      throw new Error("not authenticated");
+    }
+
+    const reactions = await prisma.reaction.findMany({ where: { postId } });
+
+    const voted = reactions.find((reaction) => reaction.authorId === userId)
+      ?.type as ReactionType | undefined;
+
+    const likeCount = await prisma.reaction.count({
+      where: { postId, type: { equals: ReactionType.LIKE } },
+    });
+    const dislikeCount = await prisma.reaction.count({
+      where: { postId, type: { equals: ReactionType.DISLIKE } },
+    });
+
+    return {
+      voted,
+      reactions,
+      likeCount,
+      dislikeCount,
+    };
+  }
+
+  @Subscription(() => ReactionsObject, {
     nullable: true,
     topics: Topic.UpdateReactions,
     filter: ({ args, payload }) => payload === args.postId,
   })
+  @UseMiddleware(isAuth)
   async updateReactions(
     @Ctx() { prisma }: MyApolloSubscriptionContext,
     @Arg("postId") _postId: number,
     @Root() postId: number
-  ): Promise<Reaction[]> {
+  ): Promise<ReactionsObject> {
     const reactions = await prisma.reaction.findMany({ where: { postId } });
 
-    return reactions;
+    const likeCount = await prisma.reaction.count({
+      where: { postId, type: { equals: ReactionType.LIKE } },
+    });
+    const dislikeCount = await prisma.reaction.count({
+      where: { postId, type: { equals: ReactionType.DISLIKE } },
+    });
+
+    return {
+      reactions,
+      likeCount,
+      dislikeCount,
+    };
   }
 
   @Mutation(() => Reaction)

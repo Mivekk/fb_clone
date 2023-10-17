@@ -12,7 +12,7 @@ export const useReactions = ({
   postId: number;
 }): { data: ReactionsQuery } => {
   const { data, subscribeToMore } = useSuspenseQuery(ReactionsDocument, {
-    variables: { where: { postId: { equals: postId } } },
+    variables: { postId },
   });
 
   useEffect(() => {

@@ -28,7 +28,6 @@ type PostActionsProps = {
 const PostActions: React.FC<PostActionsProps> = ({ postId }) => {
   const [expanded, setExpanded] = useState(0);
 
-  const { data: meData } = useQuery(MeDocument);
   const { data } = useReactions({ postId });
 
   const [addReaction] = useMutation(AddReactionDocument);
@@ -55,18 +54,18 @@ const PostActions: React.FC<PostActionsProps> = ({ postId }) => {
     }
   };
 
-  const reaction = data?.reactions.find(
-    (reaction) => reaction.author.id === meData?.me?.id
-  );
-
   return (
     <div className="divide-y">
       <div className="grid grid-cols-4 pt-2 pb-1">
         <PostActionButton handleClick={() => handleLike()} type="Like">
-          {reaction?.type === ReactionType.Like ? <BiSolidLike /> : <BiLike />}
+          {data.reactions?.voted === ReactionType.Like ? (
+            <BiSolidLike />
+          ) : (
+            <BiLike />
+          )}
         </PostActionButton>
         <PostActionButton handleClick={() => handleDislike()} type="Dislike">
-          {reaction?.type === ReactionType.Dislike ? (
+          {data.reactions?.voted === ReactionType.Dislike ? (
             <BiSolidDislike />
           ) : (
             <BiDislike />

@@ -1,6 +1,12 @@
 import { ObjectType, Field } from "type-graphql";
 
-import { User, Post, Comment } from "../../generated/type-graphql";
+import {
+  User,
+  Post,
+  Comment,
+  ReactionType,
+  Reaction,
+} from "../../generated/type-graphql";
 
 @ObjectType()
 export class RegisterResponseObject {
@@ -70,6 +76,24 @@ export class PaginatedCommentsObject {
   @Field(() => [CommentObject])
   comments: CommentObject[];
 
+  @Field(() => Number)
+  commentCount: number;
+
   @Field(() => Boolean)
   hasMore: boolean;
+}
+
+@ObjectType()
+export class ReactionsObject {
+  @Field(() => ReactionType, { nullable: true })
+  voted?: ReactionType;
+
+  @Field(() => [Reaction], { nullable: true })
+  reactions?: Reaction[];
+
+  @Field(() => Number)
+  likeCount: number;
+
+  @Field(() => Number)
+  dislikeCount: number;
 }
