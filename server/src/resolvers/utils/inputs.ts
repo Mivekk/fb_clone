@@ -34,10 +34,16 @@ export class LoginInput {
   password: string;
 }
 
+@InputType()
+class CursorObject {
+  @Field(() => Number)
+  id: number;
+}
+
 @ArgsType()
 class PaginationArgs {
-  @Field(() => Number, { nullable: true })
-  cursor?: number;
+  @Field(() => CursorObject, { nullable: true })
+  cursor?: { id: number };
 
   @Field(() => Number)
   take: number;

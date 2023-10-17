@@ -4,15 +4,32 @@ import {
   Mutation,
   PubSub,
   PubSubEngine,
+  Root,
+  Subscription,
   UseMiddleware,
 } from "type-graphql";
-import { MyApolloContext } from "../context";
+import { MyApolloContext, MyApolloSubscriptionContext } from "../context";
 import { isAuth } from "../middleware/isAuth";
 import { AddReactionInput } from "./utils/inputs";
 import { Reaction, ReactionType } from "../generated/type-graphql";
 import { Topic } from "./utils/topics";
 
 export class ReactionResolver {
+  @Subscription(() => [Reaction], {
+    nullable: true,
+    topics: Topic.UpdateReactions,
+    filter: ({ args, payload }) => payload === args.postId,
+  })
+  async updateReactions(
+    @Ctx() { prisma }: MyApolloSubscriptionContext,
+    @Arg("postId") _postId: number,
+    @Root() postId: number
+  ): Promise<Reaction[]> {
+    const reactions = await prisma.reaction.findMany({ where: { postId } });
+
+    return reactions;
+  }
+
   @Mutation(() => Reaction)
   @UseMiddleware(isAuth)
   async addReaction(
@@ -55,7 +72,7 @@ export class ReactionResolver {
       });
     }
 
-    await pubSub.publish(Topic.UpdatePost, post.id);
+    await pubSub.publish(Topic.UpdateReactions, post.id);
 
     return reaction;
   }

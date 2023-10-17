@@ -7,10 +7,12 @@ import {
   PubSubEngine,
   Query,
   Resolver,
+  Root,
+  Subscription,
   UseMiddleware,
 } from "type-graphql";
 
-import { MyApolloContext } from "../context";
+import { MyApolloContext, MyApolloSubscriptionContext } from "../context";
 import { Comment, CommentWhereInput } from "../generated/type-graphql";
 import { isAuth } from "../middleware/isAuth";
 import { AddCommentInput, PaginationCommentsArgs } from "./utils/inputs";
@@ -37,6 +39,34 @@ export class CommentResolver {
     return comments;
   }
 
+  @Subscription(() => PaginatedCommentsObject, {
+    nullable: true,
+    topics: Topic.UpdateComments,
+    filter: ({ args, payload }) => payload === args.postId,
+  })
+  async updateComments(
+    @Ctx() { prisma }: MyApolloSubscriptionContext,
+    @Arg("postId") _postId: number,
+    @Arg("cursor") cursor: number,
+    @Root() postId: number
+  ): Promise<PaginatedCommentsObject> {
+    const comments = await prisma.comment.findMany({
+      where: { postId, id: { gte: cursor } },
+      orderBy: { id: "desc" },
+      include: { replies: true },
+    });
+
+    const commentObjects = comments.map((comment) => ({
+      comment,
+      hasReplies: comment.replies.length > 0,
+    }));
+
+    return {
+      comments: commentObjects,
+      hasMore: false,
+    };
+  }
+
   @Query(() => PaginatedCommentsObject)
   @UseMiddleware(isAuth)
   async paginatedComments(
@@ -47,20 +77,20 @@ export class CommentResolver {
 
     const comments = await prisma.comment.findMany({
       where,
-      cursor: cursor ? { id: cursor } : undefined,
+      cursor,
       take: realTake,
       orderBy: { id: "desc" },
-      skip: cursor ? 1 : undefined,
+      skip: cursor ? 1 : 0,
       include: { replies: true },
     });
 
-    const commentsWithReplies = comments.map((comment) => ({
+    const commentObjects = comments.map((comment) => ({
       comment,
       hasReplies: comment.replies.length > 0,
     }));
 
     return {
-      comments: commentsWithReplies.slice(0, take),
+      comments: commentObjects.slice(0, take),
       hasMore: comments.length === realTake,
     };
   }
@@ -98,7 +128,7 @@ export class CommentResolver {
       data: { ...data, authorId: user.id },
     });
 
-    await pubSub.publish(Topic.UpdatePost, post.id);
+    await pubSub.publish(Topic.UpdateComments, post.id);
 
     return { comment };
   }
@@ -145,7 +175,7 @@ export class CommentResolver {
 
     await prisma.comment.delete({ where: comment });
 
-    await pubSub.publish(Topic.UpdatePost, post.id);
+    await pubSub.publish(Topic.UpdateComments, post.id);
 
     return true;
   }

@@ -1,13 +1,13 @@
 "use client";
 
 import React from "react";
-import { usePaginatedPosts } from "@/hooks/usePaginatedPosts";
+import { usePosts } from "@/hooks/usePaginatedPosts";
 import { ErrorBoundary } from "react-error-boundary";
 import FetchMoreButton from "./FetchMoreButton";
 import Post from "./post/Post";
 
 const Feed: React.FC<{}> = ({}) => {
-  const { data, hasMore, handleFetchMore } = usePaginatedPosts();
+  const { data, hasMore, handleFetchMore } = usePosts();
 
   if (!data) {
     return <div>No posts available!</div>;

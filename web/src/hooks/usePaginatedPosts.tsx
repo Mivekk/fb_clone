@@ -6,7 +6,7 @@ import { useQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 
 const TAKE_AMOUNT = 5;
 
-export const usePaginatedPosts = (): {
+export const usePosts = (): {
   data: PaginatedPostsQuery | undefined;
   hasMore: boolean;
   handleFetchMore: () => void;
@@ -25,7 +25,7 @@ export const usePaginatedPosts = (): {
 
     const result = await fetchMore({
       variables: {
-        cursor: posts[posts.length - 1].id,
+        cursor: { id: posts[posts.length - 1].id },
         take: TAKE_AMOUNT,
       },
     });

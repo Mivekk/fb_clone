@@ -1,0 +1,15 @@
+subscription UpdateReactions($postId: Float!) {
+  updateReactions(postId: $postId) {
+    id
+    type
+    postId
+    commentId
+    author {
+      id
+      firstName
+      lastName
+    }
+    createdAt
+    updatedAt
+  }
+}

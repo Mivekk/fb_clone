@@ -1,12 +1,12 @@
 import {
   PaginatedCommentsDocument,
   PaginatedCommentsQuery,
-  UdpatePostDocument,
+  UpdateCommentsDocument,
 } from "@/generated/graphql";
 import { useSuspenseQuery } from "@apollo/client";
 import { useEffect } from "react";
 
-const TAKE_AMOUNT = 5;
+const TAKE_AMOUNT = 3;
 
 export const useComments = ({
   postId,
@@ -18,32 +18,19 @@ export const useComments = ({
     { variables: { where: { postId: { equals: postId } }, take: TAKE_AMOUNT } }
   );
 
+  const comments = data.paginatedComments.comments;
+
   useEffect(() => {
     subscribeToMore({
-      document: UdpatePostDocument,
+      document: UpdateCommentsDocument,
+      variables: { postId, cursor: comments[comments.length - 1]?.comment.id },
       updateQuery(prev, { subscriptionData }) {
-        const updatedData = subscriptionData.data.udpatePost;
-        if (!updatedData || updatedData.id !== postId) {
+        const updatedData = subscriptionData.data.updateComments;
+        if (!updatedData) {
           return prev;
         }
 
-        const newComment = updatedData.comments.filter(
-          (comment) =>
-            !prev.paginatedComments.comments.filter(
-              (x) => x.comment === comment
-            )
-        );
-
-        // return {
-        //   paginatedComments: {
-        //     hasMore: prev.paginatedComments.hasMore,
-        //     comments: updatedData.comments.map((comment) => ({
-        //       comment,
-        //       hasReplies: false,
-        //     })),
-        //   },
-        // };
-        return prev;
+        return { paginatedComments: updatedData };
       },
     });
   }, []);

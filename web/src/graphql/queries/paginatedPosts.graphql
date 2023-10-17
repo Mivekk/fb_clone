@@ -1,4 +1,8 @@
-query PaginatedPosts($take: Float!, $where: PostWhereInput, $cursor: Float) {
+query PaginatedPosts(
+  $take: Float!
+  $where: PostWhereInput
+  $cursor: CursorObject
+) {
   paginatedPosts(take: $take, where: $where, cursor: $cursor) {
     posts {
       id

@@ -1,6 +1,7 @@
 "use client";
 
 import { ReactionsDocument } from "@/generated/graphql";
+import { useReactions } from "@/hooks/useReactions";
 import { splitReactionCount } from "@/utils/splitReactionCount";
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import React from "react";
@@ -11,9 +12,7 @@ type PostReactionsProps = {
 };
 
 const PostReactions: React.FC<PostReactionsProps> = ({ postId }) => {
-  const { data } = useSuspenseQuery(ReactionsDocument, {
-    variables: { where: { postId: { equals: postId } } },
-  });
+  const { data } = useReactions({ postId });
 
   const { likeCount, dislikeCount } = splitReactionCount(data.reactions);
 

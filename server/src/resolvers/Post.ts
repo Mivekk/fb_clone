@@ -49,13 +49,11 @@ export class PostResolver {
 
     const posts = await prisma.post.findMany({
       where,
-      cursor: cursor ? { id: cursor } : undefined,
+      cursor,
       take: realTake,
       orderBy: { id: "desc" },
       skip: cursor ? 1 : undefined,
     });
-
-    console.log(posts);
 
     return {
       posts: posts.slice(0, take),
@@ -96,9 +94,14 @@ export class PostResolver {
     return { post };
   }
 
-  @Subscription(() => Post, { nullable: true, topics: Topic.UpdatePost })
+  @Subscription(() => Post, {
+    nullable: true,
+    topics: Topic.UpdatePost,
+    filter: ({ args, payload }) => payload === args.postId,
+  })
   async udpatePost(
     @Ctx() { prisma }: MyApolloSubscriptionContext,
+    @Arg("postId") _postId: number,
     @Root() postId: number
   ): Promise<Post | null> {
     const post = await prisma.post.findUnique({ where: { id: postId } });

@@ -100,14 +100,13 @@ function makeClient() {
             paginatedPosts: {
               keyArgs: false,
               merge(existing = [], incoming) {
-                console.log(existing, incoming);
+                const existingPosts = existing.posts ?? [];
+                const incomingPosts = incoming.posts;
 
-                const newPosts = {
+                return {
                   hasMore: incoming.hasMore,
-                  posts: [...(existing.posts ?? []), ...incoming.posts],
+                  posts: [...existingPosts, ...incomingPosts],
                 };
-
-                return newPosts;
               },
             },
           },

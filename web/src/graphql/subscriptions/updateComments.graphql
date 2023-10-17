@@ -1,9 +1,5 @@
-query PaginatedComments(
-  $take: Float!
-  $cursor: CursorObject
-  $where: CommentWhereInput
-) {
-  paginatedComments(take: $take, cursor: $cursor, where: $where) {
+subscription UpdateComments($postId: Float!, $cursor: Float!) {
+  updateComments(postId: $postId, cursor: $cursor) {
     comments {
       comment {
         id
