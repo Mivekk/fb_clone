@@ -4,6 +4,7 @@ import * as React from "react";
 import * as AvatarPrimitive from "@radix-ui/react-avatar";
 
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 const Avatar = React.forwardRef<
   React.ElementRef<typeof AvatarPrimitive.Root>,
@@ -18,13 +19,10 @@ const Avatar = React.forwardRef<
       className
     )}
     {...props}
-    children={
-      <>
-        {image_url && <AvatarImage src={image_url} />}
-        <AvatarFallback />
-      </>
-    }
-  />
+  >
+    {image_url && <AvatarImage src={image_url} />}
+    <AvatarFallback />
+  </AvatarPrimitive.Root>
 ));
 Avatar.displayName = AvatarPrimitive.Root.displayName;
 

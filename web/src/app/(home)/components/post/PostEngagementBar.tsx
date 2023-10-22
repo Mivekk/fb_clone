@@ -1,8 +1,7 @@
 "use client";
 
-import { usePaginatedComments } from "@/hooks/usePaginatedComments";
+import { useComments } from "@/hooks/useComments";
 import { useReactions } from "@/hooks/useReactions";
-import { splitReactionCount } from "@/utils/splitReactionCount";
 import React from "react";
 import { BiSolidDislike, BiSolidLike } from "react-icons/bi";
 
@@ -13,7 +12,7 @@ type PostEngagementBarProps = {
 const PostEngagementBar: React.FC<PostEngagementBarProps> = ({ postId }) => {
   const {
     data: { paginatedComments },
-  } = usePaginatedComments({ postId });
+  } = useComments({ postId });
   const {
     data: { reactions },
   } = useReactions({ postId });

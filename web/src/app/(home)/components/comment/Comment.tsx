@@ -3,8 +3,10 @@
 import { Avatar } from "@/app/components/ui/avatar";
 import { CommentFieldsFragment } from "@/generated/graphql";
 import { useProfileTransition } from "@/hooks/useProfileTransition";
+import dynamic from "next/dynamic";
 import React from "react";
-import TimeAgo from "react-timeago";
+
+const TimeAgoNoSSR = dynamic(() => import("react-timeago"), { ssr: false });
 
 type CommentProps = Omit<Partial<CommentFieldsFragment>, "author"> & {
   author: {
@@ -35,7 +37,7 @@ const Comment: React.FC<CommentProps> = ({ body, createdAt, author }) => {
           </div>
           <div className="whitespace-pre-wrap">{body}</div>
         </div>
-        <TimeAgo date={createdAt} className="text-xs ml-4" />
+        <TimeAgoNoSSR date={createdAt} className="text-xs ml-4" />
       </div>
     </div>
   );

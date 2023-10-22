@@ -20,6 +20,7 @@ import React, { useState } from "react";
 import PostCreateComment from "./PostCreateComment";
 import { useQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import { useReactions } from "@/hooks/useReactions";
+import { updateReactionCache } from "@/utils/updateReactionCache";
 
 type PostActionsProps = {
   postId: number;
@@ -30,7 +31,7 @@ const PostActions: React.FC<PostActionsProps> = ({ postId }) => {
 
   const { data } = useReactions({ postId });
 
-  const [addReaction] = useMutation(AddReactionDocument);
+  const [addReaction, { client }] = useMutation(AddReactionDocument);
 
   const handleLike = async () => {
     const result = await addReaction({
@@ -41,6 +42,12 @@ const PostActions: React.FC<PostActionsProps> = ({ postId }) => {
       console.log(result);
       return;
     }
+
+    updateReactionCache({
+      postId,
+      client,
+      reactionType: ReactionType.Like,
+    });
   };
 
   const handleDislike = async () => {
@@ -52,6 +59,12 @@ const PostActions: React.FC<PostActionsProps> = ({ postId }) => {
       console.log(result);
       return;
     }
+
+    updateReactionCache({
+      postId,
+      client,
+      reactionType: ReactionType.Dislike,
+    });
   };
 
   return (

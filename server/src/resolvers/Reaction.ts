@@ -54,7 +54,6 @@ export class ReactionResolver {
     topics: Topic.UpdateReactions,
     filter: ({ args, payload }) => payload === args.postId,
   })
-  @UseMiddleware(isAuth)
   async updateReactions(
     @Ctx() { prisma }: MyApolloSubscriptionContext,
     @Arg("postId") _postId: number,
@@ -76,13 +75,13 @@ export class ReactionResolver {
     };
   }
 
-  @Mutation(() => Reaction)
+  @Mutation(() => Reaction, { nullable: true })
   @UseMiddleware(isAuth)
   async addReaction(
     @Arg("data") data: AddReactionInput,
     @Ctx() { prisma, payload }: MyApolloContext,
     @PubSub() pubSub: PubSubEngine
-  ): Promise<Reaction> {
+  ): Promise<Reaction | null> {
     const user = await prisma.user.findUnique({
       where: { id: payload?.userId },
     });

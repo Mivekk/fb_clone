@@ -2,17 +2,19 @@ import {
   PaginatedPostsDocument,
   PaginatedPostsQuery,
 } from "@/generated/graphql";
-import { useQuery } from "@apollo/experimental-nextjs-app-support/ssr";
-
-const TAKE_AMOUNT = 5;
+import { POST_TAKE_COUNT } from "@/utils/constants";
+import {
+  useQuery,
+  useSuspenseQuery,
+} from "@apollo/experimental-nextjs-app-support/ssr";
 
 export const usePosts = (): {
-  data: PaginatedPostsQuery | undefined;
+  data: PaginatedPostsQuery;
   hasMore: boolean;
   handleFetchMore: () => void;
 } => {
-  const { data, fetchMore } = useQuery(PaginatedPostsDocument, {
-    variables: { take: TAKE_AMOUNT },
+  const { data, fetchMore } = useSuspenseQuery(PaginatedPostsDocument, {
+    variables: { take: POST_TAKE_COUNT },
   });
 
   let hasMore = data?.paginatedPosts.hasMore ?? false;
@@ -26,7 +28,7 @@ export const usePosts = (): {
     const result = await fetchMore({
       variables: {
         cursor: { id: posts[posts.length - 1].id },
-        take: TAKE_AMOUNT,
+        take: POST_TAKE_COUNT,
       },
     });
 

@@ -1,17 +1,13 @@
 "use client";
 
-import React from "react";
-import { usePosts } from "@/hooks/usePaginatedPosts";
+import React, { Suspense } from "react";
+import { usePosts } from "@/hooks/usePosts";
 import { ErrorBoundary } from "react-error-boundary";
-import FetchMoreButton from "./FetchMoreButton";
+import FetchPostsButton from "./FetchPostsButton";
 import Post from "./post/Post";
 
 const Feed: React.FC<{}> = ({}) => {
   const { data, hasMore, handleFetchMore } = usePosts();
-
-  if (!data) {
-    return <div>No posts available!</div>;
-  }
 
   const posts = data.paginatedPosts.posts.map((post) => {
     return (
@@ -27,7 +23,7 @@ const Feed: React.FC<{}> = ({}) => {
   return (
     <div>
       <div>{posts}</div>
-      <FetchMoreButton hasMore={hasMore} onClick={() => handleFetchMore()} />
+      <FetchPostsButton hasMore={hasMore} onClick={() => handleFetchMore()} />
     </div>
   );
 };

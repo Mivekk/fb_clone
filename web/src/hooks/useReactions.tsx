@@ -2,8 +2,10 @@ import {
   ReactionsDocument,
   type ReactionsQuery,
   UpdateReactionsDocument,
+  MeDocument,
 } from "@/generated/graphql";
 import { useSuspenseQuery } from "@apollo/client";
+import { useQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import { useEffect } from "react";
 
 export const useReactions = ({
@@ -25,7 +27,12 @@ export const useReactions = ({
           return prev;
         }
 
-        return { reactions: updatedData };
+        return {
+          reactions: {
+            ...updatedData,
+            voted: prev.reactions.voted,
+          },
+        };
       },
     });
   }, []);

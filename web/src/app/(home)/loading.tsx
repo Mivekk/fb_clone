@@ -1,7 +1,9 @@
+"use client";
+
 import React from "react";
 
 const Loading: React.FC<{}> = ({}) => {
-  return <div>siema...</div>;
+  return <div>loading...</div>;
 };
 
 export default Loading;

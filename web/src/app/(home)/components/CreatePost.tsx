@@ -37,16 +37,6 @@ const CreatePost: React.FC<{}> = ({}) => {
       console.log(result);
       return;
     }
-
-    // const cachedPosts = client.cache.readQuery({ query: PostsDocument });
-
-    // client.cache.modify({
-    //   fields: {
-    //     posts() {
-    //       return [result.data!.createPost.post, ...cachedPosts!.posts];
-    //     },
-    //   },
-    // });
   };
 
   return (

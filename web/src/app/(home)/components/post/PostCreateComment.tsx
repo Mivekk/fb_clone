@@ -2,8 +2,13 @@
 
 import { Avatar } from "@/app/components/ui/avatar";
 import { Textarea } from "@/app/components/ui/textarea";
-import { AddCommentDocument, MeDocument } from "@/generated/graphql";
+import {
+  AddCommentDocument,
+  MeDocument,
+  PaginatedCommentsDocument,
+} from "@/generated/graphql";
 import { cn } from "@/lib/utils";
+import { COMMENT_TAKE_COUNT } from "@/utils/constants";
 import { useMutation } from "@apollo/client";
 import { useQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import React, { useEffect, useRef, useState } from "react";
@@ -23,7 +28,7 @@ const PostCreateComment: React.FC<PostCreateCommentProps> = ({
   const [text, setText] = useState<string>("");
 
   const { data } = useQuery(MeDocument);
-  const [addComment] = useMutation(AddCommentDocument);
+  const [addComment, { client }] = useMutation(AddCommentDocument);
 
   const ref = useRef<HTMLTextAreaElement>(null);
 
@@ -45,6 +50,28 @@ const PostCreateComment: React.FC<PostCreateCommentProps> = ({
     }
 
     setText("");
+
+    client.cache.updateQuery(
+      {
+        query: PaginatedCommentsDocument,
+        variables: { postId, take: COMMENT_TAKE_COUNT },
+      },
+      (data) => {
+        if (!data) {
+          return;
+        }
+
+        return {
+          paginatedComments: {
+            ...data.paginatedComments,
+            comments: [
+              { comment: result.data!.addComment.comment!, hasReplies: false },
+              ...data.paginatedComments.comments,
+            ],
+          },
+        };
+      }
+    );
   };
 
   return (

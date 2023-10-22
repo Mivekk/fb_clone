@@ -1,6 +1,7 @@
 "use client";
 
 import { getAccessToken, setAccessToken } from "@/token";
+import { getRefValue } from "@/utils/getRefValue";
 import { ApolloLink, HttpLink, split } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
@@ -106,6 +107,37 @@ function makeClient() {
                 return {
                   hasMore: incoming.hasMore,
                   posts: [...existingPosts, ...incomingPosts],
+                };
+              },
+            },
+            paginatedComments: {
+              keyArgs: ["postId"],
+              merge(existing = [], incoming) {
+                const existingComments: any[] = existing.comments ?? [];
+                const incomingComments: any[] = incoming.comments;
+
+                const comments = [...existingComments];
+
+                incomingComments.forEach((inc) => {
+                  if (
+                    !comments.find((c) => c.comment.__ref === inc.comment.__ref)
+                  ) {
+                    if (
+                      comments.length > 0 &&
+                      getRefValue(8, comments[0].comment.__ref) <
+                        getRefValue(8, inc.comment.__ref)
+                    ) {
+                      comments.unshift(inc);
+                    } else {
+                      comments.push(inc);
+                    }
+                  }
+                });
+
+                return {
+                  hasMore: incoming.hasMore,
+                  commentCount: incoming.commentCount,
+                  comments,
                 };
               },
             },

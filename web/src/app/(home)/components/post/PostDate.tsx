@@ -1,7 +1,9 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import React from "react";
-import TimeAgo from "react-timeago";
+
+const TimeAgoNoSSR = dynamic(() => import("react-timeago"), { ssr: false });
 
 type PostDateProps = {
   createdAt: any;
@@ -10,7 +12,7 @@ type PostDateProps = {
 const PostDate: React.FC<PostDateProps> = ({ createdAt }) => {
   return (
     <div className="-mt-2">
-      <TimeAgo date={createdAt} className="text-sm" />
+      <TimeAgoNoSSR date={createdAt} className="text-sm" />
     </div>
   );
 };

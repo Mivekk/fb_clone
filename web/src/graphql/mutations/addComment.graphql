@@ -2,6 +2,20 @@ mutation AddComment($data: AddCommentInput!) {
   addComment(data: $data) {
     comment {
       id
+      postId
+      replyId
+      body
+      author {
+        id
+        firstName
+        lastName
+        image_url
+      }
+      reactions {
+        ...ReactionFields
+      }
+      createdAt
+      updatedAt
     }
     error
   }
