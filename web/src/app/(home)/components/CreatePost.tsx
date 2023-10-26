@@ -14,7 +14,11 @@ import {
 import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
 import { Textarea } from "@/app/components/ui/textarea";
-import { CreatePostDocument, MeDocument } from "@/generated/graphql";
+import {
+  CreatePostDocument,
+  MeDocument,
+  PaginatedPostsDocument,
+} from "@/generated/graphql";
 import { useProfileTransition } from "@/hooks/useProfileTransition";
 import { useMutation } from "@apollo/client";
 import { useQuery } from "@apollo/experimental-nextjs-app-support/ssr";
@@ -37,6 +41,19 @@ const CreatePost: React.FC<{}> = ({}) => {
       console.log(result);
       return;
     }
+
+    client.cache.updateQuery({ query: PaginatedPostsDocument }, (data) => {
+      if (!data) {
+        return data;
+      }
+
+      return {
+        paginatedPosts: {
+          hasMore: data.paginatedPosts.hasMore,
+          posts: [...data.paginatedPosts.posts, result.data!.createPost.post!],
+        },
+      };
+    });
   };
 
   return (
