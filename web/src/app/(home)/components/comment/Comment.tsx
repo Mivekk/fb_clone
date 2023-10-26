@@ -28,7 +28,7 @@ const Comment: React.FC<CommentProps> = ({ body, createdAt, author }) => {
         className="h-8 w-8"
       />
       <div className="flex flex-col">
-        <div className="ml-2 w-fit h-fit bg-gray-200 rounded-2xl px-2 py-1 text-sm leading-4">
+        <div className="ml-2 w-fit h-fit bg-gray-200 dark:bg-[#3A3B3C] rounded-2xl px-2 py-1 text-sm leading-4">
           <div
             onClick={() => handleTransition(author.id)}
             className="text-xs font-semibold hover:cursor-pointer"

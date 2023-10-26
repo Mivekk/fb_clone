@@ -1,14 +1,14 @@
 "use client";
 
 import React from "react";
-import NavBar from "./components/NavBar";
+import ThemeProvider from "@/contexts/ThemeProvider";
+import SubLayout from "./subLayout";
 
 const HomeLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <>
-      <NavBar />
-      {children}
-    </>
+    <ThemeProvider>
+      <SubLayout>{children}</SubLayout>
+    </ThemeProvider>
   );
 };
 

@@ -15,9 +15,9 @@ const ProfileName: React.FC<ProfileNameType> = ({
   image_url,
 }) => {
   return (
-    <div className="flex items-end gap-2">
+    <div className="flex items-center just gap-2 p-2">
       <Avatar image_url={image_url} className="w-24 h-24" />
-      <div className="text-xl font-semibold">
+      <div className="text-3xl font-semibold">
         {firstName} {lastName}
       </div>
     </div>

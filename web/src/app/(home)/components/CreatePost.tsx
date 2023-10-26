@@ -57,16 +57,16 @@ const CreatePost: React.FC<{}> = ({}) => {
   };
 
   return (
-    <div className="p-2 mt-2 rounded-md md:w-[32rem] sm:w-[24rem] w-[18rem] shadow-md bg-white flex items-center">
+    <div className="p-2 mt-2 rounded-md md:w-[32rem] sm:w-[24rem] w-[18rem] shadow-md bg-white dark:bg-[#202122] flex items-center">
       <Avatar
         image_url={data?.me?.image_url}
         onClick={() => handleTransition(data?.me?.id)}
       />
       <Dialog>
-        <DialogTrigger className="grow h-8 ml-2 bg-gray-200 rounded-full flex justify-start items-center text-md">
+        <DialogTrigger className="grow h-10 ml-2 bg-gray-200 dark:bg-[#3A3B3C] rounded-full flex justify-start items-center text-md">
           <div className="ml-4 select-none">Create post...</div>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[425px] dark:text-white">
           <DialogHeader>
             <DialogTitle>Create new post</DialogTitle>
             <DialogDescription>

@@ -11,20 +11,38 @@ import {
 import { MeDocument } from "@/generated/graphql";
 import { useProfileTransition } from "@/hooks/useProfileTransition";
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
-import React from "react";
+import React, { useContext } from "react";
 import Logout from "./Logout";
+import { ThemeContext } from "@/contexts/ThemeProvider";
+import fbIcon from "../../../../public/fb-icon.svg";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const NavBar: React.FC<{}> = ({}) => {
+  const router = useRouter();
   const [handleTransition] = useProfileTransition();
+
+  const { theme, setTheme } = useContext(ThemeContext);
+
   const { data } = useSuspenseQuery(MeDocument, {
     fetchPolicy: "network-only",
   });
 
   return (
-    <div className="w-full h-12 bg-white flex justify-end select-none">
+    <div className="w-full h-16 bg-white dark:bg-[#202122] flex justify-between select-none">
+      <div className="flex w-16 h-16 justify-center items-center">
+        <Image
+          src={fbIcon}
+          alt="fbIcon"
+          width={48}
+          height={48}
+          className="hover:cursor-pointer"
+          onClick={() => router.push("/")}
+        />
+      </div>
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger className="mr-2">
-          <Avatar image_url={data.me?.image_url} />
+          <Avatar image_url={data.me?.image_url} className="w-12 h-12" />
         </DropdownMenuTrigger>
         <DropdownMenuContent className="bg-white rounded-md p-2 mr-8">
           <DropdownMenuItem
@@ -37,7 +55,11 @@ const NavBar: React.FC<{}> = ({}) => {
             </div>
           </DropdownMenuItem>
           <DropdownMenuSeparator className="h-[1px] bg-gray-200" />
-          <DropdownMenuItem>Dark theme</DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+          >
+            {theme === "light" ? "Dark" : "Light"} theme
+          </DropdownMenuItem>
           <DropdownMenuItem>
             <Logout />
           </DropdownMenuItem>

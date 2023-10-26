@@ -81,7 +81,7 @@ const PostCreateComment: React.FC<PostCreateCommentProps> = ({
         onSubmit={(e) => handleSubmit(e)}
         onClick={() => setExpanded((prev) => prev + 1)}
         className={cn(
-          "flex flex-col grow shadow-sm border bg-gray-200 rounded-2xl ml-2"
+          "flex flex-col grow shadow-sm bg-gray-200 dark:bg-[#3A3B3C] rounded-2xl ml-2"
         )}
       >
         <Textarea
