@@ -8,6 +8,8 @@ import { IntFieldUpdateOperationsInput } from "../inputs/IntFieldUpdateOperation
 import { NullableStringFieldUpdateOperationsInput } from "../inputs/NullableStringFieldUpdateOperationsInput";
 import { PostUpdateManyWithoutAuthorNestedInput } from "../inputs/PostUpdateManyWithoutAuthorNestedInput";
 import { StringFieldUpdateOperationsInput } from "../inputs/StringFieldUpdateOperationsInput";
+import { UserUpdateManyWithoutFriendsNestedInput } from "../inputs/UserUpdateManyWithoutFriendsNestedInput";
+import { UserUpdateManyWithoutPrisma_friendsNestedInput } from "../inputs/UserUpdateManyWithoutPrisma_friendsNestedInput";
 
 @TypeGraphQL.InputType("UserUpdateWithoutReactionsInput", {})
 export class UserUpdateWithoutReactionsInput {
@@ -60,4 +62,14 @@ export class UserUpdateWithoutReactionsInput {
     nullable: true
   })
   comments?: CommentUpdateManyWithoutAuthorNestedInput | undefined;
+
+  @TypeGraphQL.Field(_type => UserUpdateManyWithoutPrisma_friendsNestedInput, {
+    nullable: true
+  })
+  friends?: UserUpdateManyWithoutPrisma_friendsNestedInput | undefined;
+
+  @TypeGraphQL.Field(_type => UserUpdateManyWithoutFriendsNestedInput, {
+    nullable: true
+  })
+  prisma_friends?: UserUpdateManyWithoutFriendsNestedInput | undefined;
 }

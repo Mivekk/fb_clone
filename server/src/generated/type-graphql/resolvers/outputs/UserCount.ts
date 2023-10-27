@@ -3,7 +3,9 @@ import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { UserCountCommentsArgs } from "./args/UserCountCommentsArgs";
+import { UserCountFriendsArgs } from "./args/UserCountFriendsArgs";
 import { UserCountPostsArgs } from "./args/UserCountPostsArgs";
+import { UserCountPrisma_friendsArgs } from "./args/UserCountPrisma_friendsArgs";
 import { UserCountReactionsArgs } from "./args/UserCountReactionsArgs";
 
 @TypeGraphQL.ObjectType("UserCount", {
@@ -13,6 +15,8 @@ export class UserCount {
   posts!: number;
   comments!: number;
   reactions!: number;
+  friends!: number;
+  prisma_friends!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
     name: "posts",
@@ -36,5 +40,21 @@ export class UserCount {
   })
   getReactions(@TypeGraphQL.Root() root: UserCount, @TypeGraphQL.Args() args: UserCountReactionsArgs): number {
     return root.reactions;
+  }
+
+  @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
+    name: "friends",
+    nullable: false
+  })
+  getFriends(@TypeGraphQL.Root() root: UserCount, @TypeGraphQL.Args() args: UserCountFriendsArgs): number {
+    return root.friends;
+  }
+
+  @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
+    name: "prisma_friends",
+    nullable: false
+  })
+  getPrisma_friends(@TypeGraphQL.Root() root: UserCount, @TypeGraphQL.Args() args: UserCountPrisma_friendsArgs): number {
+    return root.prisma_friends;
   }
 }

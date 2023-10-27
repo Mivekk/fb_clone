@@ -140,4 +140,76 @@ export class UserResolver {
 
     return true;
   }
+
+  @Query(() => [User])
+  @UseMiddleware(isAuth)
+  async friends(
+    @Ctx() { prisma }: MyApolloContext,
+    @Arg("userId") userId: number
+  ): Promise<User[]> {
+    const userWithFriends = await prisma.user.findUnique({
+      where: { id: userId },
+      include: { friends: true },
+    });
+
+    if (!userWithFriends) {
+      throw new Error("user not found");
+    }
+
+    return userWithFriends.friends;
+  }
+
+  @Mutation(() => User, { nullable: true })
+  @UseMiddleware(isAuth)
+  async addFriend(
+    @Ctx() { prisma, payload }: MyApolloContext,
+    @Arg("userId") userId: number
+  ): Promise<User | null> {
+    if (!payload?.userId) {
+      throw new Error("not authenticated");
+    }
+
+    const first_update = await prisma.user.update({
+      where: { id: payload.userId },
+      data: { friends: { connect: { id: userId } } },
+    });
+
+    const second_update = await prisma.user.update({
+      where: { id: userId },
+      data: { friends: { connect: { id: payload.userId } } },
+    });
+
+    if (!first_update || !second_update) {
+      throw new Error("could not add friend");
+    }
+
+    return first_update;
+  }
+
+  @Mutation(() => User, { nullable: true })
+  @UseMiddleware(isAuth)
+  async removeFriend(
+    @Ctx() { prisma, payload }: MyApolloContext,
+    @Arg("userId") userId: number
+  ): Promise<User | null> {
+    if (!payload?.userId) {
+      throw new Error("not authenticated");
+    }
+
+    const first_update = await prisma.user.update({
+      where: { id: payload.userId },
+      data: { friends: { disconnect: { id: userId } } },
+    });
+
+    const second_update = await prisma.user.update({
+      where: { id: userId },
+      data: { friends: { disconnect: { id: payload.userId } } },
+    });
+
+    if (!first_update || !second_update) {
+      throw new Error("could not remove friend");
+    }
+
+    return first_update;
+  }
 }

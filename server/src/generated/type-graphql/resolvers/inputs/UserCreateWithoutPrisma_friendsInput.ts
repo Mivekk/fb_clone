@@ -2,13 +2,13 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
+import { CommentCreateNestedManyWithoutAuthorInput } from "../inputs/CommentCreateNestedManyWithoutAuthorInput";
 import { PostCreateNestedManyWithoutAuthorInput } from "../inputs/PostCreateNestedManyWithoutAuthorInput";
 import { ReactionCreateNestedManyWithoutAuthorInput } from "../inputs/ReactionCreateNestedManyWithoutAuthorInput";
-import { UserCreateNestedManyWithoutFriendsInput } from "../inputs/UserCreateNestedManyWithoutFriendsInput";
 import { UserCreateNestedManyWithoutPrisma_friendsInput } from "../inputs/UserCreateNestedManyWithoutPrisma_friendsInput";
 
-@TypeGraphQL.InputType("UserCreateWithoutCommentsInput", {})
-export class UserCreateWithoutCommentsInput {
+@TypeGraphQL.InputType("UserCreateWithoutPrisma_friendsInput", {})
+export class UserCreateWithoutPrisma_friendsInput {
   @TypeGraphQL.Field(_type => String, {
     nullable: false
   })
@@ -54,6 +54,11 @@ export class UserCreateWithoutCommentsInput {
   })
   posts?: PostCreateNestedManyWithoutAuthorInput | undefined;
 
+  @TypeGraphQL.Field(_type => CommentCreateNestedManyWithoutAuthorInput, {
+    nullable: true
+  })
+  comments?: CommentCreateNestedManyWithoutAuthorInput | undefined;
+
   @TypeGraphQL.Field(_type => ReactionCreateNestedManyWithoutAuthorInput, {
     nullable: true
   })
@@ -63,9 +68,4 @@ export class UserCreateWithoutCommentsInput {
     nullable: true
   })
   friends?: UserCreateNestedManyWithoutPrisma_friendsInput | undefined;
-
-  @TypeGraphQL.Field(_type => UserCreateNestedManyWithoutFriendsInput, {
-    nullable: true
-  })
-  prisma_friends?: UserCreateNestedManyWithoutFriendsInput | undefined;
 }

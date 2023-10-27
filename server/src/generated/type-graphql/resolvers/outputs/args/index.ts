@@ -3,5 +3,7 @@ export { CommentCountRepliesArgs } from "./CommentCountRepliesArgs";
 export { PostCountCommentsArgs } from "./PostCountCommentsArgs";
 export { PostCountReactionsArgs } from "./PostCountReactionsArgs";
 export { UserCountCommentsArgs } from "./UserCountCommentsArgs";
+export { UserCountFriendsArgs } from "./UserCountFriendsArgs";
 export { UserCountPostsArgs } from "./UserCountPostsArgs";
+export { UserCountPrisma_friendsArgs } from "./UserCountPrisma_friendsArgs";
 export { UserCountReactionsArgs } from "./UserCountReactionsArgs";

@@ -49,6 +49,10 @@ export class User {
 
   reactions?: Reaction[];
 
+  friends?: User[];
+
+  prisma_friends?: User[];
+
   @TypeGraphQL.Field(_type => String, {
     nullable: true
   })

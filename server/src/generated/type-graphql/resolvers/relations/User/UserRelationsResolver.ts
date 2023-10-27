@@ -5,7 +5,9 @@ import { Post } from "../../../models/Post";
 import { Reaction } from "../../../models/Reaction";
 import { User } from "../../../models/User";
 import { UserCommentsArgs } from "./args/UserCommentsArgs";
+import { UserFriendsArgs } from "./args/UserFriendsArgs";
 import { UserPostsArgs } from "./args/UserPostsArgs";
+import { UserPrisma_friendsArgs } from "./args/UserPrisma_friendsArgs";
 import { UserReactionsArgs } from "./args/UserReactionsArgs";
 import { transformInfoIntoPrismaArgs, getPrismaFromContext, transformCountFieldIntoSelectRelationsCount } from "../../../helpers";
 
@@ -51,6 +53,36 @@ export class UserRelationsResolver {
         id: user.id,
       },
     }).reactions({
+      ...args,
+      ...(_count && transformCountFieldIntoSelectRelationsCount(_count)),
+    });
+  }
+
+  @TypeGraphQL.FieldResolver(_type => [User], {
+    nullable: false
+  })
+  async friends(@TypeGraphQL.Root() user: User, @TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: UserFriendsArgs): Promise<User[]> {
+    const { _count } = transformInfoIntoPrismaArgs(info);
+    return getPrismaFromContext(ctx).user.findUniqueOrThrow({
+      where: {
+        id: user.id,
+      },
+    }).friends({
+      ...args,
+      ...(_count && transformCountFieldIntoSelectRelationsCount(_count)),
+    });
+  }
+
+  @TypeGraphQL.FieldResolver(_type => [User], {
+    nullable: false
+  })
+  async prisma_friends(@TypeGraphQL.Root() user: User, @TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: UserPrisma_friendsArgs): Promise<User[]> {
+    const { _count } = transformInfoIntoPrismaArgs(info);
+    return getPrismaFromContext(ctx).user.findUniqueOrThrow({
+      where: {
+        id: user.id,
+      },
+    }).prisma_friends({
       ...args,
       ...(_count && transformCountFieldIntoSelectRelationsCount(_count)),
     });

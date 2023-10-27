@@ -2,17 +2,17 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
+import { CommentUpdateManyWithoutAuthorNestedInput } from "../inputs/CommentUpdateManyWithoutAuthorNestedInput";
 import { DateTimeFieldUpdateOperationsInput } from "../inputs/DateTimeFieldUpdateOperationsInput";
 import { IntFieldUpdateOperationsInput } from "../inputs/IntFieldUpdateOperationsInput";
 import { NullableStringFieldUpdateOperationsInput } from "../inputs/NullableStringFieldUpdateOperationsInput";
 import { PostUpdateManyWithoutAuthorNestedInput } from "../inputs/PostUpdateManyWithoutAuthorNestedInput";
 import { ReactionUpdateManyWithoutAuthorNestedInput } from "../inputs/ReactionUpdateManyWithoutAuthorNestedInput";
 import { StringFieldUpdateOperationsInput } from "../inputs/StringFieldUpdateOperationsInput";
-import { UserUpdateManyWithoutFriendsNestedInput } from "../inputs/UserUpdateManyWithoutFriendsNestedInput";
 import { UserUpdateManyWithoutPrisma_friendsNestedInput } from "../inputs/UserUpdateManyWithoutPrisma_friendsNestedInput";
 
-@TypeGraphQL.InputType("UserUpdateWithoutCommentsInput", {})
-export class UserUpdateWithoutCommentsInput {
+@TypeGraphQL.InputType("UserUpdateWithoutPrisma_friendsInput", {})
+export class UserUpdateWithoutPrisma_friendsInput {
   @TypeGraphQL.Field(_type => StringFieldUpdateOperationsInput, {
     nullable: true
   })
@@ -58,6 +58,11 @@ export class UserUpdateWithoutCommentsInput {
   })
   posts?: PostUpdateManyWithoutAuthorNestedInput | undefined;
 
+  @TypeGraphQL.Field(_type => CommentUpdateManyWithoutAuthorNestedInput, {
+    nullable: true
+  })
+  comments?: CommentUpdateManyWithoutAuthorNestedInput | undefined;
+
   @TypeGraphQL.Field(_type => ReactionUpdateManyWithoutAuthorNestedInput, {
     nullable: true
   })
@@ -67,9 +72,4 @@ export class UserUpdateWithoutCommentsInput {
     nullable: true
   })
   friends?: UserUpdateManyWithoutPrisma_friendsNestedInput | undefined;
-
-  @TypeGraphQL.Field(_type => UserUpdateManyWithoutFriendsNestedInput, {
-    nullable: true
-  })
-  prisma_friends?: UserUpdateManyWithoutFriendsNestedInput | undefined;
 }

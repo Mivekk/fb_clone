@@ -9,6 +9,7 @@ import { PostListRelationFilter } from "../inputs/PostListRelationFilter";
 import { ReactionListRelationFilter } from "../inputs/ReactionListRelationFilter";
 import { StringFilter } from "../inputs/StringFilter";
 import { StringNullableFilter } from "../inputs/StringNullableFilter";
+import { UserListRelationFilter } from "../inputs/UserListRelationFilter";
 import { UserWhereInput } from "../inputs/UserWhereInput";
 
 @TypeGraphQL.InputType("UserWhereUniqueInput", {})
@@ -87,4 +88,14 @@ export class UserWhereUniqueInput {
     nullable: true
   })
   reactions?: ReactionListRelationFilter | undefined;
+
+  @TypeGraphQL.Field(_type => UserListRelationFilter, {
+    nullable: true
+  })
+  friends?: UserListRelationFilter | undefined;
+
+  @TypeGraphQL.Field(_type => UserListRelationFilter, {
+    nullable: true
+  })
+  prisma_friends?: UserListRelationFilter | undefined;
 }

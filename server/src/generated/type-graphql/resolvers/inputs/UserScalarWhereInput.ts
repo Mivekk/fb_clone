@@ -2,31 +2,27 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
-import { CommentListRelationFilter } from "../inputs/CommentListRelationFilter";
 import { DateTimeFilter } from "../inputs/DateTimeFilter";
 import { IntFilter } from "../inputs/IntFilter";
-import { PostListRelationFilter } from "../inputs/PostListRelationFilter";
-import { ReactionListRelationFilter } from "../inputs/ReactionListRelationFilter";
 import { StringFilter } from "../inputs/StringFilter";
 import { StringNullableFilter } from "../inputs/StringNullableFilter";
-import { UserListRelationFilter } from "../inputs/UserListRelationFilter";
 
-@TypeGraphQL.InputType("UserWhereInput", {})
-export class UserWhereInput {
-  @TypeGraphQL.Field(_type => [UserWhereInput], {
+@TypeGraphQL.InputType("UserScalarWhereInput", {})
+export class UserScalarWhereInput {
+  @TypeGraphQL.Field(_type => [UserScalarWhereInput], {
     nullable: true
   })
-  AND?: UserWhereInput[] | undefined;
+  AND?: UserScalarWhereInput[] | undefined;
 
-  @TypeGraphQL.Field(_type => [UserWhereInput], {
+  @TypeGraphQL.Field(_type => [UserScalarWhereInput], {
     nullable: true
   })
-  OR?: UserWhereInput[] | undefined;
+  OR?: UserScalarWhereInput[] | undefined;
 
-  @TypeGraphQL.Field(_type => [UserWhereInput], {
+  @TypeGraphQL.Field(_type => [UserScalarWhereInput], {
     nullable: true
   })
-  NOT?: UserWhereInput[] | undefined;
+  NOT?: UserScalarWhereInput[] | undefined;
 
   @TypeGraphQL.Field(_type => IntFilter, {
     nullable: true
@@ -72,29 +68,4 @@ export class UserWhereInput {
     nullable: true
   })
   external_id?: StringNullableFilter | undefined;
-
-  @TypeGraphQL.Field(_type => PostListRelationFilter, {
-    nullable: true
-  })
-  posts?: PostListRelationFilter | undefined;
-
-  @TypeGraphQL.Field(_type => CommentListRelationFilter, {
-    nullable: true
-  })
-  comments?: CommentListRelationFilter | undefined;
-
-  @TypeGraphQL.Field(_type => ReactionListRelationFilter, {
-    nullable: true
-  })
-  reactions?: ReactionListRelationFilter | undefined;
-
-  @TypeGraphQL.Field(_type => UserListRelationFilter, {
-    nullable: true
-  })
-  friends?: UserListRelationFilter | undefined;
-
-  @TypeGraphQL.Field(_type => UserListRelationFilter, {
-    nullable: true
-  })
-  prisma_friends?: UserListRelationFilter | undefined;
 }
