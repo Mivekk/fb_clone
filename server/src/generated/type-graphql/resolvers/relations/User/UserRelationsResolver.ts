@@ -1,13 +1,14 @@
 import * as TypeGraphQL from "type-graphql";
 import type { GraphQLResolveInfo } from "graphql";
 import { Comment } from "../../../models/Comment";
+import { Friendship } from "../../../models/Friendship";
 import { Post } from "../../../models/Post";
 import { Reaction } from "../../../models/Reaction";
 import { User } from "../../../models/User";
 import { UserCommentsArgs } from "./args/UserCommentsArgs";
-import { UserFriendsArgs } from "./args/UserFriendsArgs";
+import { UserFriendshipsArgs } from "./args/UserFriendshipsArgs";
 import { UserPostsArgs } from "./args/UserPostsArgs";
-import { UserPrisma_friendsArgs } from "./args/UserPrisma_friendsArgs";
+import { UserPrisma_friendshipsArgs } from "./args/UserPrisma_friendshipsArgs";
 import { UserReactionsArgs } from "./args/UserReactionsArgs";
 import { transformInfoIntoPrismaArgs, getPrismaFromContext, transformCountFieldIntoSelectRelationsCount } from "../../../helpers";
 
@@ -58,31 +59,31 @@ export class UserRelationsResolver {
     });
   }
 
-  @TypeGraphQL.FieldResolver(_type => [User], {
+  @TypeGraphQL.FieldResolver(_type => [Friendship], {
     nullable: false
   })
-  async friends(@TypeGraphQL.Root() user: User, @TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: UserFriendsArgs): Promise<User[]> {
+  async friendships(@TypeGraphQL.Root() user: User, @TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: UserFriendshipsArgs): Promise<Friendship[]> {
     const { _count } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).user.findUniqueOrThrow({
       where: {
         id: user.id,
       },
-    }).friends({
+    }).friendships({
       ...args,
       ...(_count && transformCountFieldIntoSelectRelationsCount(_count)),
     });
   }
 
-  @TypeGraphQL.FieldResolver(_type => [User], {
+  @TypeGraphQL.FieldResolver(_type => [Friendship], {
     nullable: false
   })
-  async prisma_friends(@TypeGraphQL.Root() user: User, @TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: UserPrisma_friendsArgs): Promise<User[]> {
+  async prisma_friendships(@TypeGraphQL.Root() user: User, @TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: UserPrisma_friendshipsArgs): Promise<Friendship[]> {
     const { _count } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).user.findUniqueOrThrow({
       where: {
         id: user.id,
       },
-    }).prisma_friends({
+    }).prisma_friendships({
       ...args,
       ...(_count && transformCountFieldIntoSelectRelationsCount(_count)),
     });

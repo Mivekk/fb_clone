@@ -6,7 +6,7 @@ import { getMainDefinition } from "@apollo/client/utilities";
 import { SSRMultipartLink } from "@apollo/experimental-nextjs-app-support/ssr";
 import { TokenRefreshLink } from "apollo-link-token-refresh";
 import { createClient } from "graphql-ws";
-import jwt_decode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 export const makeApolloLink = (): ApolloLink | undefined => {
   const httpLink = new HttpLink({
@@ -57,7 +57,7 @@ export const makeApolloLink = (): ApolloLink | undefined => {
       }
 
       try {
-        const { exp } = jwt_decode(token) as any;
+        const { exp } = jwtDecode(token) as any;
 
         if (Date.now() >= exp * 1000) {
           return false;

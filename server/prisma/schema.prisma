@@ -19,22 +19,38 @@ generator typegraphql {
 }
 
 model User {
-  id             Int        @id @default(autoincrement())
-  firstName      String
-  lastName       String
-  email          String     @unique
-  password       String?
-  image_url      String?
-  tokenVersion   Int        @default(0)
-  posts          Post[]
-  comments       Comment[]
-  reactions      Reaction[]
-  friends        User[]     @relation("UserFriends")
-  prisma_friends User[]     @relation("UserFriends")
-  external_type  String?
-  external_id    String?
-  createdAt      DateTime   @default(now())
-  updatedAt      DateTime   @updatedAt
+  id                 Int          @id @default(autoincrement())
+  firstName          String
+  lastName           String
+  email              String       @unique
+  password           String?
+  image_url          String?
+  tokenVersion       Int          @default(0)
+  posts              Post[]
+  comments           Comment[]
+  reactions          Reaction[]
+  friendships        Friendship[] @relation("FriendshipSender")
+  prisma_friendships Friendship[] @relation("FriendshipReceiver")
+  external_type      String?
+  external_id        String?
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+}
+
+enum FriendStatus {
+  INVITE_SENT
+  INVITE_RECEIVED
+  FRIENDS
+}
+
+model Friendship {
+  sender     User         @relation("FriendshipSender", fields: [senderId], references: [id])
+  senderId   Int
+  receiver   User         @relation("FriendshipReceiver", fields: [receiverId], references: [id])
+  receiverId Int
+  status     FriendStatus
+
+  @@id([senderId, receiverId])
 }
 
 model Post {

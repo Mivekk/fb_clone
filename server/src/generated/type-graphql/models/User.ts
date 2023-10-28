@@ -3,6 +3,7 @@ import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../scalars";
 import { Comment } from "../models/Comment";
+import { Friendship } from "../models/Friendship";
 import { Post } from "../models/Post";
 import { Reaction } from "../models/Reaction";
 import { UserCount } from "../resolvers/outputs/UserCount";
@@ -49,9 +50,9 @@ export class User {
 
   reactions?: Reaction[];
 
-  friends?: User[];
+  friendships?: Friendship[];
 
-  prisma_friends?: User[];
+  prisma_friendships?: Friendship[];
 
   @TypeGraphQL.Field(_type => String, {
     nullable: true

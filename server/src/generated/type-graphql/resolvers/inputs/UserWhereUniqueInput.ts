@@ -4,12 +4,12 @@ import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { CommentListRelationFilter } from "../inputs/CommentListRelationFilter";
 import { DateTimeFilter } from "../inputs/DateTimeFilter";
+import { FriendshipListRelationFilter } from "../inputs/FriendshipListRelationFilter";
 import { IntFilter } from "../inputs/IntFilter";
 import { PostListRelationFilter } from "../inputs/PostListRelationFilter";
 import { ReactionListRelationFilter } from "../inputs/ReactionListRelationFilter";
 import { StringFilter } from "../inputs/StringFilter";
 import { StringNullableFilter } from "../inputs/StringNullableFilter";
-import { UserListRelationFilter } from "../inputs/UserListRelationFilter";
 import { UserWhereInput } from "../inputs/UserWhereInput";
 
 @TypeGraphQL.InputType("UserWhereUniqueInput", {})
@@ -89,13 +89,13 @@ export class UserWhereUniqueInput {
   })
   reactions?: ReactionListRelationFilter | undefined;
 
-  @TypeGraphQL.Field(_type => UserListRelationFilter, {
+  @TypeGraphQL.Field(_type => FriendshipListRelationFilter, {
     nullable: true
   })
-  friends?: UserListRelationFilter | undefined;
+  friendships?: FriendshipListRelationFilter | undefined;
 
-  @TypeGraphQL.Field(_type => UserListRelationFilter, {
+  @TypeGraphQL.Field(_type => FriendshipListRelationFilter, {
     nullable: true
   })
-  prisma_friends?: UserListRelationFilter | undefined;
+  prisma_friendships?: FriendshipListRelationFilter | undefined;
 }

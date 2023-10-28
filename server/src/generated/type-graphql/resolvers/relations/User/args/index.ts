@@ -1,5 +1,5 @@
 export { UserCommentsArgs } from "./UserCommentsArgs";
-export { UserFriendsArgs } from "./UserFriendsArgs";
+export { UserFriendshipsArgs } from "./UserFriendshipsArgs";
 export { UserPostsArgs } from "./UserPostsArgs";
-export { UserPrisma_friendsArgs } from "./UserPrisma_friendsArgs";
+export { UserPrisma_friendshipsArgs } from "./UserPrisma_friendshipsArgs";
 export { UserReactionsArgs } from "./UserReactionsArgs";

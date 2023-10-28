@@ -12,8 +12,16 @@ import { createAccessToken, createRefreshToken } from "../auth/auth";
 import { sendRefreshToken } from "../auth/sendRefreshToken";
 import { MyApolloContext, Payload } from "../context";
 import { LoginInput, RegisterInput } from "./utils/inputs";
-import { LoginResponseObject, RegisterResponseObject } from "./utils/outputs";
-import { User } from "../generated/type-graphql";
+import {
+  LoginResponseObject,
+  RegisterResponseObject,
+  UserObject,
+} from "./utils/outputs";
+import {
+  FriendStatus,
+  User,
+  UserWhereUniqueInput,
+} from "../generated/type-graphql";
 import { verify } from "jsonwebtoken";
 import { isAuth } from "../middleware/isAuth";
 
@@ -49,6 +57,20 @@ export class UserResolver {
     } catch (err) {
       return null;
     }
+  }
+
+  @Query(() => UserObject, { nullable: true })
+  async user(
+    @Ctx() { prisma }: MyApolloContext,
+    @Arg("userId") userId: number
+  ): Promise<UserObject | null> {
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+
+    if (!user) {
+      return null;
+    }
+
+    return { ...user, friendStatus: FriendStatus.STRANGER };
   }
 
   @Mutation(() => RegisterResponseObject)
@@ -149,7 +171,7 @@ export class UserResolver {
   ): Promise<User[]> {
     const userWithFriends = await prisma.user.findUnique({
       where: { id: userId },
-      include: { friends: true },
+      include: { friendships: { where: { status: { equals: "FRIENDS" } } } },
     });
 
     if (!userWithFriends) {

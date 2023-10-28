@@ -3,10 +3,10 @@ import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { CommentCreateNestedManyWithoutAuthorInput } from "../inputs/CommentCreateNestedManyWithoutAuthorInput";
+import { FriendshipCreateNestedManyWithoutReceiverInput } from "../inputs/FriendshipCreateNestedManyWithoutReceiverInput";
+import { FriendshipCreateNestedManyWithoutSenderInput } from "../inputs/FriendshipCreateNestedManyWithoutSenderInput";
 import { PostCreateNestedManyWithoutAuthorInput } from "../inputs/PostCreateNestedManyWithoutAuthorInput";
 import { ReactionCreateNestedManyWithoutAuthorInput } from "../inputs/ReactionCreateNestedManyWithoutAuthorInput";
-import { UserCreateNestedManyWithoutFriendsInput } from "../inputs/UserCreateNestedManyWithoutFriendsInput";
-import { UserCreateNestedManyWithoutPrisma_friendsInput } from "../inputs/UserCreateNestedManyWithoutPrisma_friendsInput";
 
 @TypeGraphQL.InputType("UserCreateInput", {})
 export class UserCreateInput {
@@ -65,13 +65,13 @@ export class UserCreateInput {
   })
   reactions?: ReactionCreateNestedManyWithoutAuthorInput | undefined;
 
-  @TypeGraphQL.Field(_type => UserCreateNestedManyWithoutPrisma_friendsInput, {
+  @TypeGraphQL.Field(_type => FriendshipCreateNestedManyWithoutSenderInput, {
     nullable: true
   })
-  friends?: UserCreateNestedManyWithoutPrisma_friendsInput | undefined;
+  friendships?: FriendshipCreateNestedManyWithoutSenderInput | undefined;
 
-  @TypeGraphQL.Field(_type => UserCreateNestedManyWithoutFriendsInput, {
+  @TypeGraphQL.Field(_type => FriendshipCreateNestedManyWithoutReceiverInput, {
     nullable: true
   })
-  prisma_friends?: UserCreateNestedManyWithoutFriendsInput | undefined;
+  prisma_friendships?: FriendshipCreateNestedManyWithoutReceiverInput | undefined;
 }

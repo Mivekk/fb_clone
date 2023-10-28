@@ -10,10 +10,8 @@ const SubLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   return (
     <div className={cn(theme)}>
-      <div className="w-full h-screen bg-gray-100 dark:bg-[#18191A]">
-        <NavBar />
-        {children}
-      </div>
+      <NavBar />
+      {children}
     </div>
   );
 };

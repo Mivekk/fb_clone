@@ -4,12 +4,12 @@ import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { CommentUpdateManyWithoutAuthorNestedInput } from "../inputs/CommentUpdateManyWithoutAuthorNestedInput";
 import { DateTimeFieldUpdateOperationsInput } from "../inputs/DateTimeFieldUpdateOperationsInput";
+import { FriendshipUpdateManyWithoutReceiverNestedInput } from "../inputs/FriendshipUpdateManyWithoutReceiverNestedInput";
+import { FriendshipUpdateManyWithoutSenderNestedInput } from "../inputs/FriendshipUpdateManyWithoutSenderNestedInput";
 import { IntFieldUpdateOperationsInput } from "../inputs/IntFieldUpdateOperationsInput";
 import { NullableStringFieldUpdateOperationsInput } from "../inputs/NullableStringFieldUpdateOperationsInput";
 import { PostUpdateManyWithoutAuthorNestedInput } from "../inputs/PostUpdateManyWithoutAuthorNestedInput";
 import { StringFieldUpdateOperationsInput } from "../inputs/StringFieldUpdateOperationsInput";
-import { UserUpdateManyWithoutFriendsNestedInput } from "../inputs/UserUpdateManyWithoutFriendsNestedInput";
-import { UserUpdateManyWithoutPrisma_friendsNestedInput } from "../inputs/UserUpdateManyWithoutPrisma_friendsNestedInput";
 
 @TypeGraphQL.InputType("UserUpdateWithoutReactionsInput", {})
 export class UserUpdateWithoutReactionsInput {
@@ -63,13 +63,13 @@ export class UserUpdateWithoutReactionsInput {
   })
   comments?: CommentUpdateManyWithoutAuthorNestedInput | undefined;
 
-  @TypeGraphQL.Field(_type => UserUpdateManyWithoutPrisma_friendsNestedInput, {
+  @TypeGraphQL.Field(_type => FriendshipUpdateManyWithoutSenderNestedInput, {
     nullable: true
   })
-  friends?: UserUpdateManyWithoutPrisma_friendsNestedInput | undefined;
+  friendships?: FriendshipUpdateManyWithoutSenderNestedInput | undefined;
 
-  @TypeGraphQL.Field(_type => UserUpdateManyWithoutFriendsNestedInput, {
+  @TypeGraphQL.Field(_type => FriendshipUpdateManyWithoutReceiverNestedInput, {
     nullable: true
   })
-  prisma_friends?: UserUpdateManyWithoutFriendsNestedInput | undefined;
+  prisma_friendships?: FriendshipUpdateManyWithoutReceiverNestedInput | undefined;
 }

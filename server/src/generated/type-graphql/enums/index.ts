@@ -1,4 +1,6 @@
 export { CommentScalarFieldEnum } from "./CommentScalarFieldEnum";
+export { FriendStatus } from "./FriendStatus";
+export { FriendshipScalarFieldEnum } from "./FriendshipScalarFieldEnum";
 export { NullsOrder } from "./NullsOrder";
 export { PostScalarFieldEnum } from "./PostScalarFieldEnum";
 export { QueryMode } from "./QueryMode";

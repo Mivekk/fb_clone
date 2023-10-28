@@ -1,4 +1,4 @@
-import { ObjectType, Field } from "type-graphql";
+import { ObjectType, Field, registerEnumType } from "type-graphql";
 
 import {
   User,
@@ -6,6 +6,7 @@ import {
   Comment,
   ReactionType,
   Reaction,
+  FriendStatus,
 } from "../../generated/type-graphql";
 
 @ObjectType()
@@ -21,6 +22,12 @@ export class RegisterResponseObject {
 export class LoginResponseObject extends RegisterResponseObject {
   @Field(() => String, { nullable: true })
   accessToken?: string;
+}
+
+@ObjectType()
+export class UserObject extends User {
+  @Field(() => FriendStatus)
+  friendStatus: FriendStatus;
 }
 
 @ObjectType()

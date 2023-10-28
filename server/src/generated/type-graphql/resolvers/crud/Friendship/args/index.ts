@@ -1,0 +1,14 @@
+export { AggregateFriendshipArgs } from "./AggregateFriendshipArgs";
+export { CreateManyFriendshipArgs } from "./CreateManyFriendshipArgs";
+export { CreateOneFriendshipArgs } from "./CreateOneFriendshipArgs";
+export { DeleteManyFriendshipArgs } from "./DeleteManyFriendshipArgs";
+export { DeleteOneFriendshipArgs } from "./DeleteOneFriendshipArgs";
+export { FindFirstFriendshipArgs } from "./FindFirstFriendshipArgs";
+export { FindFirstFriendshipOrThrowArgs } from "./FindFirstFriendshipOrThrowArgs";
+export { FindManyFriendshipArgs } from "./FindManyFriendshipArgs";
+export { FindUniqueFriendshipArgs } from "./FindUniqueFriendshipArgs";
+export { FindUniqueFriendshipOrThrowArgs } from "./FindUniqueFriendshipOrThrowArgs";
+export { GroupByFriendshipArgs } from "./GroupByFriendshipArgs";
+export { UpdateManyFriendshipArgs } from "./UpdateManyFriendshipArgs";
+export { UpdateOneFriendshipArgs } from "./UpdateOneFriendshipArgs";
+export { UpsertOneFriendshipArgs } from "./UpsertOneFriendshipArgs";

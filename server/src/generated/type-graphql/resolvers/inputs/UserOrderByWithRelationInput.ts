@@ -3,10 +3,10 @@ import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { CommentOrderByRelationAggregateInput } from "../inputs/CommentOrderByRelationAggregateInput";
+import { FriendshipOrderByRelationAggregateInput } from "../inputs/FriendshipOrderByRelationAggregateInput";
 import { PostOrderByRelationAggregateInput } from "../inputs/PostOrderByRelationAggregateInput";
 import { ReactionOrderByRelationAggregateInput } from "../inputs/ReactionOrderByRelationAggregateInput";
 import { SortOrderInput } from "../inputs/SortOrderInput";
-import { UserOrderByRelationAggregateInput } from "../inputs/UserOrderByRelationAggregateInput";
 import { SortOrder } from "../../enums/SortOrder";
 
 @TypeGraphQL.InputType("UserOrderByWithRelationInput", {})
@@ -71,13 +71,13 @@ export class UserOrderByWithRelationInput {
   })
   reactions?: ReactionOrderByRelationAggregateInput | undefined;
 
-  @TypeGraphQL.Field(_type => UserOrderByRelationAggregateInput, {
+  @TypeGraphQL.Field(_type => FriendshipOrderByRelationAggregateInput, {
     nullable: true
   })
-  friends?: UserOrderByRelationAggregateInput | undefined;
+  friendships?: FriendshipOrderByRelationAggregateInput | undefined;
 
-  @TypeGraphQL.Field(_type => UserOrderByRelationAggregateInput, {
+  @TypeGraphQL.Field(_type => FriendshipOrderByRelationAggregateInput, {
     nullable: true
   })
-  prisma_friends?: UserOrderByRelationAggregateInput | undefined;
+  prisma_friendships?: FriendshipOrderByRelationAggregateInput | undefined;
 }

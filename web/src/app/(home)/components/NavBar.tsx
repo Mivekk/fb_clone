@@ -24,9 +24,7 @@ const NavBar: React.FC<{}> = ({}) => {
 
   const { theme, setTheme } = useContext(ThemeContext);
 
-  const { data } = useSuspenseQuery(MeDocument, {
-    fetchPolicy: "network-only",
-  });
+  const { data } = useSuspenseQuery(MeDocument);
 
   return (
     <div className="w-full h-16 bg-white dark:bg-[#202122] flex justify-between select-none">
