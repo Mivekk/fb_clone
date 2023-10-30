@@ -3,15 +3,15 @@ import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 
-@TypeGraphQL.InputType("FriendshipSenderIdReceiverIdCompoundUniqueInput", {})
-export class FriendshipSenderIdReceiverIdCompoundUniqueInput {
+@TypeGraphQL.InputType("FriendshipFirst_user_idSecond_user_idCompoundUniqueInput", {})
+export class FriendshipFirst_user_idSecond_user_idCompoundUniqueInput {
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
     nullable: false
   })
-  senderId!: number;
+  first_user_id!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
     nullable: false
   })
-  receiverId!: number;
+  second_user_id!: number;
 }

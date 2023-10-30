@@ -20,7 +20,7 @@ export class GroupByFriendshipArgs {
   @TypeGraphQL.Field(_type => [FriendshipScalarFieldEnum], {
     nullable: false
   })
-  by!: Array<"senderId" | "receiverId" | "status">;
+  by!: Array<"first_user_id" | "second_user_id" | "status">;
 
   @TypeGraphQL.Field(_type => FriendshipScalarWhereWithAggregatesInput, {
     nullable: true

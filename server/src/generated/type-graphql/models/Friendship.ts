@@ -9,19 +9,19 @@ import { FriendStatus } from "../enums/FriendStatus";
   simpleResolvers: true
 })
 export class Friendship {
-  sender?: User;
+  first_user?: User;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
     nullable: false
   })
-  senderId!: number;
+  first_user_id!: number;
 
-  receiver?: User;
+  second_user?: User;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
     nullable: false
   })
-  receiverId!: number;
+  second_user_id!: number;
 
   @TypeGraphQL.Field(_type => FriendStatus, {
     nullable: false

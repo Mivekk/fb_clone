@@ -16,10 +16,10 @@ export class FriendshipCreateInput {
   @TypeGraphQL.Field(_type => UserCreateNestedOneWithoutFriendshipsInput, {
     nullable: false
   })
-  sender!: UserCreateNestedOneWithoutFriendshipsInput;
+  first_user!: UserCreateNestedOneWithoutFriendshipsInput;
 
   @TypeGraphQL.Field(_type => UserCreateNestedOneWithoutPrisma_friendshipsInput, {
     nullable: false
   })
-  receiver!: UserCreateNestedOneWithoutPrisma_friendshipsInput;
+  second_user!: UserCreateNestedOneWithoutPrisma_friendshipsInput;
 }

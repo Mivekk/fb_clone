@@ -4,12 +4,12 @@ import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { FriendStatus } from "../../enums/FriendStatus";
 
-@TypeGraphQL.InputType("FriendshipCreateManyReceiverInput", {})
-export class FriendshipCreateManyReceiverInput {
+@TypeGraphQL.InputType("FriendshipCreateManyFirst_userInput", {})
+export class FriendshipCreateManyFirst_userInput {
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
     nullable: false
   })
-  senderId!: number;
+  second_user_id!: number;
 
   @TypeGraphQL.Field(_type => FriendStatus, {
     nullable: false

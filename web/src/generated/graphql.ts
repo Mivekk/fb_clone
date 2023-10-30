@@ -48,6 +48,15 @@ export type AggregateComment = {
   _sum?: Maybe<CommentSumAggregate>;
 };
 
+export type AggregateFriendship = {
+  __typename?: 'AggregateFriendship';
+  _avg?: Maybe<FriendshipAvgAggregate>;
+  _count?: Maybe<FriendshipCountAggregate>;
+  _max?: Maybe<FriendshipMaxAggregate>;
+  _min?: Maybe<FriendshipMinAggregate>;
+  _sum?: Maybe<FriendshipSumAggregate>;
+};
+
 export type AggregatePost = {
   __typename?: 'AggregatePost';
   _avg?: Maybe<PostAvgAggregate>;
@@ -731,6 +740,27 @@ export type CursorObject = {
   id: Scalars['Float']['input'];
 };
 
+export type EnumFriendStatusFieldUpdateOperationsInput = {
+  set?: InputMaybe<FriendStatus>;
+};
+
+export type EnumFriendStatusFilter = {
+  equals?: InputMaybe<FriendStatus>;
+  in?: InputMaybe<Array<FriendStatus>>;
+  not?: InputMaybe<NestedEnumFriendStatusFilter>;
+  notIn?: InputMaybe<Array<FriendStatus>>;
+};
+
+export type EnumFriendStatusWithAggregatesFilter = {
+  _count?: InputMaybe<NestedIntFilter>;
+  _max?: InputMaybe<NestedEnumFriendStatusFilter>;
+  _min?: InputMaybe<NestedEnumFriendStatusFilter>;
+  equals?: InputMaybe<FriendStatus>;
+  in?: InputMaybe<Array<FriendStatus>>;
+  not?: InputMaybe<NestedEnumFriendStatusWithAggregatesFilter>;
+  notIn?: InputMaybe<Array<FriendStatus>>;
+};
+
 export type EnumReactionTypeFieldUpdateOperationsInput = {
   set?: InputMaybe<ReactionType>;
 };
@@ -750,6 +780,322 @@ export type EnumReactionTypeWithAggregatesFilter = {
   in?: InputMaybe<Array<ReactionType>>;
   not?: InputMaybe<NestedEnumReactionTypeWithAggregatesFilter>;
   notIn?: InputMaybe<Array<ReactionType>>;
+};
+
+export enum FriendStatus {
+  Friends = 'FRIENDS',
+  InviteReceived = 'INVITE_RECEIVED',
+  InviteSent = 'INVITE_SENT'
+}
+
+export type Friendship = {
+  __typename?: 'Friendship';
+  receiver: User;
+  receiverId: Scalars['Int']['output'];
+  sender: User;
+  senderId: Scalars['Int']['output'];
+  status: FriendStatus;
+};
+
+export type FriendshipAvgAggregate = {
+  __typename?: 'FriendshipAvgAggregate';
+  receiverId?: Maybe<Scalars['Float']['output']>;
+  senderId?: Maybe<Scalars['Float']['output']>;
+};
+
+export type FriendshipAvgOrderByAggregateInput = {
+  receiverId?: InputMaybe<SortOrder>;
+  senderId?: InputMaybe<SortOrder>;
+};
+
+export type FriendshipCountAggregate = {
+  __typename?: 'FriendshipCountAggregate';
+  _all: Scalars['Int']['output'];
+  receiverId: Scalars['Int']['output'];
+  senderId: Scalars['Int']['output'];
+  status: Scalars['Int']['output'];
+};
+
+export type FriendshipCountOrderByAggregateInput = {
+  receiverId?: InputMaybe<SortOrder>;
+  senderId?: InputMaybe<SortOrder>;
+  status?: InputMaybe<SortOrder>;
+};
+
+export type FriendshipCreateInput = {
+  receiver: UserCreateNestedOneWithoutPrisma_FriendshipsInput;
+  sender: UserCreateNestedOneWithoutFriendshipsInput;
+  status: FriendStatus;
+};
+
+export type FriendshipCreateManyInput = {
+  receiverId: Scalars['Int']['input'];
+  senderId: Scalars['Int']['input'];
+  status: FriendStatus;
+};
+
+export type FriendshipCreateManyReceiverInput = {
+  senderId: Scalars['Int']['input'];
+  status: FriendStatus;
+};
+
+export type FriendshipCreateManyReceiverInputEnvelope = {
+  data: Array<FriendshipCreateManyReceiverInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type FriendshipCreateManySenderInput = {
+  receiverId: Scalars['Int']['input'];
+  status: FriendStatus;
+};
+
+export type FriendshipCreateManySenderInputEnvelope = {
+  data: Array<FriendshipCreateManySenderInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type FriendshipCreateNestedManyWithoutReceiverInput = {
+  connect?: InputMaybe<Array<FriendshipWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<FriendshipCreateOrConnectWithoutReceiverInput>>;
+  create?: InputMaybe<Array<FriendshipCreateWithoutReceiverInput>>;
+  createMany?: InputMaybe<FriendshipCreateManyReceiverInputEnvelope>;
+};
+
+export type FriendshipCreateNestedManyWithoutSenderInput = {
+  connect?: InputMaybe<Array<FriendshipWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<FriendshipCreateOrConnectWithoutSenderInput>>;
+  create?: InputMaybe<Array<FriendshipCreateWithoutSenderInput>>;
+  createMany?: InputMaybe<FriendshipCreateManySenderInputEnvelope>;
+};
+
+export type FriendshipCreateOrConnectWithoutReceiverInput = {
+  create: FriendshipCreateWithoutReceiverInput;
+  where: FriendshipWhereUniqueInput;
+};
+
+export type FriendshipCreateOrConnectWithoutSenderInput = {
+  create: FriendshipCreateWithoutSenderInput;
+  where: FriendshipWhereUniqueInput;
+};
+
+export type FriendshipCreateWithoutReceiverInput = {
+  sender: UserCreateNestedOneWithoutFriendshipsInput;
+  status: FriendStatus;
+};
+
+export type FriendshipCreateWithoutSenderInput = {
+  receiver: UserCreateNestedOneWithoutPrisma_FriendshipsInput;
+  status: FriendStatus;
+};
+
+export type FriendshipGroupBy = {
+  __typename?: 'FriendshipGroupBy';
+  _avg?: Maybe<FriendshipAvgAggregate>;
+  _count?: Maybe<FriendshipCountAggregate>;
+  _max?: Maybe<FriendshipMaxAggregate>;
+  _min?: Maybe<FriendshipMinAggregate>;
+  _sum?: Maybe<FriendshipSumAggregate>;
+  receiverId: Scalars['Int']['output'];
+  senderId: Scalars['Int']['output'];
+  status: FriendStatus;
+};
+
+export type FriendshipListRelationFilter = {
+  every?: InputMaybe<FriendshipWhereInput>;
+  none?: InputMaybe<FriendshipWhereInput>;
+  some?: InputMaybe<FriendshipWhereInput>;
+};
+
+export type FriendshipMaxAggregate = {
+  __typename?: 'FriendshipMaxAggregate';
+  receiverId?: Maybe<Scalars['Int']['output']>;
+  senderId?: Maybe<Scalars['Int']['output']>;
+  status?: Maybe<FriendStatus>;
+};
+
+export type FriendshipMaxOrderByAggregateInput = {
+  receiverId?: InputMaybe<SortOrder>;
+  senderId?: InputMaybe<SortOrder>;
+  status?: InputMaybe<SortOrder>;
+};
+
+export type FriendshipMinAggregate = {
+  __typename?: 'FriendshipMinAggregate';
+  receiverId?: Maybe<Scalars['Int']['output']>;
+  senderId?: Maybe<Scalars['Int']['output']>;
+  status?: Maybe<FriendStatus>;
+};
+
+export type FriendshipMinOrderByAggregateInput = {
+  receiverId?: InputMaybe<SortOrder>;
+  senderId?: InputMaybe<SortOrder>;
+  status?: InputMaybe<SortOrder>;
+};
+
+export type FriendshipOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
+};
+
+export type FriendshipOrderByWithAggregationInput = {
+  _avg?: InputMaybe<FriendshipAvgOrderByAggregateInput>;
+  _count?: InputMaybe<FriendshipCountOrderByAggregateInput>;
+  _max?: InputMaybe<FriendshipMaxOrderByAggregateInput>;
+  _min?: InputMaybe<FriendshipMinOrderByAggregateInput>;
+  _sum?: InputMaybe<FriendshipSumOrderByAggregateInput>;
+  receiverId?: InputMaybe<SortOrder>;
+  senderId?: InputMaybe<SortOrder>;
+  status?: InputMaybe<SortOrder>;
+};
+
+export type FriendshipOrderByWithRelationInput = {
+  receiver?: InputMaybe<UserOrderByWithRelationInput>;
+  receiverId?: InputMaybe<SortOrder>;
+  sender?: InputMaybe<UserOrderByWithRelationInput>;
+  senderId?: InputMaybe<SortOrder>;
+  status?: InputMaybe<SortOrder>;
+};
+
+export enum FriendshipScalarFieldEnum {
+  ReceiverId = 'receiverId',
+  SenderId = 'senderId',
+  Status = 'status'
+}
+
+export type FriendshipScalarWhereInput = {
+  AND?: InputMaybe<Array<FriendshipScalarWhereInput>>;
+  NOT?: InputMaybe<Array<FriendshipScalarWhereInput>>;
+  OR?: InputMaybe<Array<FriendshipScalarWhereInput>>;
+  receiverId?: InputMaybe<IntFilter>;
+  senderId?: InputMaybe<IntFilter>;
+  status?: InputMaybe<EnumFriendStatusFilter>;
+};
+
+export type FriendshipScalarWhereWithAggregatesInput = {
+  AND?: InputMaybe<Array<FriendshipScalarWhereWithAggregatesInput>>;
+  NOT?: InputMaybe<Array<FriendshipScalarWhereWithAggregatesInput>>;
+  OR?: InputMaybe<Array<FriendshipScalarWhereWithAggregatesInput>>;
+  receiverId?: InputMaybe<IntWithAggregatesFilter>;
+  senderId?: InputMaybe<IntWithAggregatesFilter>;
+  status?: InputMaybe<EnumFriendStatusWithAggregatesFilter>;
+};
+
+export type FriendshipSenderIdReceiverIdCompoundUniqueInput = {
+  receiverId: Scalars['Int']['input'];
+  senderId: Scalars['Int']['input'];
+};
+
+export type FriendshipSumAggregate = {
+  __typename?: 'FriendshipSumAggregate';
+  receiverId?: Maybe<Scalars['Int']['output']>;
+  senderId?: Maybe<Scalars['Int']['output']>;
+};
+
+export type FriendshipSumOrderByAggregateInput = {
+  receiverId?: InputMaybe<SortOrder>;
+  senderId?: InputMaybe<SortOrder>;
+};
+
+export type FriendshipUpdateInput = {
+  receiver?: InputMaybe<UserUpdateOneRequiredWithoutPrisma_FriendshipsNestedInput>;
+  sender?: InputMaybe<UserUpdateOneRequiredWithoutFriendshipsNestedInput>;
+  status?: InputMaybe<EnumFriendStatusFieldUpdateOperationsInput>;
+};
+
+export type FriendshipUpdateManyMutationInput = {
+  status?: InputMaybe<EnumFriendStatusFieldUpdateOperationsInput>;
+};
+
+export type FriendshipUpdateManyWithWhereWithoutReceiverInput = {
+  data: FriendshipUpdateManyMutationInput;
+  where: FriendshipScalarWhereInput;
+};
+
+export type FriendshipUpdateManyWithWhereWithoutSenderInput = {
+  data: FriendshipUpdateManyMutationInput;
+  where: FriendshipScalarWhereInput;
+};
+
+export type FriendshipUpdateManyWithoutReceiverNestedInput = {
+  connect?: InputMaybe<Array<FriendshipWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<FriendshipCreateOrConnectWithoutReceiverInput>>;
+  create?: InputMaybe<Array<FriendshipCreateWithoutReceiverInput>>;
+  createMany?: InputMaybe<FriendshipCreateManyReceiverInputEnvelope>;
+  delete?: InputMaybe<Array<FriendshipWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<FriendshipScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<FriendshipWhereUniqueInput>>;
+  set?: InputMaybe<Array<FriendshipWhereUniqueInput>>;
+  update?: InputMaybe<Array<FriendshipUpdateWithWhereUniqueWithoutReceiverInput>>;
+  updateMany?: InputMaybe<Array<FriendshipUpdateManyWithWhereWithoutReceiverInput>>;
+  upsert?: InputMaybe<Array<FriendshipUpsertWithWhereUniqueWithoutReceiverInput>>;
+};
+
+export type FriendshipUpdateManyWithoutSenderNestedInput = {
+  connect?: InputMaybe<Array<FriendshipWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<FriendshipCreateOrConnectWithoutSenderInput>>;
+  create?: InputMaybe<Array<FriendshipCreateWithoutSenderInput>>;
+  createMany?: InputMaybe<FriendshipCreateManySenderInputEnvelope>;
+  delete?: InputMaybe<Array<FriendshipWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<FriendshipScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<FriendshipWhereUniqueInput>>;
+  set?: InputMaybe<Array<FriendshipWhereUniqueInput>>;
+  update?: InputMaybe<Array<FriendshipUpdateWithWhereUniqueWithoutSenderInput>>;
+  updateMany?: InputMaybe<Array<FriendshipUpdateManyWithWhereWithoutSenderInput>>;
+  upsert?: InputMaybe<Array<FriendshipUpsertWithWhereUniqueWithoutSenderInput>>;
+};
+
+export type FriendshipUpdateWithWhereUniqueWithoutReceiverInput = {
+  data: FriendshipUpdateWithoutReceiverInput;
+  where: FriendshipWhereUniqueInput;
+};
+
+export type FriendshipUpdateWithWhereUniqueWithoutSenderInput = {
+  data: FriendshipUpdateWithoutSenderInput;
+  where: FriendshipWhereUniqueInput;
+};
+
+export type FriendshipUpdateWithoutReceiverInput = {
+  sender?: InputMaybe<UserUpdateOneRequiredWithoutFriendshipsNestedInput>;
+  status?: InputMaybe<EnumFriendStatusFieldUpdateOperationsInput>;
+};
+
+export type FriendshipUpdateWithoutSenderInput = {
+  receiver?: InputMaybe<UserUpdateOneRequiredWithoutPrisma_FriendshipsNestedInput>;
+  status?: InputMaybe<EnumFriendStatusFieldUpdateOperationsInput>;
+};
+
+export type FriendshipUpsertWithWhereUniqueWithoutReceiverInput = {
+  create: FriendshipCreateWithoutReceiverInput;
+  update: FriendshipUpdateWithoutReceiverInput;
+  where: FriendshipWhereUniqueInput;
+};
+
+export type FriendshipUpsertWithWhereUniqueWithoutSenderInput = {
+  create: FriendshipCreateWithoutSenderInput;
+  update: FriendshipUpdateWithoutSenderInput;
+  where: FriendshipWhereUniqueInput;
+};
+
+export type FriendshipWhereInput = {
+  AND?: InputMaybe<Array<FriendshipWhereInput>>;
+  NOT?: InputMaybe<Array<FriendshipWhereInput>>;
+  OR?: InputMaybe<Array<FriendshipWhereInput>>;
+  receiver?: InputMaybe<UserRelationFilter>;
+  receiverId?: InputMaybe<IntFilter>;
+  sender?: InputMaybe<UserRelationFilter>;
+  senderId?: InputMaybe<IntFilter>;
+  status?: InputMaybe<EnumFriendStatusFilter>;
+};
+
+export type FriendshipWhereUniqueInput = {
+  AND?: InputMaybe<Array<FriendshipWhereInput>>;
+  NOT?: InputMaybe<Array<FriendshipWhereInput>>;
+  OR?: InputMaybe<Array<FriendshipWhereInput>>;
+  receiver?: InputMaybe<UserRelationFilter>;
+  receiverId?: InputMaybe<IntFilter>;
+  sender?: InputMaybe<UserRelationFilter>;
+  senderId?: InputMaybe<IntFilter>;
+  senderId_receiverId?: InputMaybe<FriendshipSenderIdReceiverIdCompoundUniqueInput>;
+  status?: InputMaybe<EnumFriendStatusFilter>;
 };
 
 export type IntFieldUpdateOperationsInput = {
@@ -831,20 +1177,24 @@ export type Mutation = {
   addComment: AddCommentResponseObject;
   addReaction?: Maybe<Reaction>;
   createManyComment: AffectedRowsOutput;
+  createManyFriendship: AffectedRowsOutput;
   createManyPost: AffectedRowsOutput;
   createManyReaction: AffectedRowsOutput;
   createManyUser: AffectedRowsOutput;
   createOneComment: Comment;
+  createOneFriendship: Friendship;
   createOnePost: Post;
   createOneReaction: Reaction;
   createOneUser: User;
   createPost: CreatePostResponseObject;
   deleteComment: Scalars['Boolean']['output'];
   deleteManyComment: AffectedRowsOutput;
+  deleteManyFriendship: AffectedRowsOutput;
   deleteManyPost: AffectedRowsOutput;
   deleteManyReaction: AffectedRowsOutput;
   deleteManyUser: AffectedRowsOutput;
   deleteOneComment?: Maybe<Comment>;
+  deleteOneFriendship?: Maybe<Friendship>;
   deleteOnePost?: Maybe<Post>;
   deleteOneReaction?: Maybe<Reaction>;
   deleteOneUser?: Maybe<User>;
@@ -853,14 +1203,17 @@ export type Mutation = {
   logout: Scalars['Boolean']['output'];
   register: RegisterResponseObject;
   updateManyComment: AffectedRowsOutput;
+  updateManyFriendship: AffectedRowsOutput;
   updateManyPost: AffectedRowsOutput;
   updateManyReaction: AffectedRowsOutput;
   updateManyUser: AffectedRowsOutput;
   updateOneComment?: Maybe<Comment>;
+  updateOneFriendship?: Maybe<Friendship>;
   updateOnePost?: Maybe<Post>;
   updateOneReaction?: Maybe<Reaction>;
   updateOneUser?: Maybe<User>;
   upsertOneComment: Comment;
+  upsertOneFriendship: Friendship;
   upsertOnePost: Post;
   upsertOneReaction: Reaction;
   upsertOneUser: User;
@@ -879,6 +1232,12 @@ export type MutationAddReactionArgs = {
 
 export type MutationCreateManyCommentArgs = {
   data: Array<CommentCreateManyInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationCreateManyFriendshipArgs = {
+  data: Array<FriendshipCreateManyInput>;
   skipDuplicates?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -903,6 +1262,11 @@ export type MutationCreateManyUserArgs = {
 
 export type MutationCreateOneCommentArgs = {
   data: CommentCreateInput;
+};
+
+
+export type MutationCreateOneFriendshipArgs = {
+  data: FriendshipCreateInput;
 };
 
 
@@ -936,6 +1300,11 @@ export type MutationDeleteManyCommentArgs = {
 };
 
 
+export type MutationDeleteManyFriendshipArgs = {
+  where?: InputMaybe<FriendshipWhereInput>;
+};
+
+
 export type MutationDeleteManyPostArgs = {
   where?: InputMaybe<PostWhereInput>;
 };
@@ -953,6 +1322,11 @@ export type MutationDeleteManyUserArgs = {
 
 export type MutationDeleteOneCommentArgs = {
   where: CommentWhereUniqueInput;
+};
+
+
+export type MutationDeleteOneFriendshipArgs = {
+  where: FriendshipWhereUniqueInput;
 };
 
 
@@ -992,6 +1366,12 @@ export type MutationUpdateManyCommentArgs = {
 };
 
 
+export type MutationUpdateManyFriendshipArgs = {
+  data: FriendshipUpdateManyMutationInput;
+  where?: InputMaybe<FriendshipWhereInput>;
+};
+
+
 export type MutationUpdateManyPostArgs = {
   data: PostUpdateManyMutationInput;
   where?: InputMaybe<PostWhereInput>;
@@ -1013,6 +1393,12 @@ export type MutationUpdateManyUserArgs = {
 export type MutationUpdateOneCommentArgs = {
   data: CommentUpdateInput;
   where: CommentWhereUniqueInput;
+};
+
+
+export type MutationUpdateOneFriendshipArgs = {
+  data: FriendshipUpdateInput;
+  where: FriendshipWhereUniqueInput;
 };
 
 
@@ -1041,6 +1427,13 @@ export type MutationUpsertOneCommentArgs = {
 };
 
 
+export type MutationUpsertOneFriendshipArgs = {
+  create: FriendshipCreateInput;
+  update: FriendshipUpdateInput;
+  where: FriendshipWhereUniqueInput;
+};
+
+
 export type MutationUpsertOnePostArgs = {
   create: PostCreateInput;
   update: PostUpdateInput;
@@ -1059,6 +1452,23 @@ export type MutationUpsertOneUserArgs = {
   create: UserCreateInput;
   update: UserUpdateInput;
   where: UserWhereUniqueInput;
+};
+
+export type NestedEnumFriendStatusFilter = {
+  equals?: InputMaybe<FriendStatus>;
+  in?: InputMaybe<Array<FriendStatus>>;
+  not?: InputMaybe<NestedEnumFriendStatusFilter>;
+  notIn?: InputMaybe<Array<FriendStatus>>;
+};
+
+export type NestedEnumFriendStatusWithAggregatesFilter = {
+  _count?: InputMaybe<NestedIntFilter>;
+  _max?: InputMaybe<NestedEnumFriendStatusFilter>;
+  _min?: InputMaybe<NestedEnumFriendStatusFilter>;
+  equals?: InputMaybe<FriendStatus>;
+  in?: InputMaybe<Array<FriendStatus>>;
+  not?: InputMaybe<NestedEnumFriendStatusWithAggregatesFilter>;
+  notIn?: InputMaybe<Array<FriendStatus>>;
 };
 
 export type NestedEnumReactionTypeFilter = {
@@ -1688,6 +2098,7 @@ export type PostWhereUniqueInput = {
 export type Query = {
   __typename?: 'Query';
   aggregateComment: AggregateComment;
+  aggregateFriendship: AggregateFriendship;
   aggregatePost: AggregatePost;
   aggregateReaction: AggregateReaction;
   aggregateUser: AggregateUser;
@@ -1695,17 +2106,23 @@ export type Query = {
   comments?: Maybe<Array<Comment>>;
   findFirstComment?: Maybe<Comment>;
   findFirstCommentOrThrow?: Maybe<Comment>;
+  findFirstFriendship?: Maybe<Friendship>;
+  findFirstFriendshipOrThrow?: Maybe<Friendship>;
   findFirstPost?: Maybe<Post>;
   findFirstPostOrThrow?: Maybe<Post>;
   findFirstReaction?: Maybe<Reaction>;
   findFirstReactionOrThrow?: Maybe<Reaction>;
   findFirstUser?: Maybe<User>;
   findFirstUserOrThrow?: Maybe<User>;
+  friendship?: Maybe<Friendship>;
+  friendships: Array<Friendship>;
   getComment?: Maybe<Comment>;
+  getFriendship?: Maybe<Friendship>;
   getPost?: Maybe<Post>;
   getReaction?: Maybe<Reaction>;
   getUser?: Maybe<User>;
   groupByComment: Array<CommentGroupBy>;
+  groupByFriendship: Array<FriendshipGroupBy>;
   groupByPost: Array<PostGroupBy>;
   groupByReaction: Array<ReactionGroupBy>;
   groupByUser: Array<UserGroupBy>;
@@ -1728,6 +2145,15 @@ export type QueryAggregateCommentArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<CommentWhereInput>;
+};
+
+
+export type QueryAggregateFriendshipArgs = {
+  cursor?: InputMaybe<FriendshipWhereUniqueInput>;
+  orderBy?: InputMaybe<Array<FriendshipOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<FriendshipWhereInput>;
 };
 
 
@@ -1785,6 +2211,26 @@ export type QueryFindFirstCommentOrThrowArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<CommentWhereInput>;
+};
+
+
+export type QueryFindFirstFriendshipArgs = {
+  cursor?: InputMaybe<FriendshipWhereUniqueInput>;
+  distinct?: InputMaybe<Array<FriendshipScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<FriendshipOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<FriendshipWhereInput>;
+};
+
+
+export type QueryFindFirstFriendshipOrThrowArgs = {
+  cursor?: InputMaybe<FriendshipWhereUniqueInput>;
+  distinct?: InputMaybe<Array<FriendshipScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<FriendshipOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<FriendshipWhereInput>;
 };
 
 
@@ -1848,8 +2294,28 @@ export type QueryFindFirstUserOrThrowArgs = {
 };
 
 
+export type QueryFriendshipArgs = {
+  where: FriendshipWhereUniqueInput;
+};
+
+
+export type QueryFriendshipsArgs = {
+  cursor?: InputMaybe<FriendshipWhereUniqueInput>;
+  distinct?: InputMaybe<Array<FriendshipScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<FriendshipOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<FriendshipWhereInput>;
+};
+
+
 export type QueryGetCommentArgs = {
   where: CommentWhereUniqueInput;
+};
+
+
+export type QueryGetFriendshipArgs = {
+  where: FriendshipWhereUniqueInput;
 };
 
 
@@ -1875,6 +2341,16 @@ export type QueryGroupByCommentArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<CommentWhereInput>;
+};
+
+
+export type QueryGroupByFriendshipArgs = {
+  by: Array<FriendshipScalarFieldEnum>;
+  having?: InputMaybe<FriendshipScalarWhereWithAggregatesInput>;
+  orderBy?: InputMaybe<Array<FriendshipOrderByWithAggregationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<FriendshipWhereInput>;
 };
 
 
@@ -1948,7 +2424,7 @@ export type QueryReactionsArgs = {
 
 
 export type QueryUserArgs = {
-  where: UserWhereUniqueInput;
+  userId: Scalars['Float']['input'];
 };
 
 
@@ -2546,10 +3022,12 @@ export type User = {
   external_id?: Maybe<Scalars['String']['output']>;
   external_type?: Maybe<Scalars['String']['output']>;
   firstName: Scalars['String']['output'];
+  friendships: Array<Friendship>;
   id: Scalars['Int']['output'];
   image_url?: Maybe<Scalars['String']['output']>;
   lastName: Scalars['String']['output'];
   posts: Array<Post>;
+  prisma_friendships: Array<Friendship>;
   reactions: Array<Reaction>;
   tokenVersion: Scalars['Int']['output'];
   updatedAt: Scalars['DateTimeISO']['output'];
@@ -2566,6 +3044,16 @@ export type UserCommentsArgs = {
 };
 
 
+export type UserFriendshipsArgs = {
+  cursor?: InputMaybe<FriendshipWhereUniqueInput>;
+  distinct?: InputMaybe<Array<FriendshipScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<FriendshipOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<FriendshipWhereInput>;
+};
+
+
 export type UserPostsArgs = {
   cursor?: InputMaybe<PostWhereUniqueInput>;
   distinct?: InputMaybe<Array<PostScalarFieldEnum>>;
@@ -2573,6 +3061,16 @@ export type UserPostsArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<PostWhereInput>;
+};
+
+
+export type UserPrisma_FriendshipsArgs = {
+  cursor?: InputMaybe<FriendshipWhereUniqueInput>;
+  distinct?: InputMaybe<Array<FriendshipScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<FriendshipOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<FriendshipWhereInput>;
 };
 
 
@@ -2599,7 +3097,9 @@ export type UserAvgOrderByAggregateInput = {
 export type UserCount = {
   __typename?: 'UserCount';
   comments: Scalars['Int']['output'];
+  friendships: Scalars['Int']['output'];
   posts: Scalars['Int']['output'];
+  prisma_friendships: Scalars['Int']['output'];
   reactions: Scalars['Int']['output'];
 };
 
@@ -2609,8 +3109,18 @@ export type UserCountCommentsArgs = {
 };
 
 
+export type UserCountFriendshipsArgs = {
+  where?: InputMaybe<FriendshipWhereInput>;
+};
+
+
 export type UserCountPostsArgs = {
   where?: InputMaybe<PostWhereInput>;
+};
+
+
+export type UserCountPrisma_FriendshipsArgs = {
+  where?: InputMaybe<FriendshipWhereInput>;
 };
 
 
@@ -2652,10 +3162,12 @@ export type UserCreateInput = {
   external_id?: InputMaybe<Scalars['String']['input']>;
   external_type?: InputMaybe<Scalars['String']['input']>;
   firstName: Scalars['String']['input'];
+  friendships?: InputMaybe<FriendshipCreateNestedManyWithoutSenderInput>;
   image_url?: InputMaybe<Scalars['String']['input']>;
   lastName: Scalars['String']['input'];
   password?: InputMaybe<Scalars['String']['input']>;
   posts?: InputMaybe<PostCreateNestedManyWithoutAuthorInput>;
+  prisma_friendships?: InputMaybe<FriendshipCreateNestedManyWithoutReceiverInput>;
   reactions?: InputMaybe<ReactionCreateNestedManyWithoutAuthorInput>;
   tokenVersion?: InputMaybe<Scalars['Int']['input']>;
 };
@@ -2678,10 +3190,22 @@ export type UserCreateNestedOneWithoutCommentsInput = {
   create?: InputMaybe<UserCreateWithoutCommentsInput>;
 };
 
+export type UserCreateNestedOneWithoutFriendshipsInput = {
+  connect?: InputMaybe<UserWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutFriendshipsInput>;
+  create?: InputMaybe<UserCreateWithoutFriendshipsInput>;
+};
+
 export type UserCreateNestedOneWithoutPostsInput = {
   connect?: InputMaybe<UserWhereUniqueInput>;
   connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutPostsInput>;
   create?: InputMaybe<UserCreateWithoutPostsInput>;
+};
+
+export type UserCreateNestedOneWithoutPrisma_FriendshipsInput = {
+  connect?: InputMaybe<UserWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutPrisma_FriendshipsInput>;
+  create?: InputMaybe<UserCreateWithoutPrisma_FriendshipsInput>;
 };
 
 export type UserCreateNestedOneWithoutReactionsInput = {
@@ -2695,8 +3219,18 @@ export type UserCreateOrConnectWithoutCommentsInput = {
   where: UserWhereUniqueInput;
 };
 
+export type UserCreateOrConnectWithoutFriendshipsInput = {
+  create: UserCreateWithoutFriendshipsInput;
+  where: UserWhereUniqueInput;
+};
+
 export type UserCreateOrConnectWithoutPostsInput = {
   create: UserCreateWithoutPostsInput;
+  where: UserWhereUniqueInput;
+};
+
+export type UserCreateOrConnectWithoutPrisma_FriendshipsInput = {
+  create: UserCreateWithoutPrisma_FriendshipsInput;
   where: UserWhereUniqueInput;
 };
 
@@ -2710,10 +3244,27 @@ export type UserCreateWithoutCommentsInput = {
   external_id?: InputMaybe<Scalars['String']['input']>;
   external_type?: InputMaybe<Scalars['String']['input']>;
   firstName: Scalars['String']['input'];
+  friendships?: InputMaybe<FriendshipCreateNestedManyWithoutSenderInput>;
   image_url?: InputMaybe<Scalars['String']['input']>;
   lastName: Scalars['String']['input'];
   password?: InputMaybe<Scalars['String']['input']>;
   posts?: InputMaybe<PostCreateNestedManyWithoutAuthorInput>;
+  prisma_friendships?: InputMaybe<FriendshipCreateNestedManyWithoutReceiverInput>;
+  reactions?: InputMaybe<ReactionCreateNestedManyWithoutAuthorInput>;
+  tokenVersion?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type UserCreateWithoutFriendshipsInput = {
+  comments?: InputMaybe<CommentCreateNestedManyWithoutAuthorInput>;
+  email: Scalars['String']['input'];
+  external_id?: InputMaybe<Scalars['String']['input']>;
+  external_type?: InputMaybe<Scalars['String']['input']>;
+  firstName: Scalars['String']['input'];
+  image_url?: InputMaybe<Scalars['String']['input']>;
+  lastName: Scalars['String']['input'];
+  password?: InputMaybe<Scalars['String']['input']>;
+  posts?: InputMaybe<PostCreateNestedManyWithoutAuthorInput>;
+  prisma_friendships?: InputMaybe<FriendshipCreateNestedManyWithoutReceiverInput>;
   reactions?: InputMaybe<ReactionCreateNestedManyWithoutAuthorInput>;
   tokenVersion?: InputMaybe<Scalars['Int']['input']>;
 };
@@ -2724,9 +3275,26 @@ export type UserCreateWithoutPostsInput = {
   external_id?: InputMaybe<Scalars['String']['input']>;
   external_type?: InputMaybe<Scalars['String']['input']>;
   firstName: Scalars['String']['input'];
+  friendships?: InputMaybe<FriendshipCreateNestedManyWithoutSenderInput>;
   image_url?: InputMaybe<Scalars['String']['input']>;
   lastName: Scalars['String']['input'];
   password?: InputMaybe<Scalars['String']['input']>;
+  prisma_friendships?: InputMaybe<FriendshipCreateNestedManyWithoutReceiverInput>;
+  reactions?: InputMaybe<ReactionCreateNestedManyWithoutAuthorInput>;
+  tokenVersion?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type UserCreateWithoutPrisma_FriendshipsInput = {
+  comments?: InputMaybe<CommentCreateNestedManyWithoutAuthorInput>;
+  email: Scalars['String']['input'];
+  external_id?: InputMaybe<Scalars['String']['input']>;
+  external_type?: InputMaybe<Scalars['String']['input']>;
+  firstName: Scalars['String']['input'];
+  friendships?: InputMaybe<FriendshipCreateNestedManyWithoutSenderInput>;
+  image_url?: InputMaybe<Scalars['String']['input']>;
+  lastName: Scalars['String']['input'];
+  password?: InputMaybe<Scalars['String']['input']>;
+  posts?: InputMaybe<PostCreateNestedManyWithoutAuthorInput>;
   reactions?: InputMaybe<ReactionCreateNestedManyWithoutAuthorInput>;
   tokenVersion?: InputMaybe<Scalars['Int']['input']>;
 };
@@ -2737,10 +3305,12 @@ export type UserCreateWithoutReactionsInput = {
   external_id?: InputMaybe<Scalars['String']['input']>;
   external_type?: InputMaybe<Scalars['String']['input']>;
   firstName: Scalars['String']['input'];
+  friendships?: InputMaybe<FriendshipCreateNestedManyWithoutSenderInput>;
   image_url?: InputMaybe<Scalars['String']['input']>;
   lastName: Scalars['String']['input'];
   password?: InputMaybe<Scalars['String']['input']>;
   posts?: InputMaybe<PostCreateNestedManyWithoutAuthorInput>;
+  prisma_friendships?: InputMaybe<FriendshipCreateNestedManyWithoutReceiverInput>;
   tokenVersion?: InputMaybe<Scalars['Int']['input']>;
 };
 
@@ -2841,11 +3411,13 @@ export type UserOrderByWithRelationInput = {
   external_id?: InputMaybe<SortOrderInput>;
   external_type?: InputMaybe<SortOrderInput>;
   firstName?: InputMaybe<SortOrder>;
+  friendships?: InputMaybe<FriendshipOrderByRelationAggregateInput>;
   id?: InputMaybe<SortOrder>;
   image_url?: InputMaybe<SortOrderInput>;
   lastName?: InputMaybe<SortOrder>;
   password?: InputMaybe<SortOrderInput>;
   posts?: InputMaybe<PostOrderByRelationAggregateInput>;
+  prisma_friendships?: InputMaybe<FriendshipOrderByRelationAggregateInput>;
   reactions?: InputMaybe<ReactionOrderByRelationAggregateInput>;
   tokenVersion?: InputMaybe<SortOrder>;
 };
@@ -2901,10 +3473,12 @@ export type UserUpdateInput = {
   external_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   external_type?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   firstName?: InputMaybe<StringFieldUpdateOperationsInput>;
+  friendships?: InputMaybe<FriendshipUpdateManyWithoutSenderNestedInput>;
   image_url?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   lastName?: InputMaybe<StringFieldUpdateOperationsInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   posts?: InputMaybe<PostUpdateManyWithoutAuthorNestedInput>;
+  prisma_friendships?: InputMaybe<FriendshipUpdateManyWithoutReceiverNestedInput>;
   reactions?: InputMaybe<ReactionUpdateManyWithoutAuthorNestedInput>;
   tokenVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
 };
@@ -2928,12 +3502,28 @@ export type UserUpdateOneRequiredWithoutCommentsNestedInput = {
   upsert?: InputMaybe<UserUpsertWithoutCommentsInput>;
 };
 
+export type UserUpdateOneRequiredWithoutFriendshipsNestedInput = {
+  connect?: InputMaybe<UserWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutFriendshipsInput>;
+  create?: InputMaybe<UserCreateWithoutFriendshipsInput>;
+  update?: InputMaybe<UserUpdateToOneWithWhereWithoutFriendshipsInput>;
+  upsert?: InputMaybe<UserUpsertWithoutFriendshipsInput>;
+};
+
 export type UserUpdateOneRequiredWithoutPostsNestedInput = {
   connect?: InputMaybe<UserWhereUniqueInput>;
   connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutPostsInput>;
   create?: InputMaybe<UserCreateWithoutPostsInput>;
   update?: InputMaybe<UserUpdateToOneWithWhereWithoutPostsInput>;
   upsert?: InputMaybe<UserUpsertWithoutPostsInput>;
+};
+
+export type UserUpdateOneRequiredWithoutPrisma_FriendshipsNestedInput = {
+  connect?: InputMaybe<UserWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutPrisma_FriendshipsInput>;
+  create?: InputMaybe<UserCreateWithoutPrisma_FriendshipsInput>;
+  update?: InputMaybe<UserUpdateToOneWithWhereWithoutPrisma_FriendshipsInput>;
+  upsert?: InputMaybe<UserUpsertWithoutPrisma_FriendshipsInput>;
 };
 
 export type UserUpdateOneRequiredWithoutReactionsNestedInput = {
@@ -2949,8 +3539,18 @@ export type UserUpdateToOneWithWhereWithoutCommentsInput = {
   where?: InputMaybe<UserWhereInput>;
 };
 
+export type UserUpdateToOneWithWhereWithoutFriendshipsInput = {
+  data: UserUpdateWithoutFriendshipsInput;
+  where?: InputMaybe<UserWhereInput>;
+};
+
 export type UserUpdateToOneWithWhereWithoutPostsInput = {
   data: UserUpdateWithoutPostsInput;
+  where?: InputMaybe<UserWhereInput>;
+};
+
+export type UserUpdateToOneWithWhereWithoutPrisma_FriendshipsInput = {
+  data: UserUpdateWithoutPrisma_FriendshipsInput;
   where?: InputMaybe<UserWhereInput>;
 };
 
@@ -2964,10 +3564,27 @@ export type UserUpdateWithoutCommentsInput = {
   external_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   external_type?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   firstName?: InputMaybe<StringFieldUpdateOperationsInput>;
+  friendships?: InputMaybe<FriendshipUpdateManyWithoutSenderNestedInput>;
   image_url?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   lastName?: InputMaybe<StringFieldUpdateOperationsInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   posts?: InputMaybe<PostUpdateManyWithoutAuthorNestedInput>;
+  prisma_friendships?: InputMaybe<FriendshipUpdateManyWithoutReceiverNestedInput>;
+  reactions?: InputMaybe<ReactionUpdateManyWithoutAuthorNestedInput>;
+  tokenVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
+};
+
+export type UserUpdateWithoutFriendshipsInput = {
+  comments?: InputMaybe<CommentUpdateManyWithoutAuthorNestedInput>;
+  email?: InputMaybe<StringFieldUpdateOperationsInput>;
+  external_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  external_type?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  firstName?: InputMaybe<StringFieldUpdateOperationsInput>;
+  image_url?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  lastName?: InputMaybe<StringFieldUpdateOperationsInput>;
+  password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  posts?: InputMaybe<PostUpdateManyWithoutAuthorNestedInput>;
+  prisma_friendships?: InputMaybe<FriendshipUpdateManyWithoutReceiverNestedInput>;
   reactions?: InputMaybe<ReactionUpdateManyWithoutAuthorNestedInput>;
   tokenVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
 };
@@ -2978,9 +3595,26 @@ export type UserUpdateWithoutPostsInput = {
   external_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   external_type?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   firstName?: InputMaybe<StringFieldUpdateOperationsInput>;
+  friendships?: InputMaybe<FriendshipUpdateManyWithoutSenderNestedInput>;
   image_url?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   lastName?: InputMaybe<StringFieldUpdateOperationsInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  prisma_friendships?: InputMaybe<FriendshipUpdateManyWithoutReceiverNestedInput>;
+  reactions?: InputMaybe<ReactionUpdateManyWithoutAuthorNestedInput>;
+  tokenVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
+};
+
+export type UserUpdateWithoutPrisma_FriendshipsInput = {
+  comments?: InputMaybe<CommentUpdateManyWithoutAuthorNestedInput>;
+  email?: InputMaybe<StringFieldUpdateOperationsInput>;
+  external_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  external_type?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  firstName?: InputMaybe<StringFieldUpdateOperationsInput>;
+  friendships?: InputMaybe<FriendshipUpdateManyWithoutSenderNestedInput>;
+  image_url?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  lastName?: InputMaybe<StringFieldUpdateOperationsInput>;
+  password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  posts?: InputMaybe<PostUpdateManyWithoutAuthorNestedInput>;
   reactions?: InputMaybe<ReactionUpdateManyWithoutAuthorNestedInput>;
   tokenVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
 };
@@ -2991,10 +3625,12 @@ export type UserUpdateWithoutReactionsInput = {
   external_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   external_type?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   firstName?: InputMaybe<StringFieldUpdateOperationsInput>;
+  friendships?: InputMaybe<FriendshipUpdateManyWithoutSenderNestedInput>;
   image_url?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   lastName?: InputMaybe<StringFieldUpdateOperationsInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   posts?: InputMaybe<PostUpdateManyWithoutAuthorNestedInput>;
+  prisma_friendships?: InputMaybe<FriendshipUpdateManyWithoutReceiverNestedInput>;
   tokenVersion?: InputMaybe<IntFieldUpdateOperationsInput>;
 };
 
@@ -3004,9 +3640,21 @@ export type UserUpsertWithoutCommentsInput = {
   where?: InputMaybe<UserWhereInput>;
 };
 
+export type UserUpsertWithoutFriendshipsInput = {
+  create: UserCreateWithoutFriendshipsInput;
+  update: UserUpdateWithoutFriendshipsInput;
+  where?: InputMaybe<UserWhereInput>;
+};
+
 export type UserUpsertWithoutPostsInput = {
   create: UserCreateWithoutPostsInput;
   update: UserUpdateWithoutPostsInput;
+  where?: InputMaybe<UserWhereInput>;
+};
+
+export type UserUpsertWithoutPrisma_FriendshipsInput = {
+  create: UserCreateWithoutPrisma_FriendshipsInput;
+  update: UserUpdateWithoutPrisma_FriendshipsInput;
   where?: InputMaybe<UserWhereInput>;
 };
 
@@ -3025,11 +3673,13 @@ export type UserWhereInput = {
   external_id?: InputMaybe<StringNullableFilter>;
   external_type?: InputMaybe<StringNullableFilter>;
   firstName?: InputMaybe<StringFilter>;
+  friendships?: InputMaybe<FriendshipListRelationFilter>;
   id?: InputMaybe<IntFilter>;
   image_url?: InputMaybe<StringNullableFilter>;
   lastName?: InputMaybe<StringFilter>;
   password?: InputMaybe<StringNullableFilter>;
   posts?: InputMaybe<PostListRelationFilter>;
+  prisma_friendships?: InputMaybe<FriendshipListRelationFilter>;
   reactions?: InputMaybe<ReactionListRelationFilter>;
   tokenVersion?: InputMaybe<IntFilter>;
 };
@@ -3043,11 +3693,13 @@ export type UserWhereUniqueInput = {
   external_id?: InputMaybe<StringNullableFilter>;
   external_type?: InputMaybe<StringNullableFilter>;
   firstName?: InputMaybe<StringFilter>;
+  friendships?: InputMaybe<FriendshipListRelationFilter>;
   id?: InputMaybe<Scalars['Int']['input']>;
   image_url?: InputMaybe<StringNullableFilter>;
   lastName?: InputMaybe<StringFilter>;
   password?: InputMaybe<StringNullableFilter>;
   posts?: InputMaybe<PostListRelationFilter>;
+  prisma_friendships?: InputMaybe<FriendshipListRelationFilter>;
   reactions?: InputMaybe<ReactionListRelationFilter>;
   tokenVersion?: InputMaybe<IntFilter>;
 };
@@ -3131,7 +3783,7 @@ export type ReactionsQueryVariables = Exact<{
 export type ReactionsQuery = { __typename?: 'Query', reactions: { __typename?: 'ReactionsObject', voted?: ReactionType | null, likeCount: number, dislikeCount: number, reactions?: Array<{ __typename?: 'Reaction', id: number, type: ReactionType, postId: number, commentId?: number | null, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: number, firstName: string, lastName: string } }> | null } };
 
 export type UserQueryVariables = Exact<{
-  where: UserWhereUniqueInput;
+  userId: Scalars['Float']['input'];
 }>;
 
 
@@ -3166,6 +3818,6 @@ export const MeDocument = {"kind":"Document","definitions":[{"kind":"OperationDe
 export const PaginatedCommentsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PaginatedComments"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"take"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"CursorObject"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"postId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"paginatedComments"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"take"},"value":{"kind":"Variable","name":{"kind":"Name","value":"take"}}},{"kind":"Argument","name":{"kind":"Name","value":"cursor"},"value":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}}},{"kind":"Argument","name":{"kind":"Name","value":"postId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"postId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"comments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"comment"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"postId"}},{"kind":"Field","name":{"kind":"Name","value":"replyId"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"image_url"}}]}},{"kind":"Field","name":{"kind":"Name","value":"reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ReactionFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"hasReplies"}}]}},{"kind":"Field","name":{"kind":"Name","value":"commentCount"}},{"kind":"Field","name":{"kind":"Name","value":"hasMore"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"image_url"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ReactionFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Reaction"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"postId"}},{"kind":"Field","name":{"kind":"Name","value":"commentId"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]} as unknown as DocumentNode<PaginatedCommentsQuery, PaginatedCommentsQueryVariables>;
 export const PaginatedPostsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PaginatedPosts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"take"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PostWhereInput"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"CursorObject"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"paginatedPosts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"take"},"value":{"kind":"Variable","name":{"kind":"Name","value":"take"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"cursor"},"value":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"posts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"image_url"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"hasMore"}}]}}]}}]} as unknown as DocumentNode<PaginatedPostsQuery, PaginatedPostsQueryVariables>;
 export const ReactionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Reactions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"postId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"reactions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"postId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"postId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"voted"}},{"kind":"Field","name":{"kind":"Name","value":"reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"postId"}},{"kind":"Field","name":{"kind":"Name","value":"commentId"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"likeCount"}},{"kind":"Field","name":{"kind":"Name","value":"dislikeCount"}}]}}]}}]} as unknown as DocumentNode<ReactionsQuery, ReactionsQueryVariables>;
-export const UserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"User"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"image_url"}},{"kind":"Field","name":{"kind":"Name","value":"posts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"comments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<UserQuery, UserQueryVariables>;
+export const UserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"User"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"userId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"image_url"}},{"kind":"Field","name":{"kind":"Name","value":"posts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"comments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<UserQuery, UserQueryVariables>;
 export const UpdateCommentsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"UpdateComments"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"postId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateComments"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"postId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"postId"}}},{"kind":"Argument","name":{"kind":"Name","value":"cursor"},"value":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"comments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"comment"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"postId"}},{"kind":"Field","name":{"kind":"Name","value":"replyId"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"image_url"}}]}},{"kind":"Field","name":{"kind":"Name","value":"reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ReactionFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"hasReplies"}}]}},{"kind":"Field","name":{"kind":"Name","value":"commentCount"}},{"kind":"Field","name":{"kind":"Name","value":"hasMore"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"image_url"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ReactionFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Reaction"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"postId"}},{"kind":"Field","name":{"kind":"Name","value":"commentId"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]} as unknown as DocumentNode<UpdateCommentsSubscription, UpdateCommentsSubscriptionVariables>;
 export const UpdateReactionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"UpdateReactions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"postId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateReactions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"postId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"postId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"voted"}},{"kind":"Field","name":{"kind":"Name","value":"reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"postId"}},{"kind":"Field","name":{"kind":"Name","value":"commentId"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"likeCount"}},{"kind":"Field","name":{"kind":"Name","value":"dislikeCount"}}]}}]}}]} as unknown as DocumentNode<UpdateReactionsSubscription, UpdateReactionsSubscriptionVariables>;

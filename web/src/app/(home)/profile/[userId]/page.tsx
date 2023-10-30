@@ -7,10 +7,10 @@ type ProfileProps = {
   params: { userId: string };
 };
 
-const getUser = async (userId: number) => {
+const getUser = (userId: number) => {
   return getClient().query({
     query: UserDocument,
-    variables: { where: { id: userId } },
+    variables: { userId },
   });
 };
 

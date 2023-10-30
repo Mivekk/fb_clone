@@ -5,8 +5,8 @@ import { DecimalJSScalar } from "../../scalars";
 import { UserCreateNestedOneWithoutFriendshipsInput } from "../inputs/UserCreateNestedOneWithoutFriendshipsInput";
 import { FriendStatus } from "../../enums/FriendStatus";
 
-@TypeGraphQL.InputType("FriendshipCreateWithoutReceiverInput", {})
-export class FriendshipCreateWithoutReceiverInput {
+@TypeGraphQL.InputType("FriendshipCreateWithoutSecond_userInput", {})
+export class FriendshipCreateWithoutSecond_userInput {
   @TypeGraphQL.Field(_type => FriendStatus, {
     nullable: false
   })
@@ -15,5 +15,5 @@ export class FriendshipCreateWithoutReceiverInput {
   @TypeGraphQL.Field(_type => UserCreateNestedOneWithoutFriendshipsInput, {
     nullable: false
   })
-  sender!: UserCreateNestedOneWithoutFriendshipsInput;
+  first_user!: UserCreateNestedOneWithoutFriendshipsInput;
 }

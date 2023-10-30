@@ -4,7 +4,7 @@ import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { CommentUpdateManyWithoutAuthorNestedInput } from "../inputs/CommentUpdateManyWithoutAuthorNestedInput";
 import { DateTimeFieldUpdateOperationsInput } from "../inputs/DateTimeFieldUpdateOperationsInput";
-import { FriendshipUpdateManyWithoutReceiverNestedInput } from "../inputs/FriendshipUpdateManyWithoutReceiverNestedInput";
+import { FriendshipUpdateManyWithoutSecond_userNestedInput } from "../inputs/FriendshipUpdateManyWithoutSecond_userNestedInput";
 import { IntFieldUpdateOperationsInput } from "../inputs/IntFieldUpdateOperationsInput";
 import { NullableStringFieldUpdateOperationsInput } from "../inputs/NullableStringFieldUpdateOperationsInput";
 import { PostUpdateManyWithoutAuthorNestedInput } from "../inputs/PostUpdateManyWithoutAuthorNestedInput";
@@ -68,8 +68,8 @@ export class UserUpdateWithoutFriendshipsInput {
   })
   reactions?: ReactionUpdateManyWithoutAuthorNestedInput | undefined;
 
-  @TypeGraphQL.Field(_type => FriendshipUpdateManyWithoutReceiverNestedInput, {
+  @TypeGraphQL.Field(_type => FriendshipUpdateManyWithoutSecond_userNestedInput, {
     nullable: true
   })
-  prisma_friendships?: FriendshipUpdateManyWithoutReceiverNestedInput | undefined;
+  prisma_friendships?: FriendshipUpdateManyWithoutSecond_userNestedInput | undefined;
 }

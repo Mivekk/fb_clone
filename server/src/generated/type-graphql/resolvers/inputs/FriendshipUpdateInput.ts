@@ -16,10 +16,10 @@ export class FriendshipUpdateInput {
   @TypeGraphQL.Field(_type => UserUpdateOneRequiredWithoutFriendshipsNestedInput, {
     nullable: true
   })
-  sender?: UserUpdateOneRequiredWithoutFriendshipsNestedInput | undefined;
+  first_user?: UserUpdateOneRequiredWithoutFriendshipsNestedInput | undefined;
 
   @TypeGraphQL.Field(_type => UserUpdateOneRequiredWithoutPrisma_friendshipsNestedInput, {
     nullable: true
   })
-  receiver?: UserUpdateOneRequiredWithoutPrisma_friendshipsNestedInput | undefined;
+  second_user?: UserUpdateOneRequiredWithoutPrisma_friendshipsNestedInput | undefined;
 }

@@ -3,8 +3,8 @@ import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { DateTimeFieldUpdateOperationsInput } from "../inputs/DateTimeFieldUpdateOperationsInput";
-import { FriendshipUpdateManyWithoutReceiverNestedInput } from "../inputs/FriendshipUpdateManyWithoutReceiverNestedInput";
-import { FriendshipUpdateManyWithoutSenderNestedInput } from "../inputs/FriendshipUpdateManyWithoutSenderNestedInput";
+import { FriendshipUpdateManyWithoutFirst_userNestedInput } from "../inputs/FriendshipUpdateManyWithoutFirst_userNestedInput";
+import { FriendshipUpdateManyWithoutSecond_userNestedInput } from "../inputs/FriendshipUpdateManyWithoutSecond_userNestedInput";
 import { IntFieldUpdateOperationsInput } from "../inputs/IntFieldUpdateOperationsInput";
 import { NullableStringFieldUpdateOperationsInput } from "../inputs/NullableStringFieldUpdateOperationsInput";
 import { PostUpdateManyWithoutAuthorNestedInput } from "../inputs/PostUpdateManyWithoutAuthorNestedInput";
@@ -63,13 +63,13 @@ export class UserUpdateWithoutCommentsInput {
   })
   reactions?: ReactionUpdateManyWithoutAuthorNestedInput | undefined;
 
-  @TypeGraphQL.Field(_type => FriendshipUpdateManyWithoutSenderNestedInput, {
+  @TypeGraphQL.Field(_type => FriendshipUpdateManyWithoutFirst_userNestedInput, {
     nullable: true
   })
-  friendships?: FriendshipUpdateManyWithoutSenderNestedInput | undefined;
+  friendships?: FriendshipUpdateManyWithoutFirst_userNestedInput | undefined;
 
-  @TypeGraphQL.Field(_type => FriendshipUpdateManyWithoutReceiverNestedInput, {
+  @TypeGraphQL.Field(_type => FriendshipUpdateManyWithoutSecond_userNestedInput, {
     nullable: true
   })
-  prisma_friendships?: FriendshipUpdateManyWithoutReceiverNestedInput | undefined;
+  prisma_friendships?: FriendshipUpdateManyWithoutSecond_userNestedInput | undefined;
 }

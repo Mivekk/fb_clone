@@ -25,12 +25,12 @@ export class FriendshipScalarWhereWithAggregatesInput {
   @TypeGraphQL.Field(_type => IntWithAggregatesFilter, {
     nullable: true
   })
-  senderId?: IntWithAggregatesFilter | undefined;
+  first_user_id?: IntWithAggregatesFilter | undefined;
 
   @TypeGraphQL.Field(_type => IntWithAggregatesFilter, {
     nullable: true
   })
-  receiverId?: IntWithAggregatesFilter | undefined;
+  second_user_id?: IntWithAggregatesFilter | undefined;
 
   @TypeGraphQL.Field(_type => EnumFriendStatusWithAggregatesFilter, {
     nullable: true

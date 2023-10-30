@@ -10,12 +10,12 @@ export class FriendshipOrderByWithRelationInput {
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
   })
-  senderId?: "asc" | "desc" | undefined;
+  first_user_id?: "asc" | "desc" | undefined;
 
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
   })
-  receiverId?: "asc" | "desc" | undefined;
+  second_user_id?: "asc" | "desc" | undefined;
 
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
@@ -25,10 +25,10 @@ export class FriendshipOrderByWithRelationInput {
   @TypeGraphQL.Field(_type => UserOrderByWithRelationInput, {
     nullable: true
   })
-  sender?: UserOrderByWithRelationInput | undefined;
+  first_user?: UserOrderByWithRelationInput | undefined;
 
   @TypeGraphQL.Field(_type => UserOrderByWithRelationInput, {
     nullable: true
   })
-  receiver?: UserOrderByWithRelationInput | undefined;
+  second_user?: UserOrderByWithRelationInput | undefined;
 }

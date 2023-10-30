@@ -2,18 +2,18 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
-import { FriendshipUpdateWithoutSenderInput } from "../inputs/FriendshipUpdateWithoutSenderInput";
+import { FriendshipCreateWithoutFirst_userInput } from "../inputs/FriendshipCreateWithoutFirst_userInput";
 import { FriendshipWhereUniqueInput } from "../inputs/FriendshipWhereUniqueInput";
 
-@TypeGraphQL.InputType("FriendshipUpdateWithWhereUniqueWithoutSenderInput", {})
-export class FriendshipUpdateWithWhereUniqueWithoutSenderInput {
+@TypeGraphQL.InputType("FriendshipCreateOrConnectWithoutFirst_userInput", {})
+export class FriendshipCreateOrConnectWithoutFirst_userInput {
   @TypeGraphQL.Field(_type => FriendshipWhereUniqueInput, {
     nullable: false
   })
   where!: FriendshipWhereUniqueInput;
 
-  @TypeGraphQL.Field(_type => FriendshipUpdateWithoutSenderInput, {
+  @TypeGraphQL.Field(_type => FriendshipCreateWithoutFirst_userInput, {
     nullable: false
   })
-  data!: FriendshipUpdateWithoutSenderInput;
+  create!: FriendshipCreateWithoutFirst_userInput;
 }

@@ -9,12 +9,12 @@ export class FriendshipMinOrderByAggregateInput {
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
   })
-  senderId?: "asc" | "desc" | undefined;
+  first_user_id?: "asc" | "desc" | undefined;
 
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
   })
-  receiverId?: "asc" | "desc" | undefined;
+  second_user_id?: "asc" | "desc" | undefined;
 
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true

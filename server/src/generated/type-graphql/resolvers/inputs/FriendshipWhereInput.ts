@@ -26,12 +26,12 @@ export class FriendshipWhereInput {
   @TypeGraphQL.Field(_type => IntFilter, {
     nullable: true
   })
-  senderId?: IntFilter | undefined;
+  first_user_id?: IntFilter | undefined;
 
   @TypeGraphQL.Field(_type => IntFilter, {
     nullable: true
   })
-  receiverId?: IntFilter | undefined;
+  second_user_id?: IntFilter | undefined;
 
   @TypeGraphQL.Field(_type => EnumFriendStatusFilter, {
     nullable: true
@@ -41,10 +41,10 @@ export class FriendshipWhereInput {
   @TypeGraphQL.Field(_type => UserRelationFilter, {
     nullable: true
   })
-  sender?: UserRelationFilter | undefined;
+  first_user?: UserRelationFilter | undefined;
 
   @TypeGraphQL.Field(_type => UserRelationFilter, {
     nullable: true
   })
-  receiver?: UserRelationFilter | undefined;
+  second_user?: UserRelationFilter | undefined;
 }

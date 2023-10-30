@@ -10,10 +10,10 @@ export class FriendshipAvgAggregate {
   @TypeGraphQL.Field(_type => TypeGraphQL.Float, {
     nullable: true
   })
-  senderId!: number | null;
+  first_user_id!: number | null;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Float, {
     nullable: true
   })
-  receiverId!: number | null;
+  second_user_id!: number | null;
 }

@@ -35,5 +35,5 @@ export class UserPrisma_friendshipsArgs {
   @TypeGraphQL.Field(_type => [FriendshipScalarFieldEnum], {
     nullable: true
   })
-  distinct?: Array<"senderId" | "receiverId" | "status"> | undefined;
+  distinct?: Array<"first_user_id" | "second_user_id" | "status"> | undefined;
 }

@@ -9,16 +9,16 @@ export class FriendshipRelationsResolver {
   @TypeGraphQL.FieldResolver(_type => User, {
     nullable: false
   })
-  async sender(@TypeGraphQL.Root() friendship: Friendship, @TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo): Promise<User> {
+  async first_user(@TypeGraphQL.Root() friendship: Friendship, @TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo): Promise<User> {
     const { _count } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).friendship.findUniqueOrThrow({
       where: {
-        senderId_receiverId: {
-          senderId: friendship.senderId,
-          receiverId: friendship.receiverId,
+        first_user_id_second_user_id: {
+          first_user_id: friendship.first_user_id,
+          second_user_id: friendship.second_user_id,
         },
       },
-    }).sender({
+    }).first_user({
       ...(_count && transformCountFieldIntoSelectRelationsCount(_count)),
     });
   }
@@ -26,16 +26,16 @@ export class FriendshipRelationsResolver {
   @TypeGraphQL.FieldResolver(_type => User, {
     nullable: false
   })
-  async receiver(@TypeGraphQL.Root() friendship: Friendship, @TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo): Promise<User> {
+  async second_user(@TypeGraphQL.Root() friendship: Friendship, @TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo): Promise<User> {
     const { _count } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).friendship.findUniqueOrThrow({
       where: {
-        senderId_receiverId: {
-          senderId: friendship.senderId,
-          receiverId: friendship.receiverId,
+        first_user_id_second_user_id: {
+          first_user_id: friendship.first_user_id,
+          second_user_id: friendship.second_user_id,
         },
       },
-    }).receiver({
+    }).second_user({
       ...(_count && transformCountFieldIntoSelectRelationsCount(_count)),
     });
   }

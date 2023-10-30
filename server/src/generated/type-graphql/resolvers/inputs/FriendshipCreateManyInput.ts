@@ -9,12 +9,12 @@ export class FriendshipCreateManyInput {
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
     nullable: false
   })
-  senderId!: number;
+  first_user_id!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
     nullable: false
   })
-  receiverId!: number;
+  second_user_id!: number;
 
   @TypeGraphQL.Field(_type => FriendStatus, {
     nullable: false

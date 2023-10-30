@@ -1,5 +1,5 @@
-query User($where: UserWhereUniqueInput!) {
-  user(where: $where) {
+query User($userId: Float!) {
+  user(userId: $userId) {
     id
     firstName
     lastName

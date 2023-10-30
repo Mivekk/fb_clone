@@ -3,17 +3,17 @@ import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { EnumFriendStatusFieldUpdateOperationsInput } from "../inputs/EnumFriendStatusFieldUpdateOperationsInput";
-import { UserUpdateOneRequiredWithoutFriendshipsNestedInput } from "../inputs/UserUpdateOneRequiredWithoutFriendshipsNestedInput";
+import { UserUpdateOneRequiredWithoutPrisma_friendshipsNestedInput } from "../inputs/UserUpdateOneRequiredWithoutPrisma_friendshipsNestedInput";
 
-@TypeGraphQL.InputType("FriendshipUpdateWithoutReceiverInput", {})
-export class FriendshipUpdateWithoutReceiverInput {
+@TypeGraphQL.InputType("FriendshipUpdateWithoutFirst_userInput", {})
+export class FriendshipUpdateWithoutFirst_userInput {
   @TypeGraphQL.Field(_type => EnumFriendStatusFieldUpdateOperationsInput, {
     nullable: true
   })
   status?: EnumFriendStatusFieldUpdateOperationsInput | undefined;
 
-  @TypeGraphQL.Field(_type => UserUpdateOneRequiredWithoutFriendshipsNestedInput, {
+  @TypeGraphQL.Field(_type => UserUpdateOneRequiredWithoutPrisma_friendshipsNestedInput, {
     nullable: true
   })
-  sender?: UserUpdateOneRequiredWithoutFriendshipsNestedInput | undefined;
+  second_user?: UserUpdateOneRequiredWithoutPrisma_friendshipsNestedInput | undefined;
 }

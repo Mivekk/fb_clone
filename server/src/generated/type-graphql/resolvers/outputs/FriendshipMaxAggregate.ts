@@ -11,12 +11,12 @@ export class FriendshipMaxAggregate {
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
     nullable: true
   })
-  senderId!: number | null;
+  first_user_id!: number | null;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
     nullable: true
   })
-  receiverId!: number | null;
+  second_user_id!: number | null;
 
   @TypeGraphQL.Field(_type => FriendStatus, {
     nullable: true

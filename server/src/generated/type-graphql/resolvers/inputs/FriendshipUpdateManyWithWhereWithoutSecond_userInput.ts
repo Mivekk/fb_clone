@@ -5,8 +5,8 @@ import { DecimalJSScalar } from "../../scalars";
 import { FriendshipScalarWhereInput } from "../inputs/FriendshipScalarWhereInput";
 import { FriendshipUpdateManyMutationInput } from "../inputs/FriendshipUpdateManyMutationInput";
 
-@TypeGraphQL.InputType("FriendshipUpdateManyWithWhereWithoutReceiverInput", {})
-export class FriendshipUpdateManyWithWhereWithoutReceiverInput {
+@TypeGraphQL.InputType("FriendshipUpdateManyWithWhereWithoutSecond_userInput", {})
+export class FriendshipUpdateManyWithWhereWithoutSecond_userInput {
   @TypeGraphQL.Field(_type => FriendshipScalarWhereInput, {
     nullable: false
   })

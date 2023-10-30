@@ -17,11 +17,7 @@ import {
   RegisterResponseObject,
   UserObject,
 } from "./utils/outputs";
-import {
-  FriendStatus,
-  User,
-  UserWhereUniqueInput,
-} from "../generated/type-graphql";
+import { FriendStatus, User } from "../generated/type-graphql";
 import { verify } from "jsonwebtoken";
 import { isAuth } from "../middleware/isAuth";
 
@@ -59,18 +55,18 @@ export class UserResolver {
     }
   }
 
-  @Query(() => UserObject, { nullable: true })
+  @Query(() => User, { nullable: true })
   async user(
     @Ctx() { prisma }: MyApolloContext,
     @Arg("userId") userId: number
-  ): Promise<UserObject | null> {
+  ): Promise<User | null> {
     const user = await prisma.user.findUnique({ where: { id: userId } });
 
     if (!user) {
       return null;
     }
 
-    return { ...user, friendStatus: FriendStatus.STRANGER };
+    return user;
   }
 
   @Mutation(() => RegisterResponseObject)
@@ -164,74 +160,124 @@ export class UserResolver {
   }
 
   @Query(() => [User])
-  @UseMiddleware(isAuth)
   async friends(
     @Ctx() { prisma }: MyApolloContext,
     @Arg("userId") userId: number
   ): Promise<User[]> {
-    const userWithFriends = await prisma.user.findUnique({
-      where: { id: userId },
-      include: { friendships: { where: { status: { equals: "FRIENDS" } } } },
+    const users = await prisma.friendship.findMany({
+      where: { first_user_id: userId, status: FriendStatus.FRIENDS },
     });
 
-    if (!userWithFriends) {
-      throw new Error("user not found");
-    }
+    const friends = (await Promise.all(
+      users
+        .map((user) =>
+          prisma.user.findUnique({ where: { id: user.second_user_id } })
+        )
+        .filter((el) => el)
+    )) as User[];
 
-    return userWithFriends.friends;
+    return friends;
   }
 
-  @Mutation(() => User, { nullable: true })
+  @Query(() => FriendStatus)
+  @UseMiddleware(isAuth)
+  async friendStatus(
+    @Ctx() { prisma, payload }: MyApolloContext,
+    @Arg("userId") userId: number
+  ): Promise<FriendStatus> {
+    if (!payload?.userId) {
+      throw new Error("not authenticated");
+    }
+    const friendship = await prisma.friendship.findUnique({
+      where: {
+        first_user_id_second_user_id: {
+          first_user_id: payload.userId,
+          second_user_id: userId,
+        },
+      },
+    });
+
+    if (!friendship) {
+      throw new Error("could not establish relation");
+    }
+
+    const { status } = friendship;
+
+    return status as FriendStatus;
+  }
+
+  @Query(() => Boolean)
+  @Mutation(() => Boolean)
   @UseMiddleware(isAuth)
   async addFriend(
     @Ctx() { prisma, payload }: MyApolloContext,
     @Arg("userId") userId: number
-  ): Promise<User | null> {
+  ): Promise<Boolean> {
     if (!payload?.userId) {
       throw new Error("not authenticated");
     }
 
-    const first_update = await prisma.user.update({
-      where: { id: payload.userId },
-      data: { friends: { connect: { id: userId } } },
+    const first_friendship = await prisma.friendship.create({
+      data: {
+        first_user_id: payload.userId,
+        second_user_id: userId,
+        status: FriendStatus.INVITE_SENT,
+      },
     });
 
-    const second_update = await prisma.user.update({
-      where: { id: userId },
-      data: { friends: { connect: { id: payload.userId } } },
+    const second_friendship = await prisma.friendship.create({
+      data: {
+        first_user_id: userId,
+        second_user_id: payload.userId,
+        status: FriendStatus.INVITE_RECEIVED,
+      },
     });
 
-    if (!first_update || !second_update) {
+    if (!first_friendship || !second_friendship) {
       throw new Error("could not add friend");
     }
 
-    return first_update;
+    return true;
   }
 
-  @Mutation(() => User, { nullable: true })
+  @Mutation(() => Boolean)
   @UseMiddleware(isAuth)
-  async removeFriend(
+  async acceptFriend(
     @Ctx() { prisma, payload }: MyApolloContext,
     @Arg("userId") userId: number
-  ): Promise<User | null> {
+  ) {
     if (!payload?.userId) {
       throw new Error("not authenticated");
     }
 
-    const first_update = await prisma.user.update({
-      where: { id: payload.userId },
-      data: { friends: { disconnect: { id: userId } } },
+    const first_friendship = await prisma.friendship.update({
+      where: {
+        first_user_id_second_user_id: {
+          first_user_id: payload.userId,
+          second_user_id: userId,
+        },
+      },
+      data: {
+        status: FriendStatus.FRIENDS,
+      },
     });
 
-    const second_update = await prisma.user.update({
-      where: { id: userId },
-      data: { friends: { disconnect: { id: payload.userId } } },
+    const second_friendship = await prisma.friendship.update({
+      where: {
+        first_user_id_second_user_id: {
+          first_user_id: userId,
+          second_user_id: payload.userId,
+        },
+      },
+      data: {
+        status: FriendStatus.FRIENDS,
+      },
     });
 
-    if (!first_update || !second_update) {
-      throw new Error("could not remove friend");
+    if (!first_friendship || !second_friendship) {
+      throw new Error("could not add friend");
     }
 
-    return first_update;
+    return true;
   }
 }

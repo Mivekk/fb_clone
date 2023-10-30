@@ -3,7 +3,7 @@ import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { CommentCreateNestedManyWithoutAuthorInput } from "../inputs/CommentCreateNestedManyWithoutAuthorInput";
-import { FriendshipCreateNestedManyWithoutReceiverInput } from "../inputs/FriendshipCreateNestedManyWithoutReceiverInput";
+import { FriendshipCreateNestedManyWithoutSecond_userInput } from "../inputs/FriendshipCreateNestedManyWithoutSecond_userInput";
 import { PostCreateNestedManyWithoutAuthorInput } from "../inputs/PostCreateNestedManyWithoutAuthorInput";
 import { ReactionCreateNestedManyWithoutAuthorInput } from "../inputs/ReactionCreateNestedManyWithoutAuthorInput";
 
@@ -64,8 +64,8 @@ export class UserCreateWithoutFriendshipsInput {
   })
   reactions?: ReactionCreateNestedManyWithoutAuthorInput | undefined;
 
-  @TypeGraphQL.Field(_type => FriendshipCreateNestedManyWithoutReceiverInput, {
+  @TypeGraphQL.Field(_type => FriendshipCreateNestedManyWithoutSecond_userInput, {
     nullable: true
   })
-  prisma_friendships?: FriendshipCreateNestedManyWithoutReceiverInput | undefined;
+  prisma_friendships?: FriendshipCreateNestedManyWithoutSecond_userInput | undefined;
 }

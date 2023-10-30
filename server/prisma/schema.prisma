@@ -29,8 +29,8 @@ model User {
   posts              Post[]
   comments           Comment[]
   reactions          Reaction[]
-  friendships        Friendship[] @relation("FriendshipSender")
-  prisma_friendships Friendship[] @relation("FriendshipReceiver")
+  friendships        Friendship[] @relation("FriendshipFirst")
+  prisma_friendships Friendship[] @relation("FriendshipSecond")
   external_type      String?
   external_id        String?
   createdAt          DateTime     @default(now())
@@ -44,13 +44,13 @@ enum FriendStatus {
 }
 
 model Friendship {
-  sender     User         @relation("FriendshipSender", fields: [senderId], references: [id])
-  senderId   Int
-  receiver   User         @relation("FriendshipReceiver", fields: [receiverId], references: [id])
-  receiverId Int
-  status     FriendStatus
+  first_user     User         @relation("FriendshipFirst", fields: [first_user_id], references: [id])
+  first_user_id  Int
+  second_user    User         @relation("FriendshipSecond", fields: [second_user_id], references: [id])
+  second_user_id Int
+  status         FriendStatus
 
-  @@id([senderId, receiverId])
+  @@id([first_user_id, second_user_id])
 }
 
 model Post {

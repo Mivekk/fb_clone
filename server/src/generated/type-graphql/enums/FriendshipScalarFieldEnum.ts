@@ -1,8 +1,8 @@
 import * as TypeGraphQL from "type-graphql";
 
 export enum FriendshipScalarFieldEnum {
-  senderId = "senderId",
-  receiverId = "receiverId",
+  first_user_id = "first_user_id",
+  second_user_id = "second_user_id",
   status = "status"
 }
 TypeGraphQL.registerEnumType(FriendshipScalarFieldEnum, {

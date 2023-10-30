@@ -3,17 +3,17 @@ import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { EnumFriendStatusFilter } from "../inputs/EnumFriendStatusFilter";
-import { FriendshipSenderIdReceiverIdCompoundUniqueInput } from "../inputs/FriendshipSenderIdReceiverIdCompoundUniqueInput";
+import { FriendshipFirst_user_idSecond_user_idCompoundUniqueInput } from "../inputs/FriendshipFirst_user_idSecond_user_idCompoundUniqueInput";
 import { FriendshipWhereInput } from "../inputs/FriendshipWhereInput";
 import { IntFilter } from "../inputs/IntFilter";
 import { UserRelationFilter } from "../inputs/UserRelationFilter";
 
 @TypeGraphQL.InputType("FriendshipWhereUniqueInput", {})
 export class FriendshipWhereUniqueInput {
-  @TypeGraphQL.Field(_type => FriendshipSenderIdReceiverIdCompoundUniqueInput, {
+  @TypeGraphQL.Field(_type => FriendshipFirst_user_idSecond_user_idCompoundUniqueInput, {
     nullable: true
   })
-  senderId_receiverId?: FriendshipSenderIdReceiverIdCompoundUniqueInput | undefined;
+  first_user_id_second_user_id?: FriendshipFirst_user_idSecond_user_idCompoundUniqueInput | undefined;
 
   @TypeGraphQL.Field(_type => [FriendshipWhereInput], {
     nullable: true
@@ -33,12 +33,12 @@ export class FriendshipWhereUniqueInput {
   @TypeGraphQL.Field(_type => IntFilter, {
     nullable: true
   })
-  senderId?: IntFilter | undefined;
+  first_user_id?: IntFilter | undefined;
 
   @TypeGraphQL.Field(_type => IntFilter, {
     nullable: true
   })
-  receiverId?: IntFilter | undefined;
+  second_user_id?: IntFilter | undefined;
 
   @TypeGraphQL.Field(_type => EnumFriendStatusFilter, {
     nullable: true
@@ -48,10 +48,10 @@ export class FriendshipWhereUniqueInput {
   @TypeGraphQL.Field(_type => UserRelationFilter, {
     nullable: true
   })
-  sender?: UserRelationFilter | undefined;
+  first_user?: UserRelationFilter | undefined;
 
   @TypeGraphQL.Field(_type => UserRelationFilter, {
     nullable: true
   })
-  receiver?: UserRelationFilter | undefined;
+  second_user?: UserRelationFilter | undefined;
 }
