@@ -10,8 +10,8 @@ const Logout: React.FC<{}> = ({}) => {
 
   const [logout, { client }] = useMutation(LogoutDocument);
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    const result = await logout();
 
     client.resetStore();
 

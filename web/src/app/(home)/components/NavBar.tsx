@@ -24,7 +24,9 @@ const NavBar: React.FC<{}> = ({}) => {
 
   const { theme, setTheme } = useContext(ThemeContext);
 
-  const { data } = useSuspenseQuery(MeDocument);
+  const {
+    data: { me },
+  } = useSuspenseQuery(MeDocument, { fetchPolicy: "network-only" });
 
   return (
     <div className="w-full h-16 bg-white dark:bg-[#202122] flex justify-between select-none">
@@ -40,16 +42,16 @@ const NavBar: React.FC<{}> = ({}) => {
       </div>
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger className="mr-2">
-          <Avatar image_url={data.me?.image_url} className="w-12 h-12" />
+          <Avatar image_url={me?.image_url} className="w-12 h-12" />
         </DropdownMenuTrigger>
         <DropdownMenuContent className="bg-white rounded-md p-2 mr-8">
           <DropdownMenuItem
             className="flex items-center gap-2"
-            onClick={() => handleTransition(data.me?.id)}
+            onClick={() => handleTransition(me?.id)}
           >
-            <Avatar image_url={data.me?.image_url} />
+            <Avatar image_url={me?.image_url} />
             <div className="font-semibold">
-              {data.me?.firstName} {data.me?.lastName}
+              {me?.firstName} {me?.lastName}
             </div>
           </DropdownMenuItem>
           <DropdownMenuSeparator className="h-[1px] bg-gray-200" />
