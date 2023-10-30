@@ -1,7 +1,7 @@
 import { MeDocument, UserDocument } from "@/generated/graphql";
 import { getClient } from "@/lib/client";
 import React from "react";
-import ProfileName from "./components/ProfileName";
+import ProfileHeader from "./components/ProfileHeader";
 
 type ProfileProps = {
   params: { userId: string };
@@ -27,7 +27,7 @@ const Profile: React.FC<ProfileProps> = async ({ params }) => {
     <div className="w-full h-screen bg-gray-100 dark:bg-[#18191A]">
       <div className="w-full flex justify-center">
         <div className="w-[64rem] mt-4 bg-white dark:bg-[#202122] rounded-2xl flex">
-          <ProfileName {...user} />
+          <ProfileHeader {...user} />
         </div>
       </div>
     </div>

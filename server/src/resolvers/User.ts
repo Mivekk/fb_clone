@@ -179,12 +179,12 @@ export class UserResolver {
     return friends;
   }
 
-  @Query(() => FriendStatus)
+  @Query(() => FriendStatus, { nullable: true })
   @UseMiddleware(isAuth)
   async friendStatus(
     @Ctx() { prisma, payload }: MyApolloContext,
     @Arg("userId") userId: number
-  ): Promise<FriendStatus> {
+  ): Promise<FriendStatus | null> {
     if (!payload?.userId) {
       throw new Error("not authenticated");
     }
@@ -198,7 +198,7 @@ export class UserResolver {
     });
 
     if (!friendship) {
-      throw new Error("could not establish relation");
+      return null;
     }
 
     const { status } = friendship;
@@ -206,13 +206,12 @@ export class UserResolver {
     return status as FriendStatus;
   }
 
-  @Query(() => Boolean)
-  @Mutation(() => Boolean)
+  @Mutation(() => FriendStatus)
   @UseMiddleware(isAuth)
   async addFriend(
     @Ctx() { prisma, payload }: MyApolloContext,
     @Arg("userId") userId: number
-  ): Promise<Boolean> {
+  ): Promise<FriendStatus> {
     if (!payload?.userId) {
       throw new Error("not authenticated");
     }
@@ -237,17 +236,31 @@ export class UserResolver {
       throw new Error("could not add friend");
     }
 
-    return true;
+    return FriendStatus.INVITE_SENT;
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => FriendStatus)
   @UseMiddleware(isAuth)
   async acceptFriend(
     @Ctx() { prisma, payload }: MyApolloContext,
     @Arg("userId") userId: number
-  ) {
+  ): Promise<FriendStatus> {
     if (!payload?.userId) {
       throw new Error("not authenticated");
+    }
+
+    const friendship = await prisma.friendship.findUnique({
+      where: {
+        first_user_id_second_user_id: {
+          first_user_id: payload.userId,
+          second_user_id: userId,
+        },
+        status: FriendStatus.INVITE_RECEIVED,
+      },
+    });
+
+    if (!friendship) {
+      throw new Error("friendship not established");
     }
 
     const first_friendship = await prisma.friendship.update({
@@ -278,6 +291,6 @@ export class UserResolver {
       throw new Error("could not add friend");
     }
 
-    return true;
+    return FriendStatus.FRIENDS;
   }
 }

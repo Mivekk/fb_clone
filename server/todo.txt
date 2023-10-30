@@ -1,11 +1,8 @@
-- posts query
-- add hasMore to posts resolver return type (typegraphql field)
-- comments query
-- add hasReplies and hasMore to comments resolver return type (typegraphql field)
-- pagination for comments
-- fetch comment reactions at initial load
+- make better loading suspense boundary
+- fix theme
+- update cache after addFriend/acceptFriend mutations
+- tests for friendships
+
 - replies using useLazyQuery
-- add typegraphql fields friendStatus: sent fr/received fr/friends
-- friends (add new friend remove friend)
 - facebook jwt auth
 - linking accounts (user resolver login, google auth handler)

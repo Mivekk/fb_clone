@@ -1,0 +1,3 @@
+mutation AddFriend($userId: Float!) {
+  addFriend(userId: $userId)
+}
