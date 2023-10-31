@@ -1,7 +1,6 @@
-- make better loading suspense boundary
+- tests for friendships
 - fix theme
 - update cache after addFriend/acceptFriend mutations
-- tests for friendships
 
 - replies using useLazyQuery
 - facebook jwt auth

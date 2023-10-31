@@ -66,7 +66,10 @@ const CreatePost: React.FC<{}> = ({}) => {
         <DialogTrigger className="grow h-10 ml-2 bg-gray-200 dark:bg-[#3A3B3C] rounded-full flex justify-start items-center text-md">
           <div className="ml-4 select-none">Create post...</div>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px] dark:text-white">
+        <DialogContent
+          className="sm:max-w-[425px] dark:text-white"
+          onInteractOutside={(e) => e.preventDefault()}
+        >
           <DialogHeader>
             <DialogTitle>Create new post</DialogTitle>
             <DialogDescription>

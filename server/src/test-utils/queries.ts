@@ -115,3 +115,21 @@ mutation AddReaction($data: AddReactionInput!) {
   }
 }
 `;
+
+export const addFriendMutation = `
+mutation AddFriend($userId: Float!) {
+  addFriend(userId: $userId)
+}
+`;
+
+export const acceptFriendMutation = `
+mutation AcceptFriend($userId: Float!) {
+  acceptFriend(userId: $userId)
+}
+`;
+
+export const friendStatusQuery = `
+query FriendStatus($userId: Float!) {
+  friendStatus(userId: $userId)
+}
+`;

@@ -2,6 +2,8 @@ import React from "react";
 import Login from "./components/Login";
 import fbName from "../../../public/fb-name.svg";
 import Image from "next/image";
+import { Dialog, DialogContent } from "../components/ui/dialog";
+import Register from "./components/Register";
 
 const Auth: React.FC<{}> = async ({}) => {
   // const user = await getUser();
@@ -19,7 +21,10 @@ const Auth: React.FC<{}> = async ({}) => {
             Connect with friends and the world around you on Facebook.
           </div>
         </div>
-        <Login />
+        <Dialog>
+          <Login />
+          <Register />
+        </Dialog>
       </div>
     </div>
   );

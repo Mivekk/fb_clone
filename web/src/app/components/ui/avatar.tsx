@@ -20,7 +20,7 @@ const Avatar = React.forwardRef<
     )}
     {...props}
   >
-    {image_url && <AvatarImage src={image_url} />}
+    {image_url && <AvatarImage src={image_url} referrerPolicy="no-referrer" />}
     <AvatarFallback />
   </AvatarPrimitive.Root>
 ));

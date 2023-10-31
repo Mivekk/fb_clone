@@ -86,7 +86,7 @@ describe("reaction", () => {
         ReactionType.LIKE
       );
 
-      expect(result.data).toBeNull();
+      expect(result.data.addReaction).toBeNull();
       expect(JSON.stringify(result.errors)).toMatch("not authenticated");
     });
   });
@@ -259,7 +259,7 @@ describe("reaction", () => {
           },
         },
       });
-      expect(result.data).toBeNull();
+      expect(result.data.addReaction).toBeNull();
       expect(JSON.stringify(result.errors)).toMatch("not authenticated");
     });
   });

@@ -2,11 +2,14 @@ import prisma from "../client";
 import { ReactionType } from "../generated/type-graphql";
 import { graphqlWrapper } from "./graphqlWrapper";
 import {
+  acceptFriendMutation,
   addCommentMutation,
+  addFriendMutation,
   addReactionMutation,
   createPostMutation,
   deleteCommentMutation,
   deletePostMutation,
+  friendStatusQuery,
   loginMutation,
   registerMutation,
 } from "./queries";
@@ -141,6 +144,60 @@ export const graphqlAddReaction = async (
         type,
         postId,
       },
+    },
+    contextValue: {
+      req: {
+        headers: {
+          authorization: `Bearer ${accessToken}`,
+        },
+      },
+    },
+  });
+};
+
+export const graphqlAddFriend = async (accessToken: string, userId: number) => {
+  return await graphqlWrapper({
+    source: addFriendMutation,
+    variableValues: {
+      userId,
+    },
+    contextValue: {
+      req: {
+        headers: {
+          authorization: `Bearer ${accessToken}`,
+        },
+      },
+    },
+  });
+};
+
+export const graphqlAcceptFriend = async (
+  accessToken: string,
+  userId: number
+) => {
+  return await graphqlWrapper({
+    source: acceptFriendMutation,
+    variableValues: {
+      userId,
+    },
+    contextValue: {
+      req: {
+        headers: {
+          authorization: `Bearer ${accessToken}`,
+        },
+      },
+    },
+  });
+};
+
+export const graphqlFriendStatus = async (
+  accessToken: string,
+  userId: number
+) => {
+  return await graphqlWrapper({
+    source: friendStatusQuery,
+    variableValues: {
+      userId,
     },
     contextValue: {
       req: {

@@ -14,12 +14,16 @@ const FetchCommentsButton: React.FC<FetchCommentsButtonProps> = ({
   const [, startTransition] = useTransition();
 
   return (
-    <button
-      onClick={() => startTransition(() => onClick())}
-      disabled={!hasMore}
-    >
-      {hasMore ? <div>Get more</div> : <div>No more comments</div>}
-    </button>
+    <>
+      {hasMore && (
+        <button
+          onClick={() => startTransition(() => onClick())}
+          disabled={!hasMore}
+        >
+          View more comments
+        </button>
+      )}
+    </>
   );
 };
 

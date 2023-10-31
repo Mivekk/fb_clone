@@ -28,7 +28,10 @@ const PostEngagementBar: React.FC<PostEngagementBarProps> = ({ postId }) => {
         <div>{reactions.dislikeCount}</div>
       </div>
       <div className="flex gap-4 ml-auto">
-        <div className="">{paginatedComments.commentCount} comments</div>
+        <div className="">
+          {paginatedComments.commentCount}
+          {paginatedComments.commentCount === 1 ? " comment" : " comments"}
+        </div>
         <div>0 shares</div>
       </div>
     </div>
