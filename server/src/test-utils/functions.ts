@@ -19,8 +19,9 @@ export const clearDatabase = async () => {
   const posts = prisma.post.deleteMany();
   const comments = prisma.comment.deleteMany();
   const reactions = prisma.reaction.deleteMany();
+  const friendships = prisma.friendship.deleteMany();
 
-  await prisma.$transaction([reactions, comments, posts, users]);
+  await prisma.$transaction([friendships, reactions, comments, posts, users]);
 };
 
 export const graphqlLogin = async (
