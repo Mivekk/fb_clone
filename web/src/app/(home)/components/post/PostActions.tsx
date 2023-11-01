@@ -68,7 +68,7 @@ const PostActions: React.FC<PostActionsProps> = ({ postId }) => {
   };
 
   return (
-    <div className="divide-y">
+    <div className="divide-y divide-gray-300 dark:divide-gray-500">
       <div className="grid grid-cols-4 pt-2 pb-1">
         <PostActionButton handleClick={() => handleLike()} type="Like">
           {data.reactions?.voted === ReactionType.Like ? (

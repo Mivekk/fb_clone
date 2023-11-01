@@ -18,7 +18,11 @@ const FetchPostsButton: React.FC<FetchPostsButtonProps> = ({
       onClick={() => startTransition(() => onClick())}
       disabled={!hasMore}
     >
-      {hasMore ? <div>Get more</div> : <div>No more posts</div>}
+      {hasMore ? (
+        <div className="dark:text-betterGray">View more posts</div>
+      ) : (
+        <div>No more posts</div>
+      )}
     </button>
   );
 };

@@ -1,5 +1,6 @@
 "use client";
 
+import Line from "@/app/components/ui/Line";
 import { Avatar } from "@/app/components/ui/avatar";
 import { Button } from "@/app/components/ui/button";
 import {
@@ -64,43 +65,46 @@ const CreatePost: React.FC<{}> = ({}) => {
       />
       <Dialog>
         <DialogTrigger className="grow h-10 ml-2 bg-gray-200 dark:bg-[#3A3B3C] rounded-full flex justify-start items-center text-md">
-          <div className="ml-4 select-none">Create post...</div>
+          <div className="ml-4 select-none text-gray-400">Create post...</div>
         </DialogTrigger>
         <DialogContent
-          className="sm:max-w-[425px] dark:text-white"
+          className="sm:max-w-[500px] dark:text-white flex flex-col items-center"
           onInteractOutside={(e) => e.preventDefault()}
         >
           <DialogHeader>
             <DialogTitle>Create new post</DialogTitle>
-            <DialogDescription>
-              Write a title and a body of your post. Click send when you're
-              done.
-            </DialogDescription>
           </DialogHeader>
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="title">Title</Label>
-              <Input
-                id="title"
-                placeholder="Post title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
+          <Line />
+          <div className="flex flex-col w-full">
+            <div className="flex items-center gap-1">
+              <Avatar image_url={data?.me?.image_url} />
+              <div className="font-semibold">
+                {data?.me?.firstName} {data?.me?.lastName}
+              </div>
             </div>
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="body">Body</Label>
-              <Textarea
-                id="body"
-                placeholder="Post body"
-                value={body}
-                onChange={(e) => setBody(e.target.value)}
-                className="resize-none h-40"
-              />
-            </div>
+            <Input
+              id="title"
+              placeholder="Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="focus-visible:ring-0 rounded-none rounded-t-lg text-md font-semibold mt-2"
+            />
+            <Textarea
+              id="body"
+              placeholder="Body"
+              value={body}
+              onChange={(e) => setBody(e.target.value)}
+              className="resize-none h-40 focus-visible:ring-0 rounded-none rounded-b-lg text-md"
+            />
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button onClick={() => handleClick()}>Send</Button>
+              <Button
+                onClick={() => handleClick()}
+                className="bg-blue-700 w-[150px]"
+              >
+                Send
+              </Button>
             </DialogClose>
           </DialogFooter>
         </DialogContent>

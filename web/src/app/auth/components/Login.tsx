@@ -9,6 +9,7 @@ import { Input } from "@/app/components/ui/input";
 import { Button } from "@/app/components/ui/button";
 import Link from "next/link";
 import { DialogTrigger } from "@/app/components/ui/dialog";
+import Line from "@/app/components/ui/Line";
 
 const Login: React.FC<{}> = ({}) => {
   const router = useRouter();
@@ -63,7 +64,7 @@ const Login: React.FC<{}> = ({}) => {
       className="flex flex-col gap-3 bg-white p-4 rounded-lg shadow-md"
     >
       <div className="flex flex-col gap-3 items-center">
-        <div className="flex flex-col gap-2 w-[22rem]">
+        <div className="flex flex-col gap-2 md:w-[22rem] w-[18rem]">
           <Input
             type="email"
             placeholder="Email"
@@ -97,7 +98,7 @@ const Login: React.FC<{}> = ({}) => {
           </DialogTrigger>
         </div>
       </div>
-      <div className="w-full h-[1px] bg-gray-500 opacity-50" />
+      <Line />
       <div className="self-center flex flex-col items-center gap-2">
         <div className="text-sm -mt-1">Social Sign Up</div>
         <GoogleLogin

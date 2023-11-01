@@ -8,7 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/app/components/ui/dropdown-menu";
-import { MeDocument } from "@/generated/graphql";
+import { LogoutDocument, MeDocument } from "@/generated/graphql";
 import { useProfileTransition } from "@/hooks/useProfileTransition";
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import React, { useContext } from "react";
@@ -17,6 +17,7 @@ import { ThemeContext } from "@/contexts/ThemeProvider";
 import fbIcon from "../../../../public/fb-icon.svg";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useMutation } from "@apollo/client";
 
 const NavBar: React.FC<{}> = ({}) => {
   const router = useRouter();
@@ -24,9 +25,20 @@ const NavBar: React.FC<{}> = ({}) => {
 
   const { theme, setTheme } = useContext(ThemeContext);
 
+  const [logout, { client }] = useMutation(LogoutDocument);
+
   const {
     data: { me },
   } = useSuspenseQuery(MeDocument, { fetchPolicy: "network-only" });
+
+  const handleLogout = async () => {
+    const result = await logout();
+
+    client.resetStore();
+
+    router.refresh();
+    router.push("/auth");
+  };
 
   return (
     <div className="w-full h-16 bg-white dark:bg-[#202122] flex justify-between select-none">
@@ -44,9 +56,9 @@ const NavBar: React.FC<{}> = ({}) => {
         <DropdownMenuTrigger className="mr-2">
           <Avatar image_url={me?.image_url} className="w-12 h-12" />
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="bg-white rounded-md p-2 mr-8">
+        <DropdownMenuContent className="rounded-md p-2 mr-8 w-[350px]">
           <DropdownMenuItem
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 cursor-pointer"
             onClick={() => handleTransition(me?.id)}
           >
             <Avatar image_url={me?.image_url} />
@@ -57,11 +69,15 @@ const NavBar: React.FC<{}> = ({}) => {
           <DropdownMenuSeparator className="h-[1px] bg-gray-200" />
           <DropdownMenuItem
             onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+            className="cursor-pointer"
           >
             {theme === "light" ? "Dark" : "Light"} theme
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Logout />
+          <DropdownMenuItem
+            onClick={() => handleLogout()}
+            className="cursor-pointer"
+          >
+            Logout
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

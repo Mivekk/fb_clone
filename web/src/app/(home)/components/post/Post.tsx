@@ -25,12 +25,12 @@ const Post: React.FC<PostProps> = ({ id, author, title, body, createdAt }) => {
   return (
     <div
       className="mt-4 pl-2 pr-2 pb-1 rounded-md md:w-[32rem] sm:w-[24rem] w-[18rem] 
-                    shadow-md bg-white dark:bg-[#202122] dark:text-white"
+                    shadow-md bg-white dark:bg-[#202122] dark:text-darkWhite"
     >
       <PostAuthor {...author} createdAt={createdAt} />
       <PostTitle title={title} />
       <PostBody body={body} />
-      <div className="divide-y">
+      <div className="divide-y divide-gray-300 dark:divide-gray-500">
         <Suspense fallback={<div>...</div>}>
           <PostEngagementBar postId={id} />
           <PostActions postId={id} />

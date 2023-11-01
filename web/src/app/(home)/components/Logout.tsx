@@ -23,7 +23,11 @@ const Logout: React.FC<{}> = ({}) => {
     router.push("/auth");
   };
 
-  return <button onClick={() => handleLogout()}>Logout</button>;
+  return (
+    <button className="w-full h-full flex" onClick={() => handleLogout()}>
+      Logout
+    </button>
+  );
 };
 
 export default Logout;

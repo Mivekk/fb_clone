@@ -16,6 +16,10 @@ module.exports = {
       },
     },
     extend: {
+      colors: {
+        betterGray: "#b0b3b8",
+        darkWhite: "#e4e6eb",
+      },
       screens: {
         sm: "576px",
       },

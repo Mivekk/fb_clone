@@ -1,5 +1,6 @@
 "use client";
 
+import Line from "@/app/components/ui/Line";
 import { Button } from "@/app/components/ui/button";
 import { DialogContent } from "@/app/components/ui/dialog";
 import { Input } from "@/app/components/ui/input";
@@ -66,7 +67,7 @@ const Register: React.FC<{}> = ({}) => {
       <div className="w-full">
         <div className="text-3xl font-semibold">Sign Up</div>
         <div className="text-md">It's quick and easy.</div>
-        <div className="w-full h-[1px] bg-gray-500 opacity-50 my-3" />
+        <Line />
         <form
           onSubmit={(e) => handleSubmit(e)}
           className="flex flex-col gap-3 mt-2"

@@ -19,6 +19,7 @@ const FetchCommentsButton: React.FC<FetchCommentsButtonProps> = ({
         <button
           onClick={() => startTransition(() => onClick())}
           disabled={!hasMore}
+          className="dark:text-betterGray"
         >
           View more comments
         </button>

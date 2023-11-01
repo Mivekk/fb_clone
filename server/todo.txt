@@ -1,4 +1,3 @@
-- tests for friendships
 - fix theme
 - update cache after addFriend/acceptFriend mutations
 
