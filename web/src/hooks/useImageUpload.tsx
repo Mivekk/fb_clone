@@ -6,9 +6,9 @@ type UploadImage = {
   error?: string;
 };
 
-export const useImageUpload = (): [
-  uploadImage: (image: File) => Promise<UploadImage>
-] => {
+export const useImageUpload = (): {
+  uploadImage: (image: File) => Promise<UploadImage>;
+} => {
   const uploadImage = async (image: File): Promise<UploadImage> => {
     if (image.size > IMAGE_MAX_SIZE) {
       return { error: "image is too big" };
@@ -35,5 +35,5 @@ export const useImageUpload = (): [
     return { image_url };
   };
 
-  return [uploadImage];
+  return { uploadImage };
 };

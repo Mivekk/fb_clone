@@ -1,6 +1,7 @@
 "use client";
 
 import { Avatar } from "@/app/components/ui/avatar";
+import { FriendStatus } from "@/generated/graphql";
 import { useAddFriend } from "@/hooks/useAddFriend";
 import React from "react";
 
@@ -17,7 +18,9 @@ const ProfileHeader: React.FC<ProfileHeaderType> = ({
   lastName,
   image_url,
 }) => {
-  const [addFriendButton] = useAddFriend(id);
+  const { friendStatus, addFriend, acceptFriend } = useAddFriend(id);
+
+  const friendButton = !friendStatus ? null : "a";
 
   return (
     <div className="w-full flex">
@@ -27,11 +30,9 @@ const ProfileHeader: React.FC<ProfileHeaderType> = ({
           {firstName} {lastName}
         </div>
       </div>
-      {addFriendButton && (
-        <div className="ml-auto mt-auto mr-4 mb-4 px-2 py-1 h-fit bg-blue-600 text-white rounded-md">
-          {addFriendButton}
-        </div>
-      )}
+      <div className="ml-auto mt-auto mr-4 mb-4 px-2 py-1 h-fit bg-blue-600 text-white rounded-md">
+        {friendStatus}
+      </div>
     </div>
   );
 };
